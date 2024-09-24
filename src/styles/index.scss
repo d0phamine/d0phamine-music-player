@@ -1,0 +1,80 @@
+// ::-webkit-scrollbar {
+// 	width: 0.5rem;
+// 	display: none;
+// }
+// ::-webkit-scrollbar-track {
+// 	background: transparent;
+// }
+
+// ::-webkit-scrollbar-thumb {
+// 	background: #888;
+// }
+
+// ::-webkit-scrollbar-thumb:hover {
+// 	background: #555;
+// }
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	color: white;
+
+	::-webkit-scrollbar {
+		display: none;
+	}
+
+	#root {
+		height: 100%;
+		display: grid;
+		grid-template-rows: 0px 32px 1fr;
+	}
+
+	h1 {
+		font-size: 24px;
+		font-weight: 600;
+	}
+	h2 {
+		font-size: 20px;
+		font-weight: 600;
+	}
+	h3 {
+		font-size: 14px;
+		font-weight: 600;
+	}
+}
+
+.styled-notifications-success {
+	background-color: rgba(85, 85, 85, 0.124);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.124);
+	box-shadow: 0 0px 25px rgba(7, 188, 13, 0.277);
+	color: #d0d0d2;
+
+	.Toastify__progress-bar--success{
+		background: rgba(7, 188, 12, 1);
+		height: 2px;
+	}
+
+	
+}
+
+.styled-notifications-error {
+	background-color: rgba(85, 85, 85, 0.124);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.124);
+	box-shadow: 0 0px 25px rgba(188, 31, 7, 0.277);
+	color: #d0d0d2;
+	.Toastify__progress-bar--error{
+		background: rgba(231, 77, 60, 0.742);
+		height: 2px;
+	}
+}

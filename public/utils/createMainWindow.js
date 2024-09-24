@@ -1,4 +1,7 @@
-const { BrowserWindow } = require("electron");
+const { BrowserWindow, ipcMain } = require("electron");
+const { channels } = require("../../src/shared/constants");
+const path  = require("path");
+const fs = require("fs").promises;
 const { join } = require("path");
 const { autoUpdater } = require("electron-updater");
 const remote = require("@electron/remote/main");
@@ -39,5 +42,26 @@ exports.createMainWindow = async () => {
 		}
 	});
 
+	ipcMain.on(channels.GET_DIR, async (event, arg) => {
+		const arrDirs = []
+		try {
+			console.log(arg.dir, "args")
+			const directoryPath = path.join(__dirname, arg.dir);
+			console.log(directoryPath, "directorypath")
+			const files = await fs.readdir(directoryPath); // Await fs.promises.readdir
+
+
+			files.forEach((file) => {
+				arrDirs.push(file)
+			});
+
+			event.reply("directory-files", files); // You can reply with the files if needed
+		} catch (err) {
+			console.error("Unable to scan directory: ", err);
+			event.reply("directory-error", "Unable to scan directory");
+		}
+	});
+
 	return window;
 };
+
