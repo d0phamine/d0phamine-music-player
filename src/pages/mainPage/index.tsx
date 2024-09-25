@@ -5,15 +5,16 @@ import { channels } from "../../shared/constants";
 const { ipcRenderer } = window.require("electron");
 
 export const IndexPage: FC = () => {
-	const getDirs = () => {
-		ipcRenderer.send(channels.GET_DIR, {dir:'/Users/gregorysizov/Documents'});
+	const getDirs = (dir?:string) => {
+		ipcRenderer.send(channels.GET_DIR, {dir});
 	};
 
 	useEffect(() => {
 		getDirs();
-		ipcRenderer.on(channels.GET_DIR, (event:any, arg:any) => {
-			console.log(arg)
-		})
+
+		ipcRenderer.on('directory-files', (event:any, receivedFiles:any) => {
+			console.log(receivedFiles) // Обновляем состояние при получении файлов
+		});
 	}, []);
 
 	return (

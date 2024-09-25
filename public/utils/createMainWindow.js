@@ -1,7 +1,8 @@
 const { BrowserWindow, ipcMain } = require("electron");
 const { channels } = require("../../src/shared/constants");
-const path  = require("path");
-const fs = require("fs").promises;
+const path = require("path");
+const os = require("os");
+const fs = require("fs");
 const { join } = require("path");
 const { autoUpdater } = require("electron-updater");
 const remote = require("@electron/remote/main");
@@ -42,23 +43,67 @@ exports.createMainWindow = async () => {
 		}
 	});
 
+	const audioExtensions = [".mp3", ".wav", ".flac", ".ogg", ".aac"];
+
 	ipcMain.on(channels.GET_DIR, async (event, arg) => {
-		const arrDirs = []
 		try {
-			console.log(arg.dir, "args")
-			const directoryPath = path.join(__dirname, arg.dir);
-			console.log(directoryPath, "directorypath")
-			const files = await fs.readdir(directoryPath); // Await fs.promises.readdir
+			// Если аргумент не передан или не содержит "dir", используем домашнюю директорию
+			const directoryPath = arg && arg.dir ? arg.dir : os.homedir();
 
+			// Чтение содержимого директории
+			fs.readdir(directoryPath, (err, files) => {
+				if (err) {
+					console.error("Не удалось сканировать директорию: ", err);
+					event.reply(
+						"directory-error",
+						"Не удалось сканировать директорию",
+					);
+					return;
+				}
 
-			files.forEach((file) => {
-				arrDirs.push(file)
+				// Используем Promise.all, чтобы асинхронно проверять каждый файл
+				Promise.all(
+					files.map((file) => {
+						// Игнорируем файлы, которые начинаются с точки
+						if (file.startsWith(".")) {
+							return Promise.resolve(null);
+						}
+
+						const filePath = path.join(directoryPath, file);
+
+						return new Promise((resolve) => {
+							fs.stat(filePath, (err, stats) => {
+								if (err) {
+									resolve(null); // Пропускаем файлы, которые не удалось проверить
+									return;
+								}
+
+								// Если это директория или файл с аудио расширением, добавляем в результат
+								if (stats.isDirectory()) {
+									resolve({ type: "directory", name: file });
+								} else if (
+									audioExtensions.includes(
+										path.extname(file).toLowerCase(),
+									)
+								) {
+									resolve({ type: "audio", name: file });
+								} else {
+									resolve(null); // Пропускаем файлы, которые не директории или не аудиофайлы
+								}
+							});
+						});
+					}),
+				).then((results) => {
+					// Очищаем результат от null и отправляем только директории и аудиофайлы
+					const filteredFiles = results.filter(
+						(item) => item !== null,
+					);
+					event.reply("directory-files", filteredFiles);
+				});
 			});
-
-			event.reply("directory-files", files); // You can reply with the files if needed
 		} catch (err) {
-			console.error("Unable to scan directory: ", err);
-			event.reply("directory-error", "Unable to scan directory");
+			console.error("Не удалось сканировать директорию: ", err);
+			event.reply("directory-error", "Не удалось сканировать директорию");
 		}
 	});
 
