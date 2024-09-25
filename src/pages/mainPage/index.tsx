@@ -15,6 +15,16 @@ export const IndexPage: FC = () => {
 		ipcRenderer.on('directory-files', (event:any, receivedFiles:any) => {
 			console.log(receivedFiles) // Обновляем состояние при получении файлов
 		});
+
+		ipcRenderer.on('directory-error', (event:any, errorMessage:any) => {
+			console.log(errorMessage);
+		});
+
+		return () => {
+			ipcRenderer.removeAllListeners('directory-files')
+			ipcRenderer.removeAllListeners('directory-error')
+		}
+
 	}, []);
 
 	return (
