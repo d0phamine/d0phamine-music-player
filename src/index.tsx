@@ -2,12 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ToastContainer } from "react-toastify";
 import { ConfigProvider, theme } from "antd";
-import { Titlebar } from "./components/Titlebar";
+import { Titlebar } from "./components";
 
 import "react-toastify/dist/ReactToastify.css";
-import "./styles/index.scss";
-import "./styles/tailwind.css";
-import "./styles/titlebar.css";
+import "./styles/global.scss";
 
 import { Router } from "./router";
 

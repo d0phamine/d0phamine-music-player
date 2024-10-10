@@ -1,8 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .title-bar {
 	-webkit-app-region: drag;
 	margin: 0;
 	display: flex;
-	background-color: black;
+	background-color: #141414;
 	width: 100%;
 	height: 2rem;
 }

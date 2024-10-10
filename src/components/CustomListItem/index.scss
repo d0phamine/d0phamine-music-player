@@ -1,0 +1,23 @@
+.custom-list-item {
+    width: 100%;
+    padding: 4px 12px;
+    border-bottom: 1px solid #424242;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    align-items: center;
+    line-height: 1;
+    list-style-type: none;
+
+    &__title {
+        flex-grow: 1;
+        p {
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+}
+
+.custom-list-item:hover {
+    background: #6f56d0;
+}

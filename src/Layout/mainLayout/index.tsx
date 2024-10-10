@@ -1,5 +1,4 @@
 import { FC, ReactNode, useEffect } from "react";
-import { Titlebar } from "../../components/Titlebar";
 
 import './index.scss'
 

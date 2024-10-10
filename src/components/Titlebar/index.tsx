@@ -6,6 +6,8 @@ import {
 	IoRemove,
 } from "react-icons/io5";
 
+import './index.scss'
+
 const { getCurrentWindow, app } = window.require("@electron/remote");
 
 export const Titlebar: FC = () => {

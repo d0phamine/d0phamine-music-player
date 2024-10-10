@@ -65,7 +65,7 @@ exports.createMainWindow = async () => {
 				Promise.all(
 					files.map((file) => {
 						// Игнорируем файлы, которые начинаются с точки
-						if (file.startsWith(".")) {
+						if (file.startsWith(".") || file.startsWith("$")) {
 							return Promise.resolve(null);
 						}
 
@@ -80,7 +80,7 @@ exports.createMainWindow = async () => {
 
 								// Если это директория или файл с аудио расширением, добавляем в результат
 								if (stats.isDirectory()) {
-									resolve({ type: "directory", name: file });
+									resolve({ type: "directory", name: file, path:filePath });
 								} else if (
 									audioExtensions.includes(
 										path.extname(file).toLowerCase(),
@@ -98,7 +98,7 @@ exports.createMainWindow = async () => {
 					const filteredFiles = results.filter(
 						(item) => item !== null,
 					);
-					event.reply("directory-files", filteredFiles);
+					event.reply("directory-files", filteredFiles, directoryPath);
 				});
 			});
 		} catch (err) {

@@ -1,5 +1,5 @@
 module.exports = {
     channels: {
-      GET_DIR: 'get_data',
+      GET_DIR: 'get_dir',
     },
   };
