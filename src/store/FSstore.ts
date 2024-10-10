@@ -1,9 +1,9 @@
-import { log } from "console";
 import { makeAutoObservable } from "mobx";
 import { dirname, normalize } from "path";
 
 export interface IFSstore {
 	dirs: [] | null;
+	favoriteDirs: string[];
 	homePath: string;
 	currentPath: string;
 	previousPath: string;
@@ -12,6 +12,7 @@ export interface IFSstore {
 export class FSstore {
 	public FSdata: IFSstore = {
 		dirs: null,
+		favoriteDirs: [],
 		homePath: "",
 		currentPath: "",
 		previousPath: "",
@@ -35,5 +36,14 @@ export class FSstore {
 			this.FSdata.currentPath = path;
 		}
 	}
+
+	public getFavoriteDirs(dirs:any){
+		this.FSdata.favoriteDirs = dirs
+	}
+
+    public addToFavoriteDirs(path:string) {
+        this.FSdata.favoriteDirs.push(path)
+        console.log(this.FSdata.favoriteDirs)
+    }
 }
 

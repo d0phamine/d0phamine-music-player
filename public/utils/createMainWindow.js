@@ -1,4 +1,7 @@
-const { BrowserWindow, ipcMain } = require("electron");
+const {
+	BrowserWindow,
+	ipcMain,
+} = require("electron");
 const { channels } = require("../../src/shared/constants");
 const path = require("path");
 const os = require("os");
@@ -7,6 +10,7 @@ const { join } = require("path");
 const { autoUpdater } = require("electron-updater");
 const remote = require("@electron/remote/main");
 const config = require("./config");
+const CacheStore = require("./cacheStore");
 
 exports.createMainWindow = async () => {
 	const window = new BrowserWindow({
@@ -80,7 +84,11 @@ exports.createMainWindow = async () => {
 
 								// Если это директория или файл с аудио расширением, добавляем в результат
 								if (stats.isDirectory()) {
-									resolve({ type: "directory", name: file, path:filePath });
+									resolve({
+										type: "directory",
+										name: file,
+										path: filePath,
+									});
 								} else if (
 									audioExtensions.includes(
 										path.extname(file).toLowerCase(),
@@ -98,7 +106,11 @@ exports.createMainWindow = async () => {
 					const filteredFiles = results.filter(
 						(item) => item !== null,
 					);
-					event.reply("directory-files", filteredFiles, directoryPath);
+					event.reply(
+						"directory-files",
+						filteredFiles,
+						directoryPath,
+					);
 				});
 			});
 		} catch (err) {
@@ -106,6 +118,42 @@ exports.createMainWindow = async () => {
 			event.reply("directory-error", "Не удалось сканировать директорию");
 		}
 	});
+
+	const cache = new CacheStore({
+		configName: "user-preferences",
+		defaults: {
+			favoriteDirs: [],
+		},
+	});
+
+
+
+	// Получение массива
+	ipcMain.on(channels.GET_FAVORITES, async (event) => {
+		try {
+			// Получаем favoriteDirs из кэша
+			const favoriteDirs = cache.get('favoriteDirs');
+			
+			// Отправляем результат обратно в рендер-процесс
+			event.reply(channels.GET_FAVORITES, favoriteDirs);
+		} catch (error) {
+			console.error('Error fetching favoriteDirs:', error);
+			// Отправляем ошибку обратно в рендер-процесс
+			event.reply(channels.GET_FAVORITES, { error: 'Failed to retrieve favorite directories' });
+		}
+	});
+
+	// // Добавление директории в массив
+	// ipcMain.on("add-favorite-dir", (event, dir) => {
+	// 	cache.addToArray("favoriteDirs", dir);
+	// 	return cache.get("favoriteDirs");
+	// });
+
+	// // Удаление директории из массива
+	// ipcMain.on("remove-favorite-dir", (event, dir) => {
+	// 	cache.removeFromArray("favoriteDirs", dir);
+	// 	return cache.get("favoriteDirs");
+	// });
 
 	return window;
 };

@@ -1,7 +1,7 @@
 .main-page {
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: minmax(250px, 1fr) 2fr;
     overflow: hidden;
 
     &__browser {

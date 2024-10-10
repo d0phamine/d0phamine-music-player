@@ -4,9 +4,13 @@ import { observer } from "mobx-react-lite";
 import { MainLayout } from "../../Layout/mainLayout";
 import { channels } from "../../shared/constants";
 import { useStores } from "../../store";
-import { CustomListItem, CustomSearch } from "../../components";
+import { CustomIcon, CustomListItem, CustomSearch } from "../../components";
 
-import { MdFolder, MdOutlineKeyboardBackspace } from "react-icons/md";
+import {
+	MdFolder,
+	MdOutlineKeyboardBackspace,
+	MdOutlineStarPurple500,
+} from "react-icons/md";
 import { Button } from "antd";
 
 import "./index.scss";
@@ -20,8 +24,19 @@ export const IndexPage: FC = observer(() => {
 		ipcRenderer.send(channels.GET_DIR, { dir });
 	};
 
+	const getFavoriteDirs = () => {
+		ipcRenderer.send('get-favorites');
+	}
+
 	useEffect(() => {
 		getDirs();
+		getFavoriteDirs()
+
+		ipcRenderer.send('get-favorites');
+
+		ipcRenderer.on("get-favorites", (event: any, cache: any) => {
+			console.log(cache);
+		});
 
 		ipcRenderer.on(
 			"directory-files",
@@ -39,6 +54,7 @@ export const IndexPage: FC = observer(() => {
 		return () => {
 			ipcRenderer.removeAllListeners("directory-files");
 			ipcRenderer.removeAllListeners("directory-error");
+			ipcRenderer.removeAllListeners("get-favorites");
 		};
 	}, []);
 
@@ -70,6 +86,18 @@ export const IndexPage: FC = observer(() => {
 									title={item.name}
 									button={<MdFolder />}
 									onClick={() => getDirs(item.path)}
+									control={
+										<CustomIcon
+											onClick={() =>
+												console.log(
+													FSstore.FSdata.favoriteDirs,
+												)
+											}
+										>
+											<MdOutlineStarPurple500 />
+										</CustomIcon>
+									}
+									customClass="hover-control"
 								/>
 							))}
 						</div>

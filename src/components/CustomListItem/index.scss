@@ -11,6 +11,7 @@
 
     &__title {
         flex-grow: 1;
+        cursor: pointer;
         p {
             font-size: 14px;
             font-weight: 400;
@@ -20,4 +21,20 @@
 
 .custom-list-item:hover {
     background: #6f56d0;
+}
+
+.hover-control {
+    .custom-list-item {
+        &__control {
+            visibility: hidden;
+        }
+    }
+}
+
+.hover-control:hover {
+    .custom-list-item {
+        &__control {
+            visibility: visible;
+        }
+    }
 }

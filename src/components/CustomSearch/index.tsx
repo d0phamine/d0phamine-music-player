@@ -14,7 +14,7 @@ export interface CustomSearchProps {
 export const CustomSearch: FC<CustomSearchProps> = (props) => {
 	return (
 		<Input
-			className="custom-search"
+			className={"custom-search"}
 			placeholder={props.placeholder}
 			suffix={<SearchOutlined />}
 			size={props.size}

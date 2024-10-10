@@ -1,8 +1,6 @@
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode } from "react";
 
 import './index.scss'
-
-const { ipcRenderer } = window.require("electron");
 
 export interface ILayout {
 	children: ReactNode;
