@@ -42,7 +42,8 @@
 		"react-router-dom": "^6.4.4",
 		"react-toastify": "^9.1.1",
 		"react-use": "^17.4.0",
-		"sass": "^1.79.3"
+		"sass": "^1.79.5",
+		"sass-loader": "^16.0.2"
 	},
 	"homepage": "./",
 	"main": "public/electron.js",

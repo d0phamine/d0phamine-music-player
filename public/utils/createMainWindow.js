@@ -1,7 +1,4 @@
-const {
-	BrowserWindow,
-	ipcMain,
-} = require("electron");
+const { BrowserWindow, ipcMain } = require("electron");
 const { channels } = require("../../src/shared/constants");
 const path = require("path");
 const os = require("os");
@@ -126,28 +123,32 @@ exports.createMainWindow = async () => {
 		},
 	});
 
-
-
 	// Получение массива
 	ipcMain.on(channels.GET_FAVORITES, async (event) => {
 		try {
 			// Получаем favoriteDirs из кэша
-			const favoriteDirs = cache.get('favoriteDirs');
-			
+			const favoriteDirs = cache.get("favoriteDirs");
+			console.log("favorite dirs", favoriteDirs)
+
 			// Отправляем результат обратно в рендер-процесс
 			event.reply(channels.GET_FAVORITES, favoriteDirs);
 		} catch (error) {
-			console.error('Error fetching favoriteDirs:', error);
+			console.error("Error fetching favoriteDirs:", error);
 			// Отправляем ошибку обратно в рендер-процесс
-			event.reply(channels.GET_FAVORITES, { error: 'Failed to retrieve favorite directories' });
+			event.reply(channels.GET_FAVORITES, {
+				error: "Failed to retrieve favorite directories",
+			});
 		}
 	});
 
-	// // Добавление директории в массив
-	// ipcMain.on("add-favorite-dir", (event, dir) => {
-	// 	cache.addToArray("favoriteDirs", dir);
-	// 	return cache.get("favoriteDirs");
-	// });
+	// Добавление директории в массив
+	ipcMain.on(channels.ADD_FAVORITE, (event, dirPath) => {
+		try {
+			cache.addToArray("favoriteDirs", {path:dirPath, name:path.basename(dirPath)});
+		} catch (error) {
+			console.error("Error adding favoriteDirs:", error);
+		}
+	});
 
 	// // Удаление директории из массива
 	// ipcMain.on("remove-favorite-dir", (event, dir) => {
