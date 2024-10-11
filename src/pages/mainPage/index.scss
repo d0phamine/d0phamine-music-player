@@ -1,7 +1,7 @@
 .main-page {
     height: 100%;
     display: grid;
-    grid-template-columns: minmax(250px, 1fr) 2fr;
+    grid-template-columns: minmax(250px, 1fr) 3fr;
     overflow: hidden;
 
     &__browser {
@@ -41,7 +41,7 @@
             overflow: hidden;
 
             &__header {
-                padding: 12px 12px 0px 12px;
+                padding: 6px 12px 0px 12px;
             }
 
             &__list {

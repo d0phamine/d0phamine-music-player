@@ -9,6 +9,7 @@ export interface IFSstore {
 	homePath: string;
 	currentPath: string;
 	previousPath: string;
+	favoriteHandler: boolean;
 }
 
 export class FSstore {
@@ -18,6 +19,7 @@ export class FSstore {
 		homePath: "",
 		currentPath: "",
 		previousPath: "",
+		favoriteHandler: false,
 	};
 
 	constructor() {
@@ -74,6 +76,10 @@ export class FSstore {
 		console.log("Отправка пути для добавления в избранное:", path);
 		ipcRenderer.send(channels.ADD_FAVORITE, path);
 		this.getFavoriteDirs();
+	}
+
+	public deletFromFavorites(path:string){
+		
 	}
 }
 

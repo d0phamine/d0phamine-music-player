@@ -12,7 +12,7 @@ class CacheStore {
 		this.data = parseDataFile(this.path, opts.defaults);
 	}
 	log() {
-		console.log(this.data, "полученная дата");
+		console.log(this.path);
 	}
 	// Получение данных
 	get(key) {
@@ -28,9 +28,15 @@ class CacheStore {
 	// Добавление элемента в массив
 	addToArray(key, value) {
 		if (!this.data[key]) {
-			this.data[key] = [];
+			this.data[key] = []; // Инициализация массива, если его нет
 		}
-		if (!this.data[key].includes(value)) {
+
+		// Проверка на существование объекта с таким же ключом и значением
+		const exists = this.data[key].some((item) =>
+			Object.entries(value).every(([k, v]) => item[k] === v),
+		);
+
+		if (!exists) {
 			this.data[key].push(value);
 			this.set(key, this.data[key]); // Сохранить обновлённый массив
 		}
@@ -58,3 +64,4 @@ function parseDataFile(filePath, defaults) {
 }
 
 module.exports = CacheStore;
+

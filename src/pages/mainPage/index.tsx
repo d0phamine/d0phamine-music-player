@@ -22,8 +22,6 @@ export const IndexPage: FC = observer(() => {
 		FSstore.getDirs();
 		FSstore.getFavoriteDirs();
 	}, []);
-
-	console.log(FSstore.FSdata.favoriteDirs);
 	return (
 		<MainLayout>
 			<div className="main-page">
@@ -33,12 +31,20 @@ export const IndexPage: FC = observer(() => {
 							Favorite
 						</div>
 						<div className="browser-favorites__list">
-							{FSstore.FSdata.favoriteDirs?.map((item:any, index) => (
-								<CustomListItem
-									key={index}
-									title={item.path}
-								/>
-							))}
+							{FSstore.FSdata.favoriteDirs?.map(
+								(item: any, index) => (
+									<CustomListItem
+										key={index}
+										title={item.name}
+										button={<MdFolder />}
+										control={
+											<CustomIcon>
+												<MdOutlineStarPurple500 style={{color:"gold"}}/>
+											</CustomIcon>
+										}
+									/>
+								),
+							)}
 						</div>
 					</div>
 					<div className="browser-list">
@@ -69,10 +75,22 @@ export const IndexPage: FC = observer(() => {
 									control={
 										<CustomIcon
 											onClick={() =>
-												FSstore.addToFavoriteDirs(item.path)
+												FSstore.addToFavoriteDirs(
+													item.path,
+												)
 											}
 										>
-											<MdOutlineStarPurple500 />
+											<MdOutlineStarPurple500
+												style={
+													FSstore.FSdata.favoriteDirs.some(
+														(dir:any) =>
+															dir.path ===
+															item.path,
+													)
+														? { color: "gold" }
+														: { color: "white" }
+												}
+											/>
 										</CustomIcon>
 									}
 									customClass="hover-control"

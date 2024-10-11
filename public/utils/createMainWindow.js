@@ -128,7 +128,8 @@ exports.createMainWindow = async () => {
 		try {
 			// Получаем favoriteDirs из кэша
 			const favoriteDirs = cache.get("favoriteDirs");
-			console.log("favorite dirs", favoriteDirs)
+			cache.log()
+			console.log(favoriteDirs, "favoritedirsss")
 
 			// Отправляем результат обратно в рендер-процесс
 			event.reply(channels.GET_FAVORITES, favoriteDirs);
