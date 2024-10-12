@@ -22,6 +22,8 @@ export const IndexPage: FC = observer(() => {
 		FSstore.getDirs();
 		FSstore.getFavoriteDirs();
 	}, []);
+
+	console.log(FSstore.FSdata.favoriteDirs)
 	return (
 		<MainLayout>
 			<div className="main-page">
@@ -38,10 +40,19 @@ export const IndexPage: FC = observer(() => {
 										title={item.name}
 										button={<MdFolder />}
 										control={
-											<CustomIcon>
-												<MdOutlineStarPurple500 style={{color:"gold"}}/>
+											<CustomIcon
+												onClick={() =>
+													FSstore.deletFromFavorites(
+														item.path,
+													)
+												}
+											>
+												<MdOutlineStarPurple500
+													style={{ color: "gold" }}
+												/>
 											</CustomIcon>
 										}
+										onClick={() => FSstore.getDirs(item.path)}
 									/>
 								),
 							)}
@@ -83,7 +94,7 @@ export const IndexPage: FC = observer(() => {
 											<MdOutlineStarPurple500
 												style={
 													FSstore.FSdata.favoriteDirs.some(
-														(dir:any) =>
+														(dir: any) =>
 															dir.path ===
 															item.path,
 													)

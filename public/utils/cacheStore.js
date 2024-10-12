@@ -45,7 +45,7 @@ class CacheStore {
 	// Удаление элемента из массива
 	removeFromArray(key, value) {
 		if (this.data[key]) {
-			this.data[key] = this.data[key].filter((item) => item !== value);
+			this.data[key] = this.data[key].filter((item) => item.path !== value);
 			this.set(key, this.data[key]); // Сохранить обновлённый массив
 		}
 	}

@@ -73,13 +73,13 @@ export class FSstore {
 	}
 
 	public addToFavoriteDirs(path: string) {
-		console.log("Отправка пути для добавления в избранное:", path);
 		ipcRenderer.send(channels.ADD_FAVORITE, path);
 		this.getFavoriteDirs();
 	}
 
-	public deletFromFavorites(path:string){
-		
+	public deletFromFavorites(path: string) {
+		ipcRenderer.send(channels.DELETE_FAVORITE, path);
+		this.getFavoriteDirs();
 	}
 }
 

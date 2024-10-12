@@ -151,11 +151,16 @@ exports.createMainWindow = async () => {
 		}
 	});
 
-	// // Удаление директории из массива
-	// ipcMain.on("remove-favorite-dir", (event, dir) => {
-	// 	cache.removeFromArray("favoriteDirs", dir);
-	// 	return cache.get("favoriteDirs");
-	// });
+	// Удаление директории из массива
+	ipcMain.on(channels.DELETE_FAVORITE, (event, dirPath) => {
+		// cache.removeFromArray("favoriteDirs", dirPath);
+		// return cache.get("favoriteDirs");
+		try {
+			cache.removeFromArray("favoriteDirs", dirPath)
+		} catch (error) {
+			console.error("Error deleting favoriteDirs:", error)
+		}
+	});
 
 	return window;
 };
