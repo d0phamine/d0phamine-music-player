@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { MainLayout } from "../../Layout/mainLayout";
 
 import { useStores } from "../../store";
-import { CustomIcon, CustomListItem, CustomSearch } from "../../components";
+import { CustomIcon, CustomListItem, BrowserSearch } from "../../components";
 
 import {
 	MdFolder,
@@ -22,8 +22,6 @@ export const IndexPage: FC = observer(() => {
 		FSstore.getDirs();
 		FSstore.getFavoriteDirs();
 	}, []);
-
-	console.log(FSstore.FSdata.favoriteDirs)
 	return (
 		<MainLayout>
 			<div className="main-page">
@@ -72,7 +70,7 @@ export const IndexPage: FC = observer(() => {
 									);
 								}}
 							/>
-							<CustomSearch
+							<BrowserSearch
 								placeholder={FSstore.FSdata.currentPath}
 							/>
 						</div>

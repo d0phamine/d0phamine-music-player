@@ -4,7 +4,7 @@ import { channels } from "../shared/constants";
 const { ipcRenderer } = window.require("electron");
 
 export interface IFSstore {
-	dirs: [] | null;
+	dirs: [] | null | never[];
 	favoriteDirs: string[];
 	homePath: string;
 	currentPath: string;
@@ -47,6 +47,10 @@ export class FSstore {
 			ipcRenderer.removeAllListeners("directory-files");
 			ipcRenderer.removeAllListeners("directory-error");
 		};
+	}
+
+	public putDirs(dirArr: [] | never[]) {
+		this.FSdata.dirs = dirArr;
 	}
 
 	public getPath(path: string) {
