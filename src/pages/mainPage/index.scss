@@ -1,52 +1,28 @@
 .main-page {
-    height: 100%;
-    display: grid;
-    grid-template-columns: minmax(250px, 1fr) 3fr;
-    overflow: hidden;
+	height: 100%;
+	display: grid;
+	grid-template-columns: minmax(250px, 1fr) 3fr;
+	overflow: hidden;
 
-    &__browser {
-        display: grid;
-        grid-template-rows: 1fr 2fr;
-        gap: 12px;
-        border-right: 1px solid #424242;
-        overflow: hidden;
+	&__browser {
+		display: grid;
+		grid-template-rows: 1fr 2fr;
+		gap: 12px;
+		border-right: 1px solid #424242;
+		overflow: hidden;
 
-        .browser-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            overflow: hidden;
+		.browser-favorites {
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
 
-            &__controls {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                gap: 6px;
-                padding: 0px 12px;
+			&__header {
+				padding: 6px 12px 0px 12px;
+			}
 
-                .ant-btn {
-                    width: 32px;
-                    flex-shrink: 0;
-                }
-            }
-
-            &__list {
-                overflow-y: auto;
-            }
-        }
-
-        .browser-favorites {
-            display:flex;
-            flex-direction: column;
-            overflow: hidden;
-
-            &__header {
-                padding: 6px 12px 0px 12px;
-            }
-
-            &__list {
-                overflow-y: auto;
-            }
-        }
-    }
+			&__list {
+				overflow-y: auto;
+			}
+		}
+	}
 }

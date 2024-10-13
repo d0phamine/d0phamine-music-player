@@ -4,19 +4,16 @@ import { observer } from "mobx-react-lite"
 import { MainLayout } from "../../Layout/mainLayout"
 
 import { useStores } from "../../store"
-import { CustomIcon, CustomListItem, BrowserSearch } from "../../components"
+import { CustomIcon, CustomListItem } from "../../components"
 
-import {
-	MdFolder,
-	MdOutlineKeyboardBackspace,
-	MdOutlineStarPurple500,
-} from "react-icons/md"
-import { Button } from "antd"
+import { MdFolder, MdOutlineStarPurple500 } from "react-icons/md"
 
 import "./index.scss"
+import { FileBrowser } from "../../components"
+import { FavoriteBrowser } from "../../components/logic/FavoriteBrowser"
 
 export const IndexPage: FC = observer(() => {
-	const { FSstore, ComponentStore } = useStores()
+	const { FSstore } = useStores()
 
 	useEffect(() => {
 		FSstore.getDirs()
@@ -26,96 +23,8 @@ export const IndexPage: FC = observer(() => {
 		<MainLayout>
 			<div className="main-page">
 				<div className="main-page__browser">
-					<div className="browser-favorites">
-						<div className="browser-favorites__header">
-							Favorite
-						</div>
-						<div className="browser-favorites__list">
-							{FSstore.FSdata.favoriteDirs?.map(
-								(item: any, index) => (
-									<CustomListItem
-										key={index}
-										title={item.name}
-										button={<MdFolder />}
-										control={
-											<CustomIcon
-												onClick={() =>
-													FSstore.deletFromFavorites(
-														item.path,
-													)
-												}
-											>
-												<MdOutlineStarPurple500
-													style={{ color: "gold" }}
-												/>
-											</CustomIcon>
-										}
-										onClick={() =>
-											FSstore.getDirs(item.path)
-										}
-									/>
-								),
-							)}
-						</div>
-					</div>
-					<div className="browser-list">
-						<div className="browser-list__controls">
-							<Button
-								disabled={
-									FSstore.FSdata.homePath ===
-									FSstore.FSdata.currentPath
-								}
-								icon={<MdOutlineKeyboardBackspace />}
-								onClick={() => {
-									FSstore.clearFilteredDirs()
-									ComponentStore.clearBrowserSearchValue()
-									FSstore.getDirs(FSstore.FSdata.previousPath)
-								}}
-							/>
-							<BrowserSearch
-								placeholder={FSstore.FSdata.currentPath}
-							/>
-						</div>
-						<div className="browser-list__list">
-							{(FSstore.FSdata.filteredDirs
-								? FSstore.FSdata.filteredDirs
-								: FSstore.FSdata.dirs
-							)?.map((item: any, index) => (
-								<CustomListItem
-									key={index}
-									title={item.name}
-									button={<MdFolder />}
-									onClick={() => {
-										FSstore.clearFilteredDirs()
-										ComponentStore.clearBrowserSearchValue()
-										FSstore.getDirs(item.path)
-									}}
-									control={
-										<CustomIcon
-											onClick={() =>
-												FSstore.addToFavoriteDirs(
-													item.path,
-												)
-											}
-										>
-											<MdOutlineStarPurple500
-												style={
-													FSstore.FSdata.favoriteDirs.some(
-														(dir: any) =>
-															dir.path ===
-															item.path,
-													)
-														? { color: "gold" }
-														: { color: "white" }
-												}
-											/>
-										</CustomIcon>
-									}
-									customClass="hover-control"
-								/>
-							))}
-						</div>
-					</div>
+					<FavoriteBrowser/>
+					<FileBrowser/>
 				</div>
 				<div className="main-page__player"></div>
 			</div>

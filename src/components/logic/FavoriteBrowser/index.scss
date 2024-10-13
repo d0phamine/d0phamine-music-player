@@ -1,0 +1,13 @@
+.favorite-browser {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    &__header {
+        padding: 6px 12px 0px 12px;
+    }
+
+    &__list {
+        overflow-y: auto;
+    }
+}

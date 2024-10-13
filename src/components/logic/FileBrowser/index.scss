@@ -1,0 +1,23 @@
+.file-browser {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+
+    &__controls {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        padding: 0px 12px;
+
+        .ant-btn {
+            width: 32px;
+            flex-shrink: 0;
+        }
+    }
+
+    &__list {
+        overflow-y: auto;
+    }
+}
