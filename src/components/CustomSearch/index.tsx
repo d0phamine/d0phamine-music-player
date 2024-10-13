@@ -15,19 +15,11 @@ export interface CustomSearchProps {
 }
 
 export const BrowserSearch: FC<CustomSearchProps> = observer((props) => {
-	const { FSstore } = useStores()
+	const { FSstore, ComponentStore} = useStores()
 
 	const onSearch = (value: string) => {
-		console.log(value)
-
-		// 	if (FSstore.FSdata.dirs != null) {
-		// 		// Предположим, что FSstore.FSdata.dirs — это массив объектов с полем name
-		// 		const searchedItems= FSstore.FSdata.dirs.filter(
-		// 			(item: { name: string }) =>
-		// 				item.name.toLowerCase().includes(value.toLowerCase()), // Игнорируем регистр при поиске
-		// 		);
-		// 		FSstore.putDirs(searchedItems)
-		// 	}
+		ComponentStore.getBrowserSearchValue(value)
+		FSstore.filterDirsByValue(value)
 	}
 
 	return (
@@ -37,6 +29,7 @@ export const BrowserSearch: FC<CustomSearchProps> = observer((props) => {
 			suffix={<SearchOutlined />}
 			size={props.size}
 			onChange={(e) => onSearch(e.target.value)}
+			value={ComponentStore.componentData.browserSearchValue}
 		/>
 	)
 })

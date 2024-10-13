@@ -5,6 +5,7 @@ const { ipcRenderer } = window.require("electron")
 
 export interface IFSstore {
 	dirs: [] | null | never[]
+	filteredDirs: [] | null | never[]
 	favoriteDirs: string[]
 	homePath: string
 	currentPath: string
@@ -15,6 +16,7 @@ export interface IFSstore {
 export class FSstore {
 	public FSdata: IFSstore = {
 		dirs: null,
+		filteredDirs: null,
 		favoriteDirs: [],
 		homePath: "",
 		currentPath: "",
@@ -49,8 +51,16 @@ export class FSstore {
 		}
 	}
 
-	public putDirs(dirArr: [] | never[]) {
-		this.FSdata.dirs = dirArr
+	public filterDirsByValue(value: string) {
+		this.FSdata.filteredDirs = this.FSdata.dirs
+			? this.FSdata.dirs.filter((item: { name: string, path:string, type:string }) =>
+					item.name.toLowerCase().includes(value.toLowerCase()),
+			  )
+			: []
+	}
+
+	public clearFilteredDirs(){
+		this.FSdata.filteredDirs = null
 	}
 
 	public getPath(path: string) {

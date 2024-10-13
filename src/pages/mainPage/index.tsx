@@ -16,7 +16,7 @@ import { Button } from "antd"
 import "./index.scss"
 
 export const IndexPage: FC = observer(() => {
-	const { FSstore } = useStores()
+	const { FSstore, ComponentStore } = useStores()
 
 	useEffect(() => {
 		FSstore.getDirs()
@@ -67,6 +67,8 @@ export const IndexPage: FC = observer(() => {
 								}
 								icon={<MdOutlineKeyboardBackspace />}
 								onClick={() => {
+									FSstore.clearFilteredDirs()
+									ComponentStore.clearBrowserSearchValue()
 									FSstore.getDirs(FSstore.FSdata.previousPath)
 								}}
 							/>
@@ -75,12 +77,19 @@ export const IndexPage: FC = observer(() => {
 							/>
 						</div>
 						<div className="browser-list__list">
-							{FSstore.FSdata.dirs?.map((item: any, index) => (
+							{(FSstore.FSdata.filteredDirs
+								? FSstore.FSdata.filteredDirs
+								: FSstore.FSdata.dirs
+							)?.map((item: any, index) => (
 								<CustomListItem
 									key={index}
 									title={item.name}
 									button={<MdFolder />}
-									onClick={() => FSstore.getDirs(item.path)}
+									onClick={() => {
+										FSstore.clearFilteredDirs()
+										ComponentStore.clearBrowserSearchValue()
+										FSstore.getDirs(item.path)
+									}}
 									control={
 										<CustomIcon
 											onClick={() =>
