@@ -4,13 +4,10 @@ import { observer } from "mobx-react-lite"
 import { MainLayout } from "../../Layout/mainLayout"
 
 import { useStores } from "../../store"
-import { CustomIcon, CustomListItem } from "../../components"
-
-import { MdFolder, MdOutlineStarPurple500 } from "react-icons/md"
 
 import "./index.scss"
 import { FileBrowser } from "../../components"
-import { FavoriteBrowser } from "../../components/logic/FavoriteBrowser"
+import { FavoriteBrowser } from "../../components"
 
 export const IndexPage: FC = observer(() => {
 	const { FSstore } = useStores()
