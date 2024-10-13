@@ -1,27 +1,27 @@
-import { FC, useEffect } from "react";
-import { observer } from "mobx-react-lite";
+import { FC, useEffect } from "react"
+import { observer } from "mobx-react-lite"
 
-import { MainLayout } from "../../Layout/mainLayout";
+import { MainLayout } from "../../Layout/mainLayout"
 
-import { useStores } from "../../store";
-import { CustomIcon, CustomListItem, BrowserSearch } from "../../components";
+import { useStores } from "../../store"
+import { CustomIcon, CustomListItem, BrowserSearch } from "../../components"
 
 import {
 	MdFolder,
 	MdOutlineKeyboardBackspace,
 	MdOutlineStarPurple500,
-} from "react-icons/md";
-import { Button } from "antd";
+} from "react-icons/md"
+import { Button } from "antd"
 
-import "./index.scss";
+import "./index.scss"
 
 export const IndexPage: FC = observer(() => {
-	const { FSstore } = useStores();
+	const { FSstore } = useStores()
 
 	useEffect(() => {
-		FSstore.getDirs();
-		FSstore.getFavoriteDirs();
-	}, []);
+		FSstore.getDirs()
+		FSstore.getFavoriteDirs()
+	}, [])
 	return (
 		<MainLayout>
 			<div className="main-page">
@@ -50,7 +50,9 @@ export const IndexPage: FC = observer(() => {
 												/>
 											</CustomIcon>
 										}
-										onClick={() => FSstore.getDirs(item.path)}
+										onClick={() =>
+											FSstore.getDirs(item.path)
+										}
 									/>
 								),
 							)}
@@ -65,9 +67,7 @@ export const IndexPage: FC = observer(() => {
 								}
 								icon={<MdOutlineKeyboardBackspace />}
 								onClick={() => {
-									FSstore.getDirs(
-										FSstore.FSdata.previousPath,
-									);
+									FSstore.getDirs(FSstore.FSdata.previousPath)
 								}}
 							/>
 							<BrowserSearch
@@ -111,6 +111,6 @@ export const IndexPage: FC = observer(() => {
 				<div className="main-page__player"></div>
 			</div>
 		</MainLayout>
-	);
-});
+	)
+})
 

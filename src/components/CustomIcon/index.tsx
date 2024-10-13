@@ -1,13 +1,17 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react"
 
-import "./index.scss";
+import "./index.scss"
 
 export interface CustomIconProps {
-	children: ReactNode;
-    onClick?: () => void
+	children: ReactNode
+	onClick?: () => void
 }
 
 export const CustomIcon: FC<CustomIconProps> = (props) => {
-	return <div className={"custom-icon"} onClick={props.onClick}>{props.children}</div>;
-};
+	return (
+		<div className={"custom-icon"} onClick={props.onClick}>
+			{props.children}
+		</div>
+	)
+}
 

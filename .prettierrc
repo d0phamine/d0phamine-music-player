@@ -5,5 +5,5 @@
 	"singleQuote": false,
 	"endOfLine": "crlf",
 	"trailingComma": "all",
-	"semi": true
+	"semi": false
 }

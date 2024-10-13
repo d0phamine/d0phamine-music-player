@@ -1,9 +1,9 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react"
 
-import './index.scss'
+import "./index.scss"
 
 export interface ILayout {
-	children: ReactNode;
+	children: ReactNode
 }
 
 export const MainLayout: FC<ILayout> = ({ children }) => {
@@ -13,5 +13,5 @@ export const MainLayout: FC<ILayout> = ({ children }) => {
 				<div className="main-layout">{children}</div>
 			</div>
 		</>
-	);
-};
+	)
+}

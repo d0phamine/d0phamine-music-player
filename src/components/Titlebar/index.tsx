@@ -1,27 +1,27 @@
-import { FC, useState } from "react";
+import { FC, useState } from "react"
 import {
 	IoCloseOutline,
 	IoContractOutline,
 	IoExpandOutline,
 	IoRemove,
-} from "react-icons/io5";
+} from "react-icons/io5"
 
-import './index.scss'
+import "./index.scss"
 
-const { getCurrentWindow, app } = window.require("@electron/remote");
+const { getCurrentWindow, app } = window.require("@electron/remote")
 
 export const Titlebar: FC = () => {
-	const currentWindow = getCurrentWindow();
-	const [maximized, setMaximized] = useState(currentWindow.isMaximized());
+	const currentWindow = getCurrentWindow()
+	const [maximized, setMaximized] = useState(currentWindow.isMaximized())
 
-	const onMinimize = () => currentWindow.minimize();
+	const onMinimize = () => currentWindow.minimize()
 	const onMaximize = () => {
-		setMaximized(!currentWindow.isMaximized());
+		setMaximized(!currentWindow.isMaximized())
 		currentWindow.isMaximized()
 			? currentWindow.unmaximize()
-			: currentWindow.maximize();
-	};
-	const onQuit = () => app.quit();
+			: currentWindow.maximize()
+	}
+	const onQuit = () => app.quit()
 
 	return (
 		<div className="title-bar sticky top-0 select-none">
@@ -49,6 +49,6 @@ export const Titlebar: FC = () => {
 				</button>
 			</div>
 		</div>
-	);
-};
+	)
+}
 

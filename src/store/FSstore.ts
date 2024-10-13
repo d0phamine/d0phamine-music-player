@@ -1,15 +1,15 @@
-import { makeAutoObservable, runInAction } from "mobx";
-import { dirname, normalize } from "path";
-import { channels } from "../shared/constants";
-const { ipcRenderer } = window.require("electron");
+import { makeAutoObservable, runInAction } from "mobx"
+import { dirname, normalize } from "path"
+import { channels } from "../shared/constants"
+const { ipcRenderer } = window.require("electron")
 
 export interface IFSstore {
-	dirs: [] | null | never[];
-	favoriteDirs: string[];
-	homePath: string;
-	currentPath: string;
-	previousPath: string;
-	favoriteHandler: boolean;
+	dirs: [] | null | never[]
+	favoriteDirs: string[]
+	homePath: string
+	currentPath: string
+	previousPath: string
+	favoriteHandler: boolean
 }
 
 export class FSstore {
@@ -20,70 +20,70 @@ export class FSstore {
 		currentPath: "",
 		previousPath: "",
 		favoriteHandler: false,
-	};
+	}
 
 	constructor() {
-		makeAutoObservable(this);
+		makeAutoObservable(this)
 	}
 
 	public getDirs(dir?: string) {
 		// this.FSdata.dirs = dirs;
-		ipcRenderer.send(channels.GET_DIR, { dir });
+		ipcRenderer.send(channels.GET_DIR, { dir })
 		ipcRenderer.on(
 			"directory-files",
 			(event: any, receivedFiles: [], path: string) => {
 				// Обновляем состояние при получении файлов
 				runInAction(() => {
-					this.FSdata.dirs = receivedFiles;
-					this.getPath(path);
-				});
+					this.FSdata.dirs = receivedFiles
+					this.getPath(path)
+				})
 			},
-		);
+		)
 		ipcRenderer.on("directory-error", (event: any, errorMessage: any) => {
-			console.log(errorMessage);
-		});
+			console.log(errorMessage)
+		})
 
 		return () => {
-			ipcRenderer.removeAllListeners("directory-files");
-			ipcRenderer.removeAllListeners("directory-error");
-		};
+			ipcRenderer.removeAllListeners("directory-files")
+			ipcRenderer.removeAllListeners("directory-error")
+		}
 	}
 
 	public putDirs(dirArr: [] | never[]) {
-		this.FSdata.dirs = dirArr;
+		this.FSdata.dirs = dirArr
 	}
 
 	public getPath(path: string) {
 		if (this.FSdata.homePath) {
-			this.FSdata.currentPath = path;
-			this.FSdata.previousPath = dirname(this.FSdata.currentPath);
-			this.FSdata.previousPath = normalize(this.FSdata.previousPath);
+			this.FSdata.currentPath = path
+			this.FSdata.previousPath = dirname(this.FSdata.currentPath)
+			this.FSdata.previousPath = normalize(this.FSdata.previousPath)
 		} else {
-			this.FSdata.homePath = path;
-			this.FSdata.currentPath = path;
+			this.FSdata.homePath = path
+			this.FSdata.currentPath = path
 		}
 	}
 
 	public getFavoriteDirs() {
-		ipcRenderer.send(channels.GET_FAVORITES);
+		ipcRenderer.send(channels.GET_FAVORITES)
 		ipcRenderer.on("get-favorites", (event: any, favoriteDirs: any) => {
 			runInAction(() => {
-				this.FSdata.favoriteDirs = favoriteDirs;
-			});
-		});
+				this.FSdata.favoriteDirs = favoriteDirs
+			})
+		})
 		return () => {
-			ipcRenderer.removeAllListeners("get-favorites");
-		};
+			ipcRenderer.removeAllListeners("get-favorites")
+		}
 	}
 
 	public addToFavoriteDirs(path: string) {
-		ipcRenderer.send(channels.ADD_FAVORITE, path);
-		this.getFavoriteDirs();
+		ipcRenderer.send(channels.ADD_FAVORITE, path)
+		this.getFavoriteDirs()
 	}
 
 	public deletFromFavorites(path: string) {
-		ipcRenderer.send(channels.DELETE_FAVORITE, path);
-		this.getFavoriteDirs();
+		ipcRenderer.send(channels.DELETE_FAVORITE, path)
+		this.getFavoriteDirs()
 	}
 }
 
