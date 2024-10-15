@@ -25,4 +25,9 @@
 			}
 		}
 	}
+
+	&__player {
+		display: grid;
+		grid-template-rows: 55px 1fr;
+	}
 }

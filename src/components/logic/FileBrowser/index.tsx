@@ -8,13 +8,14 @@ import {
 	MdFolder,
 	MdOutlineKeyboardBackspace,
 	MdOutlineStarPurple500,
+	MdOutlineAudioFile,
 } from "react-icons/md"
 import { Button } from "antd"
 
 import "./index.scss"
 
 export const FileBrowser: FC = observer(() => {
-	const { FSstore, ComponentStore } = useStores()
+	const { FSstore, ComponentStore, PlayerStore } = useStores()
 
 	useEffect(() => {
 		FSstore.getDirs()
@@ -44,29 +45,42 @@ export const FileBrowser: FC = observer(() => {
 					<CustomListItem
 						key={index}
 						title={item.name}
-						button={<MdFolder />}
+						button={
+							item.type === "directory" ? (
+								<MdFolder />
+							) : (
+								<MdOutlineAudioFile />
+							)
+						}
 						onClick={() => {
-							FSstore.clearFilteredDirs()
-							ComponentStore.clearBrowserSearchValue()
-							FSstore.getDirs(item.path)
+							if (item.type === "directory") {
+								FSstore.clearFilteredDirs()
+								ComponentStore.clearBrowserSearchValue()
+								FSstore.getDirs(item.path)
+							} else {
+								PlayerStore.addTrackToCurrentPlaylist(item)
+								console.log(PlayerStore.playerData.currentPlaylist)
+							}
 						}}
 						control={
-							<CustomIcon
-								onClick={() =>
-									FSstore.addToFavoriteDirs(item.path)
-								}
-							>
-								<MdOutlineStarPurple500
-									style={
-										FSstore.FSdata.favoriteDirs.some(
-											(dir: any) =>
-												dir.path === item.path,
-										)
-											? { color: "gold" }
-											: { color: "white" }
+							item.type === "directory" ? (
+								<CustomIcon
+									onClick={() =>
+										FSstore.addToFavoriteDirs(item.path)
 									}
-								/>
-							</CustomIcon>
+								>
+									<MdOutlineStarPurple500
+										style={
+											FSstore.FSdata.favoriteDirs.some(
+												(dir: any) =>
+													dir.path === item.path,
+											)
+												? { color: "gold" }
+												: { color: "white" }
+										}
+									/>
+								</CustomIcon>
+							) : null
 						}
 						customClass="hover-control"
 					/>
@@ -75,3 +89,4 @@ export const FileBrowser: FC = observer(() => {
 		</div>
 	)
 })
+

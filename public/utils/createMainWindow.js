@@ -3,6 +3,8 @@ const { channels } = require("../../src/shared/constants")
 const path = require("path")
 const os = require("os")
 const fs = require("fs")
+const { Buffer } = require("buffer")
+const { parseBuffer } = require("music-metadata-browser")
 const { join } = require("path")
 const { autoUpdater } = require("electron-updater")
 const remote = require("@electron/remote/main")
@@ -73,13 +75,13 @@ exports.createMainWindow = async () => {
 						const filePath = path.join(directoryPath, file)
 
 						return new Promise((resolve) => {
-							fs.stat(filePath, (err, stats) => {
+							fs.stat(filePath, async (err, stats) => {
 								if (err) {
 									resolve(null) // Пропускаем файлы, которые не удалось проверить
 									return
 								}
 
-								// Если это директория или файл с аудио расширением, добавляем в результат
+								// Если это директория, добавляем в результат
 								if (stats.isDirectory()) {
 									resolve({
 										type: "directory",
@@ -91,7 +93,58 @@ exports.createMainWindow = async () => {
 										path.extname(file).toLowerCase(),
 									)
 								) {
-									resolve({ type: "audio", name: file })
+									// Если это аудиофайл, пытаемся прочитать его метаданные
+									try {
+										const fileBuffer =
+											fs.readFileSync(filePath)
+										const metadata = await parseBuffer(
+											fileBuffer,
+										)
+										const title =
+											metadata.common.title || file // Название трека, если доступно, иначе имя файла
+										const artist =
+											metadata.common.artist ||
+											"Unknown Artist" // Артист, если доступен
+										const duration =
+											Math.round(
+												metadata.format.duration,
+											) || 0 // Длительность трека в секундах
+
+										// Получение обложки
+										let coverUrl = null
+										if (
+											metadata.common.picture &&
+											metadata.common.picture.length > 0
+										) {
+											const cover =
+												metadata.common.picture[0] // Первая картинка (обычно это обложка альбома)
+											const base64Cover =
+												cover.data.toString("base64") // Преобразуем данные картинки в base64
+											coverUrl = `data:${cover.format};base64,${base64Cover}` // Создаем data-URL для изображения
+										}
+
+										resolve({
+											type: "audio",
+											name: title, // Название трека
+											artist: artist, // Артист
+											path: filePath, // Путь к файлу
+											cover: coverUrl, // Обложка
+											duration: duration, // Длительность трека в секундах
+										})
+									} catch (err) {
+										console.error(
+											`Ошибка чтения метаданных для файла ${filePath}:`,
+											err,
+										)
+										resolve({
+											type: "audio",
+											name: file, // Если метаданные не удалось прочитать, используем имя файла
+											artist: "Unknown Artist",
+											path: filePath,
+											cover: null, // Обложка недоступна
+											duration: 0, // Если длительность неизвестна
+										})
+									}
 								} else {
 									resolve(null) // Пропускаем файлы, которые не директории или не аудиофайлы
 								}
@@ -124,9 +177,6 @@ exports.createMainWindow = async () => {
 		try {
 			// Получаем favoriteDirs из кэша
 			const favoriteDirs = cache.get("favoriteDirs")
-			cache.log()
-			console.log(favoriteDirs, "favoritedirsss")
-
 			// Отправляем результат обратно в рендер-процесс
 			event.reply(channels.GET_FAVORITES, favoriteDirs)
 		} catch (error) {
