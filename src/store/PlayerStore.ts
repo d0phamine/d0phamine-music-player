@@ -4,8 +4,9 @@ export interface ITrack {
 	name: string
 	path: string
 	type: string
-    cover: string | null
-    duration: number
+	cover: string | null
+	duration: number
+	selected: boolean
 }
 
 export interface IPlayerStore {
@@ -33,12 +34,29 @@ export class PlayerStore {
 
 	public getSelectedTrack(selectedTrack: ITrack) {
 		this.playerData.selectedTrack = selectedTrack
+		console.log(this.playerData.selectedTrack)
 	}
 
 	public addTrackToCurrentPlaylist(track: ITrack) {
 		if (!this.playerData.currentPlaylist.includes(track)) {
-			this.playerData.currentPlaylist.unshift(track)
-		}
+            this.playerData.currentPlaylist.push(track);
+    
+            // Проверяем, есть ли трек с selected: true
+            const hasSelectedTrack = this.playerData.currentPlaylist.some(elem => elem.selected);
+    
+            // Если нет выбранного трека, назначаем первый трек как selected
+            if (!hasSelectedTrack) {
+                this.playerData.currentPlaylist.forEach((elem, index) => {
+                    elem.selected = index === 0; // Первый элемент получает true, остальные false
+                });
+            }
+        }
+	}
+
+	public setSelectedTrackInCurrentPlaylist(track: ITrack) {
+		this.playerData.currentPlaylist.forEach((elem) => {
+			elem.selected = elem === track // Если трек совпадает с выбранным, установить selected в true, иначе false
+		})
 	}
 }
 

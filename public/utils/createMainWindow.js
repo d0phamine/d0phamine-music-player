@@ -130,6 +130,7 @@ exports.createMainWindow = async () => {
 											path: filePath, // Путь к файлу
 											cover: coverUrl, // Обложка
 											duration: duration, // Длительность трека в секундах
+											selected:false,
 										})
 									} catch (err) {
 										console.error(
@@ -143,6 +144,7 @@ exports.createMainWindow = async () => {
 											path: filePath,
 											cover: null, // Обложка недоступна
 											duration: 0, // Если длительность неизвестна
+											selected:false,
 										})
 									}
 								} else {

@@ -6,9 +6,10 @@ import { MainLayout } from "../../Layout/mainLayout"
 import { useStores } from "../../store"
 
 import "./index.scss"
-import { FileBrowser } from "../../components"
-import { FavoriteBrowser } from "../../components"
-import { TrackPlayer } from "../../components"
+import { FileBrowser, TrackPlayer, FavoriteBrowser } from "../../components"
+
+
+import { CurrentPlaylist } from "../../components"
 
 export const IndexPage: FC = observer(() => {
 	const { FSstore } = useStores()
@@ -21,12 +22,12 @@ export const IndexPage: FC = observer(() => {
 		<MainLayout>
 			<div className="main-page">
 				<div className="main-page__browser">
-					<FavoriteBrowser/>
-					<FileBrowser/>
+					<FavoriteBrowser />
+					<FileBrowser />
 				</div>
 				<div className="main-page__player">
-					<TrackPlayer/>
-					<div></div>
+					<TrackPlayer />
+					<CurrentPlaylist />
 				</div>
 			</div>
 		</MainLayout>

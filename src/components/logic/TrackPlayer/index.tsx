@@ -1,7 +1,6 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { observer } from "mobx-react-lite"
 
-import { Button } from "antd"
 import {
 	MdPlayCircle,
 	MdSkipNext,
@@ -11,8 +10,8 @@ import {
 	MdVolumeUp,
 } from "react-icons/md"
 
-import { useStores } from "../../../store"
-import { CustomIcon, CustomListItem, BrowserSearch } from "../.."
+// import { useStores } from "../../../store"
+// import { CustomIcon, CustomListItem, BrowserSearch } from "../.."
 
 import "./index.scss"
 
