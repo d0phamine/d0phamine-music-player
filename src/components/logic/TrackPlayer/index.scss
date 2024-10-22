@@ -38,6 +38,14 @@
         p {
             font-size: 12px;
             line-height: 1;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .info-track-name {
+            width: 100%;
+            overflow: hidden;
         }
 
         .info-track-executor {

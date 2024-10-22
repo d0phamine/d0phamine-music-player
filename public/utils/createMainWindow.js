@@ -20,6 +20,7 @@ exports.createMainWindow = async () => {
 			enableRemoteModule: true,
 			devTools: config.isDev,
 			contextIsolation: false,
+			webSecurity:false,
 		},
 		frame: false,
 		icon: config.icon,

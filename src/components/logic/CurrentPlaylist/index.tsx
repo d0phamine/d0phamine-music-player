@@ -23,7 +23,6 @@ export const CurrentPlaylist: FC = observer(() => {
 						title={item.name}
 						button={<MdOutlineAudioFile />}
 						onClick={() => {
-							PlayerStore.getSelectedTrack(item)
                             PlayerStore.setSelectedTrackInCurrentPlaylist(item)
 						}}
 						style={
