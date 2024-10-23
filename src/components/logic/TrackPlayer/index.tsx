@@ -14,9 +14,11 @@ import {
 } from "react-icons/md"
 
 import { useStores } from "../../../store"
+import { TrackProgressBar } from "../../ui"
 // import { CustomIcon, CustomListItem, BrowserSearch } from "../.."
 
 import "./index.scss"
+
 
 export const TrackPlayer: FC = observer(() => {
 	const { PlayerStore } = useStores()
@@ -71,7 +73,7 @@ export const TrackPlayer: FC = observer(() => {
 				<div className="info-track-executor">
 					<p>0:00</p>
 				</div>
-				<div className="info-track-progress"></div>
+				<TrackProgressBar/>
 			</div>
 			<MdVolumeUp />
 			<div className="track-player__volume"></div>
