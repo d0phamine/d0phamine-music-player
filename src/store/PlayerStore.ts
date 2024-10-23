@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx"
+import ReactHowler from "react-howler"
 
 export interface ITrack {
 	name: string
@@ -13,6 +14,8 @@ export interface IPlayerStore {
 	isPlaying: boolean
 	currentPlaylist: ITrack[]
 	selectedTrack: ITrack | null
+	currentSeekOfPlay: number | null
+    currentTimeOfPlay: number | null
 }
 
 export class PlayerStore {
@@ -20,6 +23,8 @@ export class PlayerStore {
 		isPlaying: false,
 		currentPlaylist: [],
 		selectedTrack: null,
+		currentSeekOfPlay: null,
+        currentTimeOfPlay: null,
 	}
 
 	constructor() {
@@ -70,6 +75,7 @@ export class PlayerStore {
 				)
 
 			if (currentIndexOfSelectedTrack !== -1) {
+				// Сбрасываем selected для текущего трека
 				this.playerData.currentPlaylist[
 					currentIndexOfSelectedTrack
 				].selected = false
@@ -77,21 +83,25 @@ export class PlayerStore {
 				let newIndex
 
 				if (direction === "next") {
+					// Переход вперед
 					newIndex =
 						(currentIndexOfSelectedTrack + 1) %
 						this.playerData.currentPlaylist.length
 				} else if (direction === "previous") {
+					// Переход назад с зацикливанием
 					newIndex =
-						currentIndexOfSelectedTrack -
-						1 +
+						(currentIndexOfSelectedTrack -
+							1 +
+							this.playerData.currentPlaylist.length) %
 						this.playerData.currentPlaylist.length
 				}
+
+				// Устанавливаем selected для нового трека
 				if (
 					newIndex !== undefined &&
 					newIndex >= 0 &&
 					newIndex < this.playerData.currentPlaylist.length
 				) {
-					// Устанавливаем selected = true для нового трека
 					this.playerData.currentPlaylist[newIndex].selected = true
 					this.playerData.selectedTrack =
 						this.playerData.currentPlaylist[newIndex]
@@ -108,5 +118,13 @@ export class PlayerStore {
 			})
 		}
 	}
+
+    public setCurrentTimeOfPlay(value:number | null){
+        this.playerData.currentTimeOfPlay = value
+    }
+
+    public setCurrentSeekOfPlay(value:number | null){
+        this.playerData.currentSeekOfPlay = value
+    }
 }
 

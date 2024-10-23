@@ -1,26 +1,37 @@
 .track-progress-bar {
 	width: 100%;
-	// height: 2px;
-	// background-color: #fff;
+	height: 6px;
 	margin-top: auto;
 	border-radius: 2px;
 	margin: 0;
 
-	// .ant-slider-handle::after{
-	//     width: 6px;
-	//     height: 6px;
-	// }
-}
-
-.ant-slider {
-	height: 6px;
 	.ant-slider-handle {
 		width: 6px;
 		height: 6px;
 	}
 
-    .ant-slider-handle:before {
-        width: 6px;
+	.ant-slider-handle:before {
+		width: 6px;
 		height: 6px;
-    }
+	}
+
+	.ant-slider-handle:after {
+		width: 6px;
+		height: 6px;
+		inset-block-start: 2px;
+	}
+
+	.ant-slider-handle:hover::after {
+		width: 6px;
+		height: 6px;
+		inset-block-start: 2px;
+	}
+
+	.ant-slider-handle:focus::after {
+		width: 6px;
+		height: 6px;
+		inset-block-start: 2px;
+	}
 }
+
+
