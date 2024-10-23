@@ -14,7 +14,7 @@ import {
 } from "react-icons/md"
 
 import { useStores } from "../../../store"
-import { TrackProgressBar } from "../../ui"
+import { TrackProgressBar, VolumeChanger } from "../../ui"
 // import { CustomIcon, CustomListItem, BrowserSearch } from "../.."
 
 import "./index.scss"
@@ -23,15 +23,17 @@ export const TrackPlayer: FC = observer(() => {
 	const { PlayerStore } = useStores()
 	const howlerRef = useRef<ReactHowler | null>(null)
 
-    function formatTime(seconds: number | null): string {
-        if (seconds == null) return "0:00"; // Если значение null, возвращаем "0:00"
-        
-        const minutes = Math.floor(seconds / 60); // Рассчитываем количество минут
-        const remainingSeconds = Math.floor(seconds % 60); // Оставшиеся секунды
-      
-        // Форматируем оставшиеся секунды, добавляем "0", если меньше 10
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-      }
+	function formatTime(seconds: number | null): string {
+		if (seconds == null) return "0:00" // Если значение null, возвращаем "0:00"
+
+		const minutes = Math.floor(seconds / 60) // Рассчитываем количество минут
+		const remainingSeconds = Math.floor(seconds % 60) // Оставшиеся секунды
+
+		// Форматируем оставшиеся секунды, добавляем "0", если меньше 10
+		return `${minutes}:${
+			remainingSeconds < 10 ? "0" : ""
+		}${remainingSeconds}`
+	}
 
 	useEffect(() => {
 		let interval: NodeJS.Timeout | null = null
@@ -105,15 +107,13 @@ export const TrackPlayer: FC = observer(() => {
 				</div>
 				<div className="info-track-executor">
 					<p>
-						{PlayerStore.playerData.currentTimeOfPlay == null
-							? "0:00"
-							: formatTime(PlayerStore.playerData.currentTimeOfPlay)}
+						{formatTime(PlayerStore.playerData.currentTimeOfPlay)}
 					</p>
 				</div>
-				<TrackProgressBar howlerRef={howlerRef}/>
+				<TrackProgressBar howlerRef={howlerRef} />
 			</div>
-			<MdVolumeUp />
-			<div className="track-player__volume"></div>
+			<MdVolumeUp onClick={() => PlayerStore.setPlayerVolume(0)} style={{ cursor: "pointer" }}/>
+			<VolumeChanger/>
 			{PlayerStore.playerData.selectedTrack == null ? (
 				<></>
 			) : (
@@ -122,7 +122,7 @@ export const TrackPlayer: FC = observer(() => {
 						`file://${PlayerStore.playerData.selectedTrack?.path}`,
 					]}
 					playing={PlayerStore.playerData.isPlaying}
-					volume={1.0}
+					volume={PlayerStore.playerData.playerVolume}
 					onPlayError={(id, error) => {
 						console.log(error)
 					}}
@@ -134,7 +134,7 @@ export const TrackPlayer: FC = observer(() => {
 							undefined,
 							"next",
 						)
-                        PlayerStore.changeIsPlaying()
+						PlayerStore.changeIsPlaying()
 					}}
 				/>
 			)}

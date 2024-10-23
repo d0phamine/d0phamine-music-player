@@ -1,9 +1,10 @@
-.track-progress-bar {
-	width: 100%;
+.volume-changer {
+	width: 42px;
 	height: 6px;
-	margin-top: auto;
 	border-radius: 2px;
-	margin: 0px 0px 0px 0px;
+	margin-left: 4px;
+	padding-block: 0px;
+	padding-top: 1px;
 
     .ant-slider-track {
         background-color: #fff;
@@ -12,7 +13,6 @@
 	.ant-slider-handle {
 		width: 6px;
 		height: 6px;
-        margin-left: 2px;
         box-shadow: unset;
         outline: unset;
         background-color: transparent;
@@ -21,43 +21,40 @@
 	.ant-slider-handle:before {
 		width: 6px;
 		height: 6px;
-        margin-left: 2px;
         box-shadow: unset;
         outline: unset;
+        background-color: transparent;
 	}
 
 	.ant-slider-handle:after {
 		width: 6px;
 		height: 6px;
-		inset-block-start: 2px;
+		inset-block-start: -1px;
         box-shadow: unset;
         outline: unset;
-        margin-left: 2px;
         background-color: transparent;
 	}
 
 	.ant-slider-handle:hover::after {
 		width: 6px;
 		height: 6px;
-		inset-block-start: 2px;
-        margin-left: 2px;
-        background-color: transparent;
+		inset-block-start: -1px;
         box-shadow: unset;
         outline: unset;
+        background-color: transparent;
 	}
 
 	.ant-slider-handle:focus::after {
 		width: 6px;
 		height: 6px;
-		inset-block-start: 2px;
-        margin-left: 2px;
-        background-color: transparent;
+		inset-block-start: -1px;
         box-shadow: unset;
         outline: unset;
+        background-color: transparent;
 	}
 }
 
-.track-progress-bar:hover{
+.volume-changer:hover{
     .ant-slider-track{
         background-color: #fff;
     }
@@ -78,5 +75,3 @@
     }
 
 }
-
-

@@ -16,6 +16,7 @@ export interface IPlayerStore {
 	selectedTrack: ITrack | null
 	currentSeekOfPlay: number | null
     currentTimeOfPlay: number | null
+    playerVolume: number
 }
 
 export class PlayerStore {
@@ -25,6 +26,7 @@ export class PlayerStore {
 		selectedTrack: null,
 		currentSeekOfPlay: null,
         currentTimeOfPlay: null,
+        playerVolume: 1.0
 	}
 
 	constructor() {
@@ -125,6 +127,10 @@ export class PlayerStore {
 
     public setCurrentSeekOfPlay(value:number | null){
         this.playerData.currentSeekOfPlay = value
+    }
+
+    public setPlayerVolume(value:number){
+        this.playerData.playerVolume = value
     }
 }
 
