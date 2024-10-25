@@ -11,6 +11,7 @@ import {
 	MdRepeat,
 	MdVolumeUp,
 	MdPauseCircle,
+	MdVolumeMute,
 } from "react-icons/md"
 
 import { useStores } from "../../../store"
@@ -23,7 +24,7 @@ export const TrackPlayer: FC = observer(() => {
 	const { PlayerStore } = useStores()
 	const howlerRef = useRef<ReactHowler | null>(null)
 
-	function formatTime(seconds: number | null): string {
+	const formatTime = (seconds: number | null) => {
 		if (seconds == null) return "0:00" // Если значение null, возвращаем "0:00"
 
 		const minutes = Math.floor(seconds / 60) // Рассчитываем количество минут
@@ -93,8 +94,34 @@ export const TrackPlayer: FC = observer(() => {
 				/>
 			</div>
 			<div className="track-player__play-mode">
-				<MdShuffle />
-				<MdRepeat />
+				<MdShuffle
+					style={
+						PlayerStore.playerData.isShuffled
+							? { cursor: "pointer", color: "#6f56d0" }
+							: { cursor: "pointer" }
+					}
+					onClick={() => {
+						if (PlayerStore.playerData.isShuffled) {
+							PlayerStore.unShufflePlaylist()
+							PlayerStore.setSelectedTrackInCurrentPlaylist(
+								PlayerStore.playerData.currentPlaylist[0],
+							)
+						} else {
+							PlayerStore.shufflePlaylist()
+							PlayerStore.setSelectedTrackInCurrentPlaylist(
+								PlayerStore.playerData.currentPlaylist[0],
+							)
+						}
+					}}
+				/>
+				<MdRepeat
+					style={
+						PlayerStore.playerData.isLooped
+							? { cursor: "pointer", color: "#6f56d0" }
+							: { cursor: "pointer" }
+					}
+                    onClick={() => PlayerStore.changeIsLooped()}
+				/>
 			</div>
 			<div className="track-player__cover"></div>
 			<div className="track-player__info">
@@ -112,8 +139,22 @@ export const TrackPlayer: FC = observer(() => {
 				</div>
 				<TrackProgressBar howlerRef={howlerRef} />
 			</div>
-			<MdVolumeUp onClick={() => PlayerStore.setPlayerVolume(0)} style={{ cursor: "pointer" }}/>
-			<VolumeChanger/>
+			{PlayerStore.playerData.playerVolume ? (
+				<MdVolumeUp
+					onClick={() => PlayerStore.mutePlayerVolume()}
+					style={{ cursor: "pointer" }}
+				/>
+			) : (
+				<MdVolumeMute
+					onClick={() =>
+						PlayerStore.setPlayerVolume(
+							PlayerStore.playerData.playerVolumeBuffer,
+						)
+					}
+					style={{ cursor: "pointer" }}
+				/>
+			)}
+			<VolumeChanger />
 			{PlayerStore.playerData.selectedTrack == null ? (
 				<></>
 			) : (
@@ -130,10 +171,12 @@ export const TrackPlayer: FC = observer(() => {
 					onEnd={() => {
 						PlayerStore.changeIsPlaying()
 						PlayerStore.setCurrentTimeOfPlay(0)
-						PlayerStore.setSelectedTrackInCurrentPlaylist(
-							undefined,
-							"next",
-						)
+						if (!PlayerStore.playerData.isLooped) {
+							PlayerStore.setSelectedTrackInCurrentPlaylist(
+								undefined,
+								"next",
+							)
+						}
 						PlayerStore.changeIsPlaying()
 					}}
 				/>

@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx"
 import ReactHowler from "react-howler"
+import { CurrentPlaylist } from "../components"
 
 export interface ITrack {
 	name: string
@@ -12,21 +13,29 @@ export interface ITrack {
 
 export interface IPlayerStore {
 	isPlaying: boolean
+    isShuffled: boolean
+    isLooped: boolean
 	currentPlaylist: ITrack[]
+	originalPlaylist: ITrack[]
 	selectedTrack: ITrack | null
 	currentSeekOfPlay: number | null
-    currentTimeOfPlay: number | null
-    playerVolume: number
+	currentTimeOfPlay: number | null
+	playerVolume: number
+	playerVolumeBuffer: number
 }
 
 export class PlayerStore {
 	public playerData: IPlayerStore = {
 		isPlaying: false,
+        isShuffled: false,
+        isLooped: false,
 		currentPlaylist: [],
+		originalPlaylist: [],
 		selectedTrack: null,
 		currentSeekOfPlay: null,
-        currentTimeOfPlay: null,
-        playerVolume: 1.0
+		currentTimeOfPlay: null,
+		playerVolume: 1.0,
+		playerVolumeBuffer: 0,
 	}
 
 	constructor() {
@@ -39,10 +48,10 @@ export class PlayerStore {
 			: (this.playerData.isPlaying = true)
 	}
 
-	public setSelectedTrack(selectedTrack: ITrack) {
-		this.playerData.selectedTrack = selectedTrack
-		console.log(this.playerData.selectedTrack)
-	}
+	// public setSelectedTrack(selectedTrack: ITrack) {
+	// 	this.playerData.selectedTrack = selectedTrack
+	// 	console.log(this.playerData.selectedTrack)
+	// }
 
 	public addTrackToCurrentPlaylist(track: ITrack) {
 		if (!this.playerData.currentPlaylist.includes(track)) {
@@ -59,7 +68,7 @@ export class PlayerStore {
 					elem.selected = index === 0 // Первый элемент получает true, остальные false
 				})
 				runInAction(() => {
-					this.setSelectedTrack(track)
+                    this.playerData.selectedTrack = track
 					this.changeIsPlaying()
 				})
 			}
@@ -121,16 +130,52 @@ export class PlayerStore {
 		}
 	}
 
-    public setCurrentTimeOfPlay(value:number | null){
-        this.playerData.currentTimeOfPlay = value
+	public setCurrentTimeOfPlay(value: number | null) {
+		this.playerData.currentTimeOfPlay = value
+	}
+
+	public setCurrentSeekOfPlay(value: number | null) {
+		this.playerData.currentSeekOfPlay = value
+	}
+
+	public setPlayerVolume(value: number) {
+		this.playerData.playerVolume = value
+	}
+
+	public mutePlayerVolume() {
+		this.playerData.playerVolumeBuffer = this.playerData.playerVolume
+		this.playerData.playerVolume = 0
+	}
+
+	public shufflePlaylist() {
+		this.playerData.originalPlaylist = [...this.playerData.currentPlaylist]
+
+		for (let i = this.playerData.currentPlaylist.length - 1; i > 0; i--) {
+			const j: number = Math.floor(Math.random() * (i + 1))
+
+			// Меняем местами элементы в массиве
+			;[
+				this.playerData.currentPlaylist[i],
+				this.playerData.currentPlaylist[j],
+			] = [
+				this.playerData.currentPlaylist[j],
+				this.playerData.currentPlaylist[i],
+			]
+		}
+
+
+        this.playerData.isShuffled = true
+	}
+
+    public unShufflePlaylist() {
+        this.playerData.currentPlaylist = this.playerData.originalPlaylist
+        this.playerData.isShuffled = false
     }
 
-    public setCurrentSeekOfPlay(value:number | null){
-        this.playerData.currentSeekOfPlay = value
-    }
-
-    public setPlayerVolume(value:number){
-        this.playerData.playerVolume = value
+    public changeIsLooped(){
+        this.playerData.isLooped
+			? (this.playerData.isLooped = false)
+			: (this.playerData.isLooped = true)
     }
 }
 

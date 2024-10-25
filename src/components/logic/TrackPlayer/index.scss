@@ -12,6 +12,10 @@
         align-items: center;
     }
 
+    &__controls > *:hover {
+        transition: 0.3s;
+    }
+
     &__play-mode {
         display: flex;
         flex-direction: row;
