@@ -1,6 +1,6 @@
 # d0phamine music player
 
-![dopamine.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3fb1e679-f3fd-4eb4-8453-09daeac47dba/fc7880f8-1803-47b4-9538-02e89f6b1600/dopamine.png)
+![dopamine.png](src/assets/dopamine.png)
 
 Simple Electron desktop multi-platform music application.
 
@@ -14,7 +14,7 @@ Simple Electron desktop multi-platform music application.
 
 ---
 
-![CleanShot 2024-10-28 at 20.32.03@2x 1.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3fb1e679-f3fd-4eb4-8453-09daeac47dba/c875e8b5-858f-434f-8771-e78786f6cf82/CleanShot_2024-10-28_at_20.32.032x_1.png)
+![CleanShot 2024-10-28 at 20.32.03@2x 1.png](src/assets/design.png)
 
 ## Functionality 🥹
 
