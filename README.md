@@ -14,7 +14,7 @@ Simple Electron desktop multi-platform music application.
 
 ---
 
-![CleanShot 2024-10-28 at 20.32.03@2x 1.png](src/assets/design.png)
+![design.png](src/assets/design.png)
 
 ## Functionality 🥹
 
