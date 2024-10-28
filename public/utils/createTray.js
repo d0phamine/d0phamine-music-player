@@ -19,21 +19,9 @@ exports.createTray = () => {
 				label: "Creator",
 				submenu: [
 					{
-						label: "GitHub @barisbored",
+						label: "GitHub @d0phamine",
 						click: () => {
-							shell.openExternal("https://github.com/barisbored");
-						},
-					},
-					{
-						label: "E-Mail hi@338.rocks",
-						click: () => {
-							shell.openExternal("mailto:hi@338.rocks");
-						},
-					},
-					{
-						label: "Website",
-						click: () => {
-							shell.openExternal("https://338.rocks");
+							shell.openExternal("https://github.com/d0phamine");
 						},
 					},
 				],
@@ -43,14 +31,12 @@ exports.createTray = () => {
 				click: () =>
 					showNotification(
 						"This Notification Comes From Tray",
-						"Hello, world!",
 					),
 			},
 			{
 				label: "Quit",
 				click: () => {
 					config.isQuiting = true;
-
 					app.quit();
 				},
 			},

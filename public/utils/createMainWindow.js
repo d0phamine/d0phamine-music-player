@@ -13,7 +13,7 @@ const CacheStore = require("./cacheStore")
 
 exports.createMainWindow = async () => {
 	const window = new BrowserWindow({
-		width: 800,
+		width: 850,
 		height: 600,
 		webPreferences: {
 			nodeIntegration: true,

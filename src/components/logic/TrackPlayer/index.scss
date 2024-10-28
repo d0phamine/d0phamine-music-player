@@ -1,80 +1,94 @@
 .track-player {
-    border-bottom: 1px solid #424242;
-    padding: 6px 12px;
-    display: flex;
-    flex-direction: row;
-    gap: 6px;
-    align-items: center;
+	border-bottom: 1px solid #424242;
+	padding: 6px 12px;
+	display: flex;
+	flex-direction: row;
+	gap: 6px;
+	align-items: center;
+	min-width: 0;
 
-    &__controls {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
+	&__controls {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
 
-    &__controls > *:hover {
-        transition: 0.3s;
-    }
+	&__controls > *:hover {
+		transition: 0.3s;
+	}
 
-    &__play-mode {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-right: 6px;
-    }
-    
+	&__play-mode {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-right: 6px;
+	}
 
-    &__cover {
-        height: 36px;
-        width: 36px;
-        background-color: #fff;
-        border-radius: 6px;
-    }
+	&__cover {
+		height: 36px;
+		width: 36px;
+		background-color: #fff;
+		border-radius: 6px;
+		flex-shrink: 0;
+	}
 
-    &__info {
-        height: 36px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        margin-right: 6px;
+	.volume-changer {
+		flex-shrink: 0;
+	}
 
-        p {
-            font-size: 12px;
-            line-height: 1;
-            white-space: nowrap; 
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+	svg {
+		flex-shrink: 0;
+	}
 
-        .info-track-name {
-            width: 100%;
-            overflow: hidden;
-        }
+	&__info {
+		height: 36px;
+		flex-grow: 1;
+		flex-shrink: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		margin-right: 6px;
+		min-width: 0;
 
-        .info-track-executor {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+		p {
+			font-size: 12px;
+			line-height: 1;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 
-            p {
-                color: #cccccc;
-            }
-        }
+		.info-track-name {
+			width: 100%;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
 
-        // .info-track-progress {
-        //     width: 100%;
-        //     height: 2px;
-        //     background-color: #fff;
-        //     margin-top: auto;
-        //     border-radius: 2px;
-        // }
-    }
+		.info-track-executor {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
 
-    // &__volume{
-    //     height: 2px;
-    //     width: 42px;
-    //     background-color: #fff;
-    //     border-radius: 2px;
-    // }
+			p {
+				color: #cccccc;
+			}
+		}
+
+		// .info-track-progress {
+		//     width: 100%;
+		//     height: 2px;
+		//     background-color: #fff;
+		//     margin-top: auto;
+		//     border-radius: 2px;
+		// }
+	}
+
+	// &__volume{
+	//     height: 2px;
+	//     width: 42px;
+	//     background-color: #fff;
+	//     border-radius: 2px;
+	// }
 }
+
