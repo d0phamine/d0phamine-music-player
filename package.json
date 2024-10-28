@@ -1,4 +1,13 @@
 {
+	"name": "electron-react-desktop-music-player",
+	"author": {
+		"name": "d0phamine"
+	},
+	"description": "Electron react music player for multiplatform desktop",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/d0phamine/desktop-react-musicPlayer"
+	},
 	"license": "GPL-3.0",
 	"version": "1.0.1",
 	"private": true,

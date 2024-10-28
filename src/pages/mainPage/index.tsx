@@ -17,7 +17,7 @@ export const IndexPage: FC = observer(() => {
 	useEffect(() => {
 		FSstore.getDirs()
 		FSstore.getFavoriteDirs()
-	}, [])
+	}, [FSstore])
 	return (
 		<MainLayout>
 			<div className="main-page">

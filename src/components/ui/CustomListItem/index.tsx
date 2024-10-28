@@ -14,7 +14,7 @@ export interface CustomListItemProps {
 export const CustomListItem: FC<CustomListItemProps> = (props) => {
 	return (
 		<div
-			className={"custom-list-item" + " " + props.customClass}
+			className={`custom-list-item ${props.customClass || ""}`}
 			style={props.style}
 		>
 			<div className="custom-list-item__button">{props.button}</div>
@@ -25,3 +25,4 @@ export const CustomListItem: FC<CustomListItemProps> = (props) => {
 		</div>
 	)
 }
+

@@ -19,7 +19,7 @@ export const FileBrowser: FC = observer(() => {
 
 	useEffect(() => {
 		FSstore.getDirs()
-	}, [])
+	}, [FSstore])
 
 	return (
 		<div className="file-browser">

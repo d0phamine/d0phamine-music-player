@@ -16,7 +16,7 @@ export const FavoriteBrowser: FC = observer(() => {
 
 	useEffect(() => {
 		FSstore.getFavoriteDirs()
-	}, [])
+	}, [FSstore])
 
 	return (
 		<div className="favorite-browser">

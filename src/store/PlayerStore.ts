@@ -1,6 +1,4 @@
 import { makeAutoObservable, runInAction } from "mobx"
-import ReactHowler from "react-howler"
-import { CurrentPlaylist } from "../components"
 
 export interface ITrack {
 	name: string
