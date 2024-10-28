@@ -1,6 +1,6 @@
 # d0phamine music player
 
-![dopamine.png](src/assets/dopamine.png)
+<div style="text-align: center;" markdown="1"><img src="src/assets/dopamine.png" alt=""></img></div>
 
 Simple Electron desktop multi-platform music application.
 
