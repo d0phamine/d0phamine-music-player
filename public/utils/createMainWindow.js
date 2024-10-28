@@ -1,5 +1,5 @@
-const { BrowserWindow, ipcMain } = require("electron")
-const { channels } = require("../../src/shared/constants")
+const { BrowserWindow, ipcMain, app } = require("electron")
+const { channels } = require("./constants")
 const path = require("path")
 const os = require("os")
 const fs = require("fs")
@@ -41,11 +41,14 @@ exports.createMainWindow = async () => {
 
 	window.on("close", (e) => {
 		if (!config.isQuiting) {
-			e.preventDefault()
-
-			window.hide()
+			// Предотвратить закрытие окна
+			e.preventDefault();
+			window.hide();
+		} else {
+			// Завершить приложение, если config.isQuiting установлен в true
+			app.quit();
 		}
-	})
+	});
 
 	const audioExtensions = [".mp3", ".wav", ".flac", ".ogg", ".aac"]
 

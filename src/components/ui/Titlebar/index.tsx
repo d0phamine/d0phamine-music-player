@@ -21,7 +21,15 @@ export const Titlebar: FC = () => {
 			? currentWindow.unmaximize()
 			: currentWindow.maximize()
 	}
-	const onQuit = () => app.quit()
+	const onQuit = () => {
+        // Закрыть текущее окно
+        currentWindow.close();
+    };
+
+    currentWindow.on('close', (e:Error) => {
+        // Закрыть приложение
+        app.exit();
+    });
 
 	return (
 		<div className="title-bar sticky top-0 select-none">

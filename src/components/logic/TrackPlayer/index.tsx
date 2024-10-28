@@ -57,7 +57,7 @@ export const TrackPlayer: FC = observer(() => {
 		return () => {
 			if (interval) clearInterval(interval)
 		}
-	}, [PlayerStore])
+	}, [PlayerStore.playerData.isPlaying])
 
 	return (
 		<div className="track-player">

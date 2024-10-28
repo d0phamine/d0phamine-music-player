@@ -1,7 +1,8 @@
 {
-	"name": "electron-react-desktop-music-player",
+	"name": "d0phamine-music-player",
 	"author": {
-		"name": "d0phamine"
+		"name": "d0phamine",
+		"email": "sizow123@gmail.com"
 	},
 	"description": "Electron react music player for multiplatform desktop",
 	"repository": {
@@ -9,8 +10,50 @@
 		"url": "https://github.com/d0phamine/desktop-react-musicPlayer"
 	},
 	"license": "GPL-3.0",
-	"version": "1.0.1",
+	"version": "1.0.0",
 	"private": true,
+	"build": {
+		"appId": "com.d0phamine.d0phamine-music-player",
+		"productName": "d0phamine-music-player",
+		"copyright": "Copyright © 2024",
+		"files": [
+			"build/**/*",
+			"main.js",
+			"package.json"
+		],
+		"directories": {
+			"output": "dist"
+		},
+		"mac": {
+			"target": [
+				"dmg",
+				"zip"
+			],
+			"category": "public.app-category.productivity",
+			"icon": "public/web-app-manifest-512x512"
+		},
+		"win": {
+			"target": [
+				{
+					"target": "nsis",
+					"arch": ["x64", "arm64"]
+				}
+			],
+			"icon": "public/web-app-manifest-512x512.png"
+		},
+		"linux": {
+			"target": [
+				"deb",
+				"AppImage"
+			],
+			"category": "Utility",
+			"icon": "public/web-app-manifest-512x512.png"
+		},
+		"nsis": {
+			"oneClick": false,
+			"allowToChangeInstallationDirectory": true
+		}
+	},
 	"devDependencies": {
 		"@types/node": "^18.11.10",
 		"@types/react": "^18.0.26",
@@ -66,7 +109,7 @@
 		"prebuild": "rimraf build && rimraf dist",
 		"react:build": "react-scripts build",
 		"react:dev": "cross-env BROWSER=none react-scripts start",
-		"electron:build": "electron-builder build --win --publish never",
+		"electron:build": "electron-builder build --win --mac --linux --publish never",
 		"electron:deploy": "electron-builder build --win --publish always",
 		"electron:dev": "electron .",
 		"build": "npm run react:build && npm run electron:build",
