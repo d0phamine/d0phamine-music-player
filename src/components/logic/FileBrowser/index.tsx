@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { observer } from "mobx-react-lite"
 
 import { useStores } from "../../../store"
@@ -17,10 +17,6 @@ import "./index.scss"
 export const FileBrowser: FC = observer(() => {
 	const { FSstore, ComponentStore, PlayerStore } = useStores()
 
-	useEffect(() => {
-		FSstore.getDirs()
-	}, [FSstore])
-
 	return (
 		<div className="file-browser">
 			<div className="file-browser__controls">
@@ -32,59 +28,66 @@ export const FileBrowser: FC = observer(() => {
 					onClick={() => {
 						FSstore.clearFilteredDirs()
 						ComponentStore.clearBrowserSearchValue()
-						FSstore.getDirs(FSstore.FSdata.previousPath)
+						FSstore.setBrowserDirs(FSstore.FSdata.previousPath)
 					}}
 				/>
 				<BrowserSearch placeholder={FSstore.FSdata.currentPath} />
 			</div>
 			<div className="file-browser__list">
-				{(FSstore.FSdata.filteredDirs
-					? FSstore.FSdata.filteredDirs
-					: FSstore.FSdata.dirs
-				)?.map((item: any, index) => (
-					<CustomListItem
-						key={index}
-						title={item.name}
-						button={
-							item.type === "directory" ? (
-								<MdFolder />
-							) : (
-								<MdOutlineAudioFile />
-							)
-						}
-						onClick={() => {
-							if (item.type === "directory") {
-								FSstore.clearFilteredDirs()
-								ComponentStore.clearBrowserSearchValue()
-								FSstore.getDirs(item.path)
-							} else {
-								PlayerStore.addTrackToCurrentPlaylist(item)
-								console.log(PlayerStore.playerData.currentPlaylist)
+				{FSstore.FSdata.loading ? (
+					null // Вы можете заменить это на спиннер или другую индикацию
+				) : (
+					// Рендеринг элементов списка без ul
+					(
+						FSstore.FSdata.filteredDirs ||
+						FSstore.FSdata.browserDirs
+					)?.map((item: any, index) => (
+						<CustomListItem
+							key={index}
+							title={item.name}
+							button={
+								item.type === "directory" ? (
+									<MdFolder />
+								) : (
+									<MdOutlineAudioFile />
+								)
 							}
-						}}
-						control={
-							item.type === "directory" ? (
-								<CustomIcon
-									onClick={() =>
-										FSstore.addToFavoriteDirs(item.path)
-									}
-								>
-									<MdOutlineStarPurple500
-										style={
-											FSstore.FSdata.favoriteDirs.some(
-												(dir: any) =>
-													dir.path === item.path,
-											)
-												? { color: "gold" }
-												: { color: "white" }
+							onClick={() => {
+								if (item.type === "directory") {
+									FSstore.clearFilteredDirs()
+									ComponentStore.clearBrowserSearchValue()
+									FSstore.setBrowserDirs(item.path)
+								} else {
+									PlayerStore.addTrackToCurrentPlaylist(item)
+									console.log(
+										PlayerStore.playerData.currentPlaylist,
+									)
+								}
+							}}
+							control={
+								item.type === "directory" ? (
+									<CustomIcon
+										onClick={() =>
+											FSstore.addToFavoriteDirs(item.path)
 										}
-									/>
-								</CustomIcon>
-							) : null
-						}
-						customClass="hover-control"
-					/>
-				))}
+									>
+										<MdOutlineStarPurple500
+											style={{
+												color: FSstore.FSdata.favoriteDirs.some(
+													(dir: any) =>
+														dir.path === item.path,
+												)
+													? "gold"
+													: "white",
+											}}
+										/>
+									</CustomIcon>
+								) : null
+							}
+							customClass="hover-control"
+						/>
+					))
+				)}
 			</div>
 		</div>
 	)

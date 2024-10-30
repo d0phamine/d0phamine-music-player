@@ -1,65 +1,96 @@
 import { makeAutoObservable, runInAction } from "mobx"
 import { dirname, normalize } from "path"
 import { channels } from "../shared/constants"
+import { ITrack } from "./PlayerStore"
 const { ipcRenderer } = window.require("electron")
 
+export interface DirsArr {
+	type: string
+	name: string
+	path: string
+}
+
 export interface IFSstore {
-	dirs: [] | null | never[]
-	filteredDirs: [] | null | never[]
+	dirs: DirsArr[] | ITrack[] | null
+	browserDirs: DirsArr[] | ITrack[] | null
+	filteredDirs: DirsArr[] | ITrack[] | null
 	favoriteDirs: string[]
 	homePath: string
 	currentPath: string
 	previousPath: string
 	favoriteHandler: boolean
+	loading: boolean
 }
 
 export class FSstore {
 	public FSdata: IFSstore = {
 		dirs: null,
+		browserDirs: [],
 		filteredDirs: null,
 		favoriteDirs: [],
 		homePath: "",
 		currentPath: "",
 		previousPath: "",
 		favoriteHandler: false,
+		loading: false,
 	}
 
 	constructor() {
 		makeAutoObservable(this)
 	}
 
-	public getDirs(dir?: string) {
-		// this.FSdata.dirs = dirs;
-		ipcRenderer.send(channels.GET_DIR, { dir })
-		ipcRenderer.on(
-			"directory-files",
-			(event: any, receivedFiles: [], path: string) => {
-				// Обновляем состояние при получении файлов
+	public getDirs(dir?: string): Promise<DirsArr[] | ITrack[]> {
+		this.FSdata.loading = true
+		return new Promise((resolve, reject) => {
+			// let files: DirsArr[] | ITrack[] = []
 
-				runInAction(() => {
-					this.FSdata.dirs = receivedFiles
-					this.getPath(path)
-				})
-			},
-		)
+			ipcRenderer.send(channels.GET_DIR, { dir })
 
-		ipcRenderer.on("directory-error", (event: any, errorMessage: any) => {
-			console.log(errorMessage)
+			ipcRenderer.on(
+				"directory-files",
+				(
+					event: any,
+					receivedFiles: DirsArr[] | ITrack[],
+					path: string,
+				) => {
+					runInAction(() => {
+						this.getPath(path)
+						this.FSdata.loading = false // Assuming getPath is defined
+						resolve(receivedFiles) // Return receivedFiles to the caller
+					})
+
+					// Возвращаем files после получения данных
+				},
+			)
+
+			ipcRenderer.on(
+				"directory-error",
+				(event: any, errorMessage: any) => {
+					console.log(errorMessage)
+					this.FSdata.loading = false
+					reject(errorMessage) // Отклоняем промис в случае ошибки
+				},
+			)
 		})
+	}
 
-		return () => {
-			ipcRenderer.removeAllListeners("directory-files")
-			ipcRenderer.removeAllListeners("directory-error")
-		}
+	public async setBrowserDirs(dir?: string) {
+		const files = await this.getDirs(dir ?? "") // Fetch the files
+		runInAction(() => {
+			this.FSdata.browserDirs = files
+			this.FSdata.filteredDirs = null // Assign the fetched files to browserDirs
+		})
 	}
 
 	public filterDirsByValue(value: string) {
-		this.FSdata.filteredDirs = this.FSdata.dirs
-			? this.FSdata.dirs.filter(
-					(item: { name: string; path: string; type: string }) =>
-						item.name.toLowerCase().includes(value.toLowerCase()),
-			  )
-			: []
+		if (this.FSdata.browserDirs) {
+			this.FSdata.filteredDirs = this.FSdata.browserDirs.filter(
+				(item: DirsArr | ITrack) =>
+					item.name.toLowerCase().includes(value.toLowerCase()),
+			)
+		} else {
+			this.FSdata.filteredDirs = []
+		}
 	}
 
 	public clearFilteredDirs() {

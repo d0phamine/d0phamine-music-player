@@ -15,7 +15,7 @@ export const IndexPage: FC = observer(() => {
 	const { FSstore } = useStores()
 
 	useEffect(() => {
-		FSstore.getDirs()
+		FSstore.setBrowserDirs()
 		FSstore.getFavoriteDirs()
 	}, [FSstore])
 	return (

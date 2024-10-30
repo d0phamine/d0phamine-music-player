@@ -47,7 +47,7 @@ export const FavoriteBrowser: FC = observer(() => {
 								</CustomIcon>
 							</div>
 						}
-						onClick={() => FSstore.getDirs(item.path)}
+						onClick={() => FSstore.setBrowserDirs(item.path)}
 					/>
 				))}
 			</div>
