@@ -1,13 +1,11 @@
-import { FC, useEffect } from "react"
+import { FC, useEffect, ReactNode } from "react"
 import { observer } from "mobx-react-lite"
+import { Dropdown } from "antd"
 
 import { useStores } from "../../../store"
-import { CustomIcon, CustomListItem } from "../.."
+import { CustomIcon, CustomListItem, DirDropdown } from "../.."
 
-import {
-	MdFolder,
-	MdOutlineStarPurple500,
-} from "react-icons/md"
+import { MdFolder, MdOutlineStarPurple500, MdMoreHoriz } from "react-icons/md"
 
 import "./index.scss"
 
@@ -28,15 +26,26 @@ export const FavoriteBrowser: FC = observer(() => {
 						title={item.name}
 						button={<MdFolder />}
 						control={
-							<CustomIcon
-								onClick={() =>
-									FSstore.deletFromFavorites(item.path)
-								}
-							>
-								<MdOutlineStarPurple500
-									style={{ color: "gold" }}
-								/>
-							</CustomIcon>
+							<div className="control-items">
+								<DirDropdown trigger={["click"]} dirPath={item.path}>
+									<CustomIcon
+										onClick={(e: React.MouseEvent) =>
+											e.preventDefault()
+										}
+									>
+										<MdMoreHoriz />
+									</CustomIcon>
+								</DirDropdown>
+								<CustomIcon
+									onClick={() =>
+										FSstore.deletFromFavorites(item.path)
+									}
+								>
+									<MdOutlineStarPurple500
+										style={{ color: "gold" }}
+									/>
+								</CustomIcon>
+							</div>
 						}
 						onClick={() => FSstore.getDirs(item.path)}
 					/>

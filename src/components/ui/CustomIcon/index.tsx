@@ -4,7 +4,7 @@ import "./index.scss"
 
 export interface CustomIconProps {
 	children: ReactNode
-	onClick?: () => void
+	onClick?: (e:React.MouseEvent) => void
 }
 
 export const CustomIcon: FC<CustomIconProps> = (props) => {

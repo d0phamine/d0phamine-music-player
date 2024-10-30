@@ -11,8 +11,8 @@ export interface ITrack {
 
 export interface IPlayerStore {
 	isPlaying: boolean
-    isShuffled: boolean
-    isLooped: boolean
+	isShuffled: boolean
+	isLooped: boolean
 	currentPlaylist: ITrack[]
 	originalPlaylist: ITrack[]
 	selectedTrack: ITrack | null
@@ -25,8 +25,8 @@ export interface IPlayerStore {
 export class PlayerStore {
 	public playerData: IPlayerStore = {
 		isPlaying: false,
-        isShuffled: false,
-        isLooped: false,
+		isShuffled: false,
+		isLooped: false,
 		currentPlaylist: [],
 		originalPlaylist: [],
 		selectedTrack: null,
@@ -66,7 +66,7 @@ export class PlayerStore {
 					elem.selected = index === 0 // Первый элемент получает true, остальные false
 				})
 				runInAction(() => {
-                    this.playerData.selectedTrack = track
+					this.playerData.selectedTrack = track
 					this.changeIsPlaying()
 				})
 			}
@@ -161,19 +161,24 @@ export class PlayerStore {
 			]
 		}
 
-
-        this.playerData.isShuffled = true
+		this.playerData.isShuffled = true
 	}
 
-    public unShufflePlaylist() {
-        this.playerData.currentPlaylist = this.playerData.originalPlaylist
-        this.playerData.isShuffled = false
-    }
+	public unShufflePlaylist() {
+		this.playerData.currentPlaylist = this.playerData.originalPlaylist
+		this.playerData.isShuffled = false
+	}
 
-    public changeIsLooped(){
-        this.playerData.isLooped
+	public changeIsLooped() {
+		this.playerData.isLooped
 			? (this.playerData.isLooped = false)
 			: (this.playerData.isLooped = true)
-    }
+	}
+
+	public addArrOfTracksToCurrentPlaylist(arrOfTracks: ITrack[] | null) {
+		if (arrOfTracks != null) {
+			this.playerData.currentPlaylist.push(...arrOfTracks)
+		}
+	}
 }
 

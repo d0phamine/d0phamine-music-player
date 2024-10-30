@@ -35,12 +35,14 @@ export class FSstore {
 			"directory-files",
 			(event: any, receivedFiles: [], path: string) => {
 				// Обновляем состояние при получении файлов
+
 				runInAction(() => {
 					this.FSdata.dirs = receivedFiles
 					this.getPath(path)
 				})
 			},
 		)
+
 		ipcRenderer.on("directory-error", (event: any, errorMessage: any) => {
 			console.log(errorMessage)
 		})
@@ -53,13 +55,14 @@ export class FSstore {
 
 	public filterDirsByValue(value: string) {
 		this.FSdata.filteredDirs = this.FSdata.dirs
-			? this.FSdata.dirs.filter((item: { name: string, path:string, type:string }) =>
-					item.name.toLowerCase().includes(value.toLowerCase()),
+			? this.FSdata.dirs.filter(
+					(item: { name: string; path: string; type: string }) =>
+						item.name.toLowerCase().includes(value.toLowerCase()),
 			  )
 			: []
 	}
 
-	public clearFilteredDirs(){
+	public clearFilteredDirs() {
 		this.FSdata.filteredDirs = null
 	}
 

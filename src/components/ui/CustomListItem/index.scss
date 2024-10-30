@@ -24,6 +24,14 @@
             
 		}
 	}
+
+	&__control{
+		.control-items{
+			display: flex;
+			flex-direction: row;
+			gap: 4px;
+		}
+	}
 }
 
 .custom-list-item:hover {
