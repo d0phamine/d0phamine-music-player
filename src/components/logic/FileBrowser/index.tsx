@@ -26,7 +26,6 @@ export const FileBrowser: FC = observer(() => {
 					}
 					icon={<MdOutlineKeyboardBackspace />}
 					onClick={() => {
-						FSstore.clearFilteredDirs()
 						ComponentStore.clearBrowserSearchValue()
 						FSstore.setBrowserDirs(FSstore.FSdata.previousPath)
 					}}
@@ -54,7 +53,6 @@ export const FileBrowser: FC = observer(() => {
 							}
 							onClick={() => {
 								if (item.type === "directory") {
-									FSstore.clearFilteredDirs()
 									ComponentStore.clearBrowserSearchValue()
 									FSstore.setBrowserDirs(item.path)
 								} else {
