@@ -93,10 +93,6 @@ export class FSstore {
 		}
 	}
 
-	public clearFilteredDirs() {
-		this.FSdata.filteredDirs = null
-	}
-
 	public getPath(path: string) {
 		if (this.FSdata.homePath) {
 			this.FSdata.currentPath = path
