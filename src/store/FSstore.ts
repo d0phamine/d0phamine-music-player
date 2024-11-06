@@ -18,8 +18,8 @@ export interface IFSstore {
 	homePath: string
 	currentPath: string
 	previousPath: string
-	favoriteHandler: boolean
 	loading: boolean
+	tracksFromFavoriteDir: DirsArr[] | ITrack[] | null
 }
 
 export class FSstore {
@@ -31,8 +31,8 @@ export class FSstore {
 		homePath: "",
 		currentPath: "",
 		previousPath: "",
-		favoriteHandler: false,
 		loading: false,
+		tracksFromFavoriteDir: []
 	}
 
 	constructor() {
@@ -79,6 +79,16 @@ export class FSstore {
 		runInAction(() => {
 			this.FSdata.browserDirs = files
 			this.FSdata.filteredDirs = null // Assign the fetched files to browserDirs
+		})
+	}
+
+	public async setTracksFromFavoriteDir(dir:string){
+		const files = await this.getDirs(dir ?? "")
+		// files.forEach((elem, index) => {
+			
+		// })
+		runInAction(() => {
+			this.FSdata.tracksFromFavoriteDir = files
 		})
 	}
 

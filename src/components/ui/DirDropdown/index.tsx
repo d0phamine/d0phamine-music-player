@@ -16,8 +16,18 @@ export interface DirDropdownProps extends DropdownProps {
 export const DirDropdown: FC<DirDropdownProps> = observer((props) => {
 	const { ComponentStore, PlayerStore, FSstore } = useStores()
 
-	const onClick: MenuProps["onClick"] = ({ key }) => {}
+	const onClick: MenuProps["onClick"] = async ({ key }) => {
+		if (key === "1") {
+			await FSstore.setTracksFromFavoriteDir(props.dirPath)
 
+			// После загрузки данных теперь `tracksFromFavoriteDir` должен быть доступен
+			FSstore.FSdata.tracksFromFavoriteDir?.forEach((elem, index) => {
+				if (PlayerStore.isITrack(elem)) {
+					PlayerStore.addTrackToCurrentPlaylist(elem)
+				}
+			})
+		}
+	}
 	return (
 		<Dropdown
 			menu={{

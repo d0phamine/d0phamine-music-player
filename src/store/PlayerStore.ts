@@ -51,8 +51,21 @@ export class PlayerStore {
 	// 	console.log(this.playerData.selectedTrack)
 	// }
 
+	public isITrack = (obj: any): obj is ITrack => {
+		return(
+			typeof obj.name === 'string' &&
+			typeof obj.path === 'string' &&
+			typeof obj.type === 'string' &&
+			(typeof obj.cover === 'string' || obj.cover === null ) &&
+			typeof obj.duration === 'number' &&
+			typeof obj.selected === 'boolean'
+		)
+	}
+
 	public addTrackToCurrentPlaylist(track: ITrack) {
-		if (!this.playerData.currentPlaylist.includes(track)) {
+		console.log(track)
+		console.log(this.playerData.currentPlaylist)
+		if (!this.playerData.currentPlaylist.some((elem) => elem.name === track.name)) {
 			this.playerData.currentPlaylist.push(track)
 
 			// Проверяем, есть ли трек с selected: true
