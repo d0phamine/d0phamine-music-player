@@ -84,9 +84,6 @@ export class FSstore {
 
 	public async setTracksFromFavoriteDir(dir:string){
 		const files = await this.getDirs(dir ?? "")
-		// files.forEach((elem, index) => {
-			
-		// })
 		runInAction(() => {
 			this.FSdata.tracksFromFavoriteDir = files
 		})

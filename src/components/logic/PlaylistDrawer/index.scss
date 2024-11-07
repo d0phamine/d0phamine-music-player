@@ -1,0 +1,19 @@
+.ant-drawer{
+    .ant-drawer-mask{
+        background: none;
+    }
+    .ant-drawer-content-wrapper {
+        top: auto !important;
+        width: 320px !important;
+        .playlist-drawer {
+            border-left: 1px solid #424242;
+            background: rgba(22, 22, 22, 1);
+
+            &__children{
+                background: rgba(29, 28, 28, 1);
+            }
+        }
+    }
+}
+
+
