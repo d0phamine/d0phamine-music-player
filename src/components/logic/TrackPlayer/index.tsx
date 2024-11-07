@@ -120,15 +120,24 @@ export const TrackPlayer: FC = observer(() => {
 							? { cursor: "pointer", color: "#6f56d0" }
 							: { cursor: "pointer" }
 					}
-                    onClick={() => PlayerStore.changeIsLooped()}
+					onClick={() => PlayerStore.changeIsLooped()}
 				/>
 			</div>
-			<div className="track-player__cover"></div>
+			<div className="track-player__cover">
+				{PlayerStore.playerData.selectedTrack == null ? null : (
+					<img
+						src={PlayerStore.playerData.selectedTrack.cover}
+						alt=""
+					/>
+				)}
+			</div>
 			<div className="track-player__info">
 				<div className="info-track-name">
 					<p>
 						{PlayerStore.playerData.selectedTrack == null
 							? "----"
+							: PlayerStore.playerData.selectedTrack.artist
+							? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
 							: PlayerStore.playerData.selectedTrack.name}
 					</p>
 				</div>

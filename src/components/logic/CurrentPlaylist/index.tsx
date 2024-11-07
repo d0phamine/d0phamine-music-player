@@ -20,10 +20,14 @@ export const CurrentPlaylist: FC = observer(() => {
 				(item: ITrack, index) => (
 					<CustomListItem
 						key={index}
-						title={item.name}
+						title={
+							item.artist
+								? `${item.artist} - ${item.name}`
+								: item.name
+						}
 						button={<MdOutlineAudioFile />}
 						onClick={() => {
-                            PlayerStore.setSelectedTrackInCurrentPlaylist(item)
+							PlayerStore.setSelectedTrackInCurrentPlaylist(item)
 						}}
 						style={
 							item.selected ? { backgroundColor: "green" } : {}

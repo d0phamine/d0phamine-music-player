@@ -106,9 +106,9 @@ exports.createMainWindow = async () => {
 										)
 										const title =
 											metadata.common.title || file // Название трека, если доступно, иначе имя файла
-										// const artist =
-										// 	metadata.common.artist ||
-										// 	"Unknown Artist" // Артист, если доступен
+										const artist =
+											metadata.common.artist ||
+											"" // Артист, если доступен
 										const duration =
 											Math.round(
 												metadata.format.duration,
@@ -130,7 +130,7 @@ exports.createMainWindow = async () => {
 										resolve({
 											type: "audio",
 											name: title, // Название трека
-											// artist: artist, // Артист
+											artist: artist, // Артист
 											path: filePath, // Путь к файлу
 											cover: coverUrl, // Обложка
 											duration: duration, // Длительность трека в секундах
@@ -144,7 +144,7 @@ exports.createMainWindow = async () => {
 										resolve({
 											type: "audio",
 											name: file, // Если метаданные не удалось прочитать, используем имя файла
-											// artist: "Unknown Artist",
+											artist: "",
 											path: filePath,
 											cover: null, // Обложка недоступна
 											duration: 0, // Если длительность неизвестна
