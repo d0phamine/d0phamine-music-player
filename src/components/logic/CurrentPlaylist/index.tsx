@@ -5,7 +5,10 @@ import { CustomListItem } from "../../"
 import { useStores } from "../../../store"
 import { ITrack } from "../../../store/PlayerStore"
 
-import { MdOutlineAudioFile } from "react-icons/md"
+import { MdOutlineAudioFile} from "react-icons/md"
+import { RiPlayList2Fill } from "react-icons/ri";
+import { IoMdMenu } from "react-icons/io"
+import { FloatButton } from "antd"
 
 import "./index.scss"
 
@@ -35,6 +38,14 @@ export const CurrentPlaylist: FC = observer(() => {
 					/>
 				),
 			)}
+			<FloatButton.Group
+				trigger="click"
+				type="primary"
+				style={{ insetInlineEnd: 24 }}
+				icon={<IoMdMenu />}
+			>
+				<FloatButton icon={<RiPlayList2Fill />} />
+			</FloatButton.Group>
 		</div>
 	)
 })

@@ -1,10 +1,13 @@
 .favorite-browser {
     display: flex;
     flex-direction: column;
+    gap: 4px;
     overflow: hidden;
 
     &__header {
-        padding: 6px 12px 0px 12px;
+        padding: 12px 12px 0px 12px;
+        line-height: 1;
+        font-size: 16px;
     }
 
     &__list {

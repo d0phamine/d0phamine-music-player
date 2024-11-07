@@ -1,13 +1,13 @@
 import { FC, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 
+
 import { MainLayout } from "../../Layout/mainLayout"
 
 import { useStores } from "../../store"
-
-import "./index.scss"
 import { FileBrowser, TrackPlayer, FavoriteBrowser } from "../../components"
 
+import "./index.scss"
 
 import { CurrentPlaylist } from "../../components"
 

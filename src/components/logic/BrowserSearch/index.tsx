@@ -24,7 +24,7 @@ export const BrowserSearch: FC<CustomSearchProps> = observer((props) => {
 
 	return (
 		<Input
-			className={"custom-search"}
+			className={"browser-search"}
 			placeholder={props.placeholder}
 			suffix={<SearchOutlined />}
 			size={props.size}
