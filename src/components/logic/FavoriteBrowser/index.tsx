@@ -1,11 +1,12 @@
-import { FC, useEffect, ReactNode } from "react"
+import { FC, useEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { Dropdown } from "antd"
 
 import { useStores } from "../../../store"
 import { CustomIcon, CustomListItem, DirDropdown } from "../.."
 
 import { MdFolder, MdOutlineStarPurple500, MdMoreHoriz } from "react-icons/md"
+import { DirsArr } from "../../../store/FSstore"
+import { ITrack } from "../../../store/PlayerStore"
 
 import "./index.scss"
 
@@ -20,7 +21,7 @@ export const FavoriteBrowser: FC = observer(() => {
 		<div className="favorite-browser">
 			<div className="favorite-browser__header">Favorite</div>
 			<div className="favorite-browser__list">
-				{FSstore.FSdata.favoriteDirs?.map((item: any, index) => (
+				{FSstore.FSdata.favoriteDirs?.map((item: DirsArr | ITrack, index) => (
 					<CustomListItem
 						key={index}
 						title={item.name}

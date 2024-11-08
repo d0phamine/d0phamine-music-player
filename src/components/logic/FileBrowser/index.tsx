@@ -2,6 +2,8 @@ import { FC } from "react"
 import { observer } from "mobx-react-lite"
 
 import { useStores } from "../../../store"
+import { DirsArr } from "../../../store/FSstore"
+import { ITrack } from "../../../store/PlayerStore"
 import { CustomIcon, CustomListItem, BrowserSearch } from "../.."
 
 import {
@@ -20,9 +22,7 @@ export const FileBrowser: FC = observer(() => {
 	return (
 		<div className="browser">
 			<div className="browser__controls">
-				<BrowserSearch
-					placeholder={FSstore.FSdata.currentPath}
-				/>
+				<BrowserSearch placeholder={FSstore.FSdata.currentPath} />
 				<Button
 					disabled={
 						FSstore.FSdata.homePath === FSstore.FSdata.currentPath
@@ -40,7 +40,7 @@ export const FileBrowser: FC = observer(() => {
 					: (
 							FSstore.FSdata.filteredDirs ||
 							FSstore.FSdata.browserDirs
-					  )?.map((item: any, index) => (
+					  )?.map((item: DirsArr | ITrack, index) => (
 							<CustomListItem
 								key={index}
 								title={item.name}
@@ -56,9 +56,11 @@ export const FileBrowser: FC = observer(() => {
 										ComponentStore.clearBrowserSearchValue()
 										FSstore.setBrowserDirs(item.path)
 									} else {
-										PlayerStore.addTrackToCurrentPlaylist(
-											item,
-										)
+										if (PlayerStore.isITrack(item)) {
+											PlayerStore.addTrackToCurrentPlaylist(
+												item,
+											)
+										}
 									}
 								}}
 								control={
@@ -73,7 +75,7 @@ export const FileBrowser: FC = observer(() => {
 											<MdOutlineStarPurple500
 												style={{
 													color: FSstore.FSdata.favoriteDirs.some(
-														(dir: any) =>
+														(dir: DirsArr | ITrack) =>
 															dir.path ===
 															item.path,
 													)

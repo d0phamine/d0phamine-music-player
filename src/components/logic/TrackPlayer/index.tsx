@@ -16,12 +16,11 @@ import {
 
 import { useStores } from "../../../store"
 import { TrackProgressBar, VolumeChanger } from "../../ui"
-// import { CustomIcon, CustomListItem, BrowserSearch } from "../.."
 
 import "./index.scss"
 
 export const TrackPlayer: FC = observer(() => {
-	const { PlayerStore } = useStores()
+	const { PlayerStore, ComponentStore } = useStores()
 	const howlerRef = useRef<ReactHowler | null>(null)
 
 	const formatTime = (seconds: number | null) => {
@@ -37,6 +36,7 @@ export const TrackPlayer: FC = observer(() => {
 	}
 
 	useEffect(() => {
+		ComponentStore.setHowlerRef(howlerRef)
 		let interval: NodeJS.Timeout | null = null
 
 		if (PlayerStore.playerData.isPlaying) {

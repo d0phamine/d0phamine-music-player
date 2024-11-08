@@ -11,6 +11,7 @@ export interface IComponentStore {
 	drawerOpen: boolean
 	childrenDrawer: boolean
 	containerRefSize: { width: number; height: number }
+    howlerRef:any
 }
 
 export class ComponentStore {
@@ -20,6 +21,7 @@ export class ComponentStore {
 		drawerOpen: false,
 		childrenDrawer: false,
 		containerRefSize: { width: 0, height: 0 },
+        howlerRef: null
 	}
 
 	constructor() {
@@ -56,5 +58,9 @@ export class ComponentStore {
 			this.componentData.containerRefSize = { width, height }
 		}
 	}
+
+    public setHowlerRef(ref:any){
+        this.componentData.howlerRef = ref
+    }
 }
 

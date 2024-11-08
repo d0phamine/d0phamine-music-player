@@ -2,7 +2,10 @@ import { makeAutoObservable, runInAction } from "mobx"
 import { dirname, normalize } from "path"
 import { channels } from "../shared/constants"
 import { ITrack } from "./PlayerStore"
+import { IpcRendererEvent } from 'electron';
+
 const { ipcRenderer } = window.require("electron")
+
 
 export interface DirsArr {
 	type: string
@@ -14,7 +17,7 @@ export interface IFSstore {
 	dirs: DirsArr[] | ITrack[] | null
 	browserDirs: DirsArr[] | ITrack[] | null
 	filteredDirs: DirsArr[] | ITrack[] | null
-	favoriteDirs: string[]
+	favoriteDirs: DirsArr[] | ITrack[]
 	homePath: string
 	currentPath: string
 	previousPath: string
@@ -49,7 +52,7 @@ export class FSstore {
 			ipcRenderer.on(
 				"directory-files",
 				(
-					event: any,
+					event: IpcRendererEvent,
 					receivedFiles: DirsArr[] | ITrack[],
 					path: string,
 				) => {
@@ -65,7 +68,7 @@ export class FSstore {
 
 			ipcRenderer.on(
 				"directory-error",
-				(event: any, errorMessage: any) => {
+				(event: IpcRendererEvent, errorMessage: string) => {
 					console.log(errorMessage)
 					this.FSdata.loading = false
 					reject(errorMessage) // Отклоняем промис в случае ошибки
@@ -113,7 +116,7 @@ export class FSstore {
 
 	public getFavoriteDirs() {
 		ipcRenderer.send(channels.GET_FAVORITES)
-		ipcRenderer.on("get-favorites", (event: any, favoriteDirs: any) => {
+		ipcRenderer.on("get-favorites", (event: IpcRendererEvent, favoriteDirs: ITrack[] | DirsArr[]) => {
 			runInAction(() => {
 				this.FSdata.favoriteDirs = favoriteDirs
 			})
