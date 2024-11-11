@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react"
+import { FC, useEffect, useRef } from "react"
 import { observer } from "mobx-react-lite"
 
 import { CustomListItem, PlaylistDrawer } from "../../"
@@ -14,14 +14,24 @@ import "./index.scss"
 
 export const CurrentPlaylist: FC = observer(() => {
 	const { PlayerStore, ComponentStore } = useStores()
-
 	const containerRef = useRef<HTMLDivElement | null>(null)
 
-	useEffect(() => {
+	const updateContainerSize = () => {
 		if (containerRef.current) {
 			ComponentStore.setContainerRefSize(containerRef)
 		}
+	}
+
+	useEffect(() => {
+		updateContainerSize()
 	}, [PlayerStore.playerData.currentPlaylist])
+
+	useEffect(() => {
+		window.addEventListener("resize", updateContainerSize)
+		return () => {
+			window.removeEventListener("resize", updateContainerSize)
+		}
+	}, [])
 
 	return (
 		<div className="current-playlist" ref={containerRef}>

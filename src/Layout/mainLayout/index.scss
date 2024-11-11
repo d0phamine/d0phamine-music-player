@@ -3,7 +3,7 @@
 	overflow: hidden;
 
 	.visualizer-container {
-        height: 100%;
+        height: calc(100% - 32px);
         width: 100%;
 		z-index: 1;
 		position: absolute;
