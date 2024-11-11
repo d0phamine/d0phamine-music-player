@@ -1,11 +1,22 @@
-.layout-wrapper{
-    height: 100%;
-    overflow: hidden;
-    .main-layout {
+.layout-wrapper {
+	height: 100%;
+	overflow: hidden;
+
+	.visualizer-container {
         height: 100%;
-        overflow: hidden;
-        position: relative;
-        z-index: 10;
-        backdrop-filter: blur(4px);
-    }
+        width: 100%;
+		z-index: 1;
+		position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+	}
+
+	.main-layout {
+		height: 100%;
+		overflow: hidden;
+		position: relative;
+		z-index: 10;
+		backdrop-filter: blur(4px);
+	}
 }

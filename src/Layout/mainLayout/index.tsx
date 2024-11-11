@@ -11,9 +11,12 @@ export const MainLayout: FC<ILayout> = ({ children }) => {
 	return (
 		<>
 			<div className="layout-wrapper">
-				<AudioVisualizer/>
+				<div className="visualizer-container">
+					<AudioVisualizer />
+				</div>
 				<div className="main-layout">{children}</div>
 			</div>
 		</>
 	)
 }
+
