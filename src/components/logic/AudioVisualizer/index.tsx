@@ -40,6 +40,7 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 						showScaleX: false,
 						showScaleY: false,
 						gradient: "rainbow",
+                        volume: 0,
 						audioCtx: howlerInstance._sounds[0]._node.context, // передаем аудиоконтекст
 					},
 				)

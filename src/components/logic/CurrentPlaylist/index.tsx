@@ -5,7 +5,7 @@ import { CustomListItem, PlaylistDrawer } from "../../"
 import { useStores } from "../../../store"
 import { ITrack } from "../../../store/PlayerStore"
 
-import { MdOutlineAudioFile } from "react-icons/md"
+import { MdOutlineAudioFile, MdCleaningServices } from "react-icons/md"
 import { RiPlayList2Fill } from "react-icons/ri"
 import { IoMdMenu } from "react-icons/io"
 import { FloatButton } from "antd"
@@ -69,6 +69,10 @@ export const CurrentPlaylist: FC = observer(() => {
 				<FloatButton
 					icon={<RiPlayList2Fill />}
 					onClick={() => ComponentStore.changeDrawerOpen()}
+				/>
+				<FloatButton
+					icon={<MdCleaningServices />}
+					onClick={() => PlayerStore.cleanCurrentPlaylist()}
 				/>
 			</FloatButton.Group>
 		</div>

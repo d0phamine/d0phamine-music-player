@@ -196,5 +196,10 @@ export class PlayerStore {
 			this.playerData.currentPlaylist.push(...arrOfTracks)
 		}
 	}
+
+	public cleanCurrentPlaylist(){
+		this.playerData.isPlaying = false
+		this.playerData.currentPlaylist = []
+	}
 }
 

@@ -10,8 +10,8 @@
     }
 
 	.ant-slider-handle {
-		width: 6px;
-		height: 6px;
+		width: 3px;
+		height: 3px;
         margin-left: 2px;
         box-shadow: unset;
         outline: unset;
@@ -19,16 +19,16 @@
 	}
 
 	.ant-slider-handle:before {
-		width: 6px;
-		height: 6px;
+		width: 3px;
+		height: 3px;
         margin-left: 2px;
         box-shadow: unset;
         outline: unset;
 	}
 
 	.ant-slider-handle:after {
-		width: 6px;
-		height: 6px;
+		width: 3px;
+		height: 3px;
 		inset-block-start: 2px;
         box-shadow: unset;
         outline: unset;
@@ -37,8 +37,8 @@
 	}
 
 	.ant-slider-handle:hover::after {
-		width: 6px;
-		height: 6px;
+		width: 3px;
+		height: 3px;
 		inset-block-start: 2px;
         margin-left: 2px;
         background-color: transparent;
@@ -47,14 +47,19 @@
 	}
 
 	.ant-slider-handle:focus::after {
-		width: 6px;
-		height: 6px;
+		width: 3px;
+		height: 3px;
 		inset-block-start: 2px;
         margin-left: 2px;
         background-color: transparent;
         box-shadow: unset;
         outline: unset;
 	}
+
+    .ant-slider-handle:focus::before {
+        width: 3px;
+		height: 3px;
+    }
 }
 
 .track-progress-bar:hover{
