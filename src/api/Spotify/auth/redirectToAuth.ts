@@ -1,6 +1,3 @@
-
-
-
 export const redirectToAuth = async (clientId: string) => {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);

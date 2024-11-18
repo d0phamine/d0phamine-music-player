@@ -66,6 +66,7 @@ export const Titlebar: FC = observer(() => {
 				>
 					{maximized ? <IoContractOutline /> : <IoExpandOutline />}
 				</button>
+				<p style={{fontSize:"6px"}}>{window.location.href}</p>
 				{SpotifyStore.SpotifyData.accessToken ? (
 					<Button
 						className="spotify-button"
