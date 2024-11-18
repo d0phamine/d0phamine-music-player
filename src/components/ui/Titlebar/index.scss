@@ -26,6 +26,14 @@
 	flex-grow: 1;
 	color: white;
 	border-bottom: 1px solid #424242;
+	padding-right: 4px;
+
+	.spotify-button {
+
+		border-radius: 12px;
+		padding: 0px 7px 0px 6px;
+		font-size: 12px;
+	}
 }
 
 .menu-icon {

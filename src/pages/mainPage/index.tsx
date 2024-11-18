@@ -11,7 +11,7 @@ import "./index.scss"
 
 import { CurrentPlaylist } from "../../components"
 
-export const IndexPage: FC = observer(() => {
+export const MainPage: FC = observer(() => {
 	const { FSstore } = useStores()
 
 	useEffect(() => {

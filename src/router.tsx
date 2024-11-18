@@ -1,16 +1,14 @@
 import { FC } from "react"
 import { HashRouter, Route, Routes } from "react-router-dom"
-import { IndexPage } from "./pages/mainPage"
+import { MainPage } from "./pages/mainPage"
+import { SpotifyPage } from "./pages/spotifyPage"
 
 export const Router: FC = () => {
 	return (
-		<HashRouter>
-			<Routes>
-				<Route path="/">
-					<Route index element={<IndexPage />} />
-				</Route>
-			</Routes>
-		</HashRouter>
+		<Routes>
+			<Route path="/" element={<MainPage />} />
+			<Route path="/spotify-page" element={<SpotifyPage />} />
+		</Routes>
 	)
 }
 

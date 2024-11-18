@@ -13,14 +13,16 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 	const analyzerRef = useRef<AudioMotionAnalyzer | null>(null)
 	const visualizerRef = useRef<HTMLDivElement>(null)
 
-	// Состояние для плавного затухания
-
 	useEffect(() => {
-		// Следим за состоянием воспроизведения
-
-		// Проверяем, существует ли howlerRef и что внутри него есть howler
+		// Проверяем, что howlerRef и его свойства существуют
 		if (howlerRef?.current?.howler) {
 			const howlerInstance = howlerRef.current.howler
+
+			// Проверяем, что sounds[0] существует и содержит _node
+			const soundNode = howlerInstance._sounds[0]?._node
+			if (!soundNode) {
+				return; // Прерываем выполнение, если звуковой узел не найден
+			}
 
 			// Инициализация AudioMotionAnalyzer только один раз
 			if (visualizerRef.current && !analyzerRef.current) {
@@ -29,33 +31,30 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 					{
 						barSpace: 0.5,
 						radial: true,
-                        spinSpeed: 0.7,
-                        radius: 0.1,
+						spinSpeed: 0.7,
+						radius: 0.1,
 						channelLayout: "dual-horizontal",
-                        showBgColor: true,
-                        bgAlpha: 0,
-                        overlay: true,
+						showBgColor: true,
+						bgAlpha: 0,
+						overlay: true,
 						fftSize: 16384,
-                        showPeaks: true,
+						showPeaks: true,
 						showScaleX: false,
 						showScaleY: false,
 						gradient: "rainbow",
-                        volume: 0,
-						audioCtx: howlerInstance._sounds[0]._node.context, // передаем аудиоконтекст
+						volume: 0,
+						audioCtx: soundNode.context, // передаем аудиоконтекст
 					},
 				)
 			}
 
-			// Подключаем звуковой узел Howler к анализатору
-			if (howlerInstance && analyzerRef.current) {
-				analyzerRef.current.connectInput(
-					howlerInstance._sounds[0]._node,
-				)
+			// Подключаем звуковой узел Howler к анализатору, если analyzerRef и soundNode существуют
+			if (howlerInstance && analyzerRef.current && soundNode) {
+				analyzerRef.current.connectInput(soundNode)
 			}
 		}
 	}, [howlerRef, PlayerStore.playerData.selectedTrack]) // Инициализация анализатора только при смене трека
 
 	// Рендерим визуализатор с плавным переходом для opacity
-	return <div ref={visualizerRef} className="audio-visualizer" style={{background:"transparent"}}></div>
+	return <div ref={visualizerRef} className="audio-visualizer" style={{ background: "transparent" }}></div>
 })
-

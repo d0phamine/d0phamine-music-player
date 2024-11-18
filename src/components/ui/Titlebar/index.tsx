@@ -1,19 +1,30 @@
 import { FC, useState } from "react"
+
+import { useStores } from "../../../store"
+import { observer } from "mobx-react-lite"
+import { useNavigate, useLocation } from "react-router-dom"
+
 import {
 	IoCloseOutline,
 	IoContractOutline,
 	IoExpandOutline,
 	IoRemove,
+	IoPlaySharp,
 } from "react-icons/io5"
+import { FaSpotify } from "react-icons/fa"
+import { Button } from "antd"
 
 import "./index.scss"
 
 const { getCurrentWindow, app } = window.require("@electron/remote")
 
-export const Titlebar: FC = () => {
+export const Titlebar: FC = observer(() => {
+	const { SpotifyStore } = useStores()
+	const location = useLocation()
+	const redirect = useNavigate()
+
 	const currentWindow = getCurrentWindow()
 	const [maximized, setMaximized] = useState(currentWindow.isMaximized())
-
 	const onMinimize = () => currentWindow.minimize()
 	const onMaximize = () => {
 		setMaximized(!currentWindow.isMaximized())
@@ -22,14 +33,14 @@ export const Titlebar: FC = () => {
 			: currentWindow.maximize()
 	}
 	const onQuit = () => {
-        // Закрыть текущее окно
-        currentWindow.close();
-    };
+		// Закрыть текущее окно
+		currentWindow.close()
+	}
 
-    currentWindow.on('close', (e:Error) => {
-        // Закрыть приложение
-        app.exit();
-    });
+	currentWindow.on("close", (e: Error) => {
+		// Закрыть приложение
+		app.exit()
+	})
 
 	return (
 		<div className="title-bar sticky top-0 select-none">
@@ -55,8 +66,39 @@ export const Titlebar: FC = () => {
 				>
 					{maximized ? <IoContractOutline /> : <IoExpandOutline />}
 				</button>
+				{SpotifyStore.SpotifyData.accessToken ? (
+					<Button
+						className="spotify-button"
+						size="small"
+						icon={
+							location.pathname === "/spotify-page" ? (
+								<IoPlaySharp />
+							) : (
+								<FaSpotify />
+							)
+						}
+						onClick={() =>
+							location.pathname === "/spotify-page"
+								? redirect("/")
+								: redirect("/spotify-page")
+						}
+					>
+						{location.pathname === "/spotify-page"
+							? "Go to player"
+							: "Go to spotify"}
+					</Button>
+				) : (
+					<Button
+						className="spotify-button"
+						size="small"
+						icon={<FaSpotify />}
+						onClick={() => SpotifyStore.getAccessToken()}
+					>
+						Connect spotify
+					</Button>
+				)}
 			</div>
 		</div>
 	)
-}
+})
 
