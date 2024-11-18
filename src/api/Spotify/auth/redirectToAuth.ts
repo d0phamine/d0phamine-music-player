@@ -5,11 +5,35 @@ export const redirectToAuth = async (clientId: string) => {
     // Сохраняем verifier
     localStorage.setItem("verifier", verifier);
 
+    const scopes = [
+        'ugc-image-upload',
+        'streaming',
+      
+        'user-read-playback-state',
+        'user-modify-playback-state',
+        'user-read-currently-playing',
+      
+        'playlist-read-private',
+        'playlist-modify-public',
+        'playlist-modify-private',
+        'playlist-read-collaborative',
+      
+        'user-follow-modify',
+        'user-follow-read',
+      
+        'user-read-playback-position',
+        'user-top-read',
+        'user-read-recently-played',
+      
+        'user-library-read',
+        'user-library-modify',
+      ] as const
+
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("response_type", "code");
     params.append("redirect_uri", "http://localhost:3000");
-    params.append("scope", "user-read-private user-read-email");
+    params.append("scope", scopes.join(' '));
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
 

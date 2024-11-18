@@ -1,6 +1,6 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, runInAction } from "mobx"
 import { spotifyAuth } from "../api/Spotify/auth/auth"
-import { getUserInfo } from "../api/Spotify/getUserInfo/getUserInfo"
+import { getUserInfo, getUserPlaylists } from "../api/Spotify/getData"
 
 interface Image {
 	url: string
@@ -30,6 +30,7 @@ export interface ISpotifyStore {
 	accessToken: string | undefined
 	refreshToken: string | undefined
 	userInfo: IUserInfo | null
+	userPlaylists:{}
 }
 
 export class SpotifyStore {
@@ -37,6 +38,7 @@ export class SpotifyStore {
 		accessToken: "",
 		refreshToken:"",
 		userInfo: null,
+		userPlaylists:{}
 	}
 
 	constructor() {
@@ -54,26 +56,44 @@ export class SpotifyStore {
 	}
 
 	public async getAccessToken() {
+		// Проверяем, есть ли уже accessToken
 		if (!this.SpotifyData.accessToken) {
-			try {
-				const token_data = await spotifyAuth()
-				console.log(token_data)
-				if (token_data) {
-					this.SpotifyData.accessToken = token_data.access_token
-					this.SpotifyData.refreshToken = token_data.refresh_token
-				} else {
-					console.error("Не удалось получить токен")
-				}
-			} catch (error) {
-				console.error("Ошибка при получении токена:", error)
+		  try {
+			// Получаем токены через функцию spotifyAuth
+			const token_data = await spotifyAuth();
+	  
+			// Если данные о токенах получены, обновляем хранилище
+			if (token_data) {
+			  this.SpotifyData.accessToken = token_data.access_token;
+			  this.SpotifyData.refreshToken = token_data.refresh_token;
+			} else {
+			  console.error("Не удалось получить токен");
 			}
+		  } catch (error) {
+			console.error("Ошибка при получении токена:", error);
+		  }
 		}
+	  }
+
+	public setTokens(access_token:string, refresh_token:string){
+		runInAction(() => {
+			this.SpotifyData.accessToken = access_token
+			this.SpotifyData.refreshToken = refresh_token
+		})
 	}
 
 	public async setUserInfo() {
 		if (this.SpotifyData.accessToken && this.SpotifyData.refreshToken) {
 			this.SpotifyData.userInfo = await getUserInfo(
 				this.SpotifyData.accessToken, this.SpotifyData.refreshToken
+			)
+		}
+	}
+
+	public async setUserPlaylists() {
+		if (this.SpotifyData.accessToken && this.SpotifyData.refreshToken) {
+			this.SpotifyData.userPlaylists = await getUserPlaylists(
+				this.SpotifyData.accessToken, this.SpotifyData.refreshToken, {offset:5, limit:20}
 			)
 		}
 	}

@@ -11,9 +11,9 @@ export const SpotifyPage: FC = observer(() => {
 	const { SpotifyStore } = useStores()
 
 	useEffect(() => {
-		SpotifyStore.setUserInfo()
+		SpotifyStore.setUserPlaylists()
 	}, [SpotifyStore])
-
+	console.log(SpotifyStore.SpotifyData.userPlaylists)
 	return (
 		<MainLayout>
 			<div className="spotify-page">
