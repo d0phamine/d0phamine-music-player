@@ -66,38 +66,27 @@ export const Titlebar: FC = observer(() => {
 				>
 					{maximized ? <IoContractOutline /> : <IoExpandOutline />}
 				</button>
-				<p style={{fontSize:"6px"}}>{window.location.href}</p>
-				{SpotifyStore.SpotifyData.accessToken ? (
-					<Button
-						className="spotify-button"
-						size="small"
-						icon={
-							location.pathname === "/spotify-page" ? (
-								<IoPlaySharp />
-							) : (
-								<FaSpotify />
-							)
-						}
-						onClick={() =>
-							location.pathname === "/spotify-page"
-								? redirect("/")
-								: redirect("/spotify-page")
-						}
-					>
-						{location.pathname === "/spotify-page"
-							? "Go to player"
-							: "Go to spotify"}
-					</Button>
-				) : (
-					<Button
-						className="spotify-button"
-						size="small"
-						icon={<FaSpotify />}
-						onClick={() => SpotifyStore.getAccessToken()}
-					>
-						Connect spotify
-					</Button>
-				)}
+				{/* <p style={{ fontSize: "4px" }}>{window.location.href}</p> */}
+				<Button
+					className="spotify-button"
+					size="small"
+					icon={
+						location.pathname === "/spotify-page" ? (
+							<IoPlaySharp />
+						) : (
+							<FaSpotify />
+						)
+					}
+					onClick={() =>
+						location.pathname === "/spotify-page"
+							? redirect("/")
+							: redirect("/spotify-page")
+					}
+				>
+					{location.pathname === "/spotify-page"
+						? "Go to player"
+						: "Go to spotify"}
+				</Button>
 			</div>
 		</div>
 	)

@@ -5,8 +5,8 @@
 	overflow: hidden;
 
 	&__browser {
-		display: grid;
-		grid-template-rows: 1fr 2fr;
+		display: flex;
+		flex-direction: column;
 		gap: 12px;
 		border-right: 1px solid #424242;
 		overflow: hidden;

@@ -1,0 +1,39 @@
+.spotify-list-item {
+	width: 100%;
+	padding: 6px 12px;
+	border-bottom: 1px solid #424242;
+	display: flex;
+	line-height: 1;
+	list-style-type: none;
+	gap: 6px;
+
+
+	&__image {
+		flex-shrink: 0;
+		img {
+			width: 32px;
+			height: 32px;
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 2px;
+		line-height: 1;
+
+		.item-content-title{
+			font-size: 14px;
+		}
+
+		.item-content-type-owner {
+			font-size: 10px;
+			font-weight: 400;
+		}
+	}
+}
+
+// .spotify-list-item:nth-child(1){
+// 	border-top: 1px solid #424242;
+// }

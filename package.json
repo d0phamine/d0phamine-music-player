@@ -88,6 +88,7 @@
 		"@electron/remote": "^2.0.8",
 		"@fontsource-variable/jetbrains-mono": "^5.1.1",
 		"@fontsource/fira-mono": "^5.1.0",
+		"@spotify/web-api-ts-sdk": "^1.2.0",
 		"@types/react-howler": "^5.2.3",
 		"ajv": "^8.17.1",
 		"antd": "^5.21.6",
