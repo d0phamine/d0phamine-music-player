@@ -18,7 +18,6 @@ import "./index.scss"
 
 export const FileBrowser: FC = observer(() => {
 	const { FSstore, ComponentStore, PlayerStore } = useStores()
-
 	return (
 		<div className="browser">
 			<div className="browser__controls">
@@ -43,7 +42,13 @@ export const FileBrowser: FC = observer(() => {
 					  )?.map((item: DirsArr | ITrack, index) => (
 							<CustomListItem
 								key={index}
-								title={item.name}
+								title={
+									PlayerStore.isITrack(item)
+										? item.artist === ""
+											? item.name
+											: `${item.artist} - ${item.name}`
+										: item.name
+								}
 								button={
 									item.type === "directory" ? (
 										<MdFolder />
@@ -75,7 +80,11 @@ export const FileBrowser: FC = observer(() => {
 											<MdOutlineStarPurple500
 												style={{
 													color: FSstore.FSdata.favoriteDirs.some(
-														(dir: DirsArr | ITrack) =>
+														(
+															dir:
+																| DirsArr
+																| ITrack,
+														) =>
 															dir.path ===
 															item.path,
 													)

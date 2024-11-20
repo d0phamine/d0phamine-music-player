@@ -15,7 +15,6 @@ export const MyContent: FC = observer(() => {
 		SpotifyStore.setUserTopCombined("long_term", 10)
 	}, [])
 
-	console.log(SpotifyStore.SpotifyData.userTopCombined, "top combined")
 	return (
 		<div className="my-content">
 			<div className="my-content__header">My Playlists</div>

@@ -27,6 +27,7 @@ body {
 	font-family: 'JetBrains Mono Variable', monospace;
 	color: white;
 	background: #141414;
+	overflow: hidden;
 
 	::-webkit-scrollbar {
 		display: none;
@@ -36,6 +37,7 @@ body {
 		height: 100%;
 		display: grid;
 		grid-template-rows: 0px 32px 1fr;
+		overflow: hidden;
 	}
 
 	p {
