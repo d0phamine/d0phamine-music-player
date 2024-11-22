@@ -7,7 +7,7 @@ import { MainLayout } from "../../Layout/mainLayout"
 import { useStores } from "../../store"
 
 import "./index.scss"
-import { MyContent } from "../../components"
+import { MyCollections, MyContent, TrackPlayer } from "../../components"
 
 export const SpotifyPage: FC = observer(() => {
 	const { SpotifyStore } = useStores()
@@ -23,13 +23,12 @@ export const SpotifyPage: FC = observer(() => {
 		<MainLayout>
 			<div className="spotify-page">
 				<div className="spotify-page__browser">
-					{SpotifyStore.SpotifyData.sdk ? (
-							<MyContent /> 
-					) : (
-						<></>
-					)}
+					{SpotifyStore.SpotifyData.sdk ? <MyContent /> : <></>}
 				</div>
-				<div className="spotify-page__player"></div>
+				<div className="spotify-page__player">
+					<TrackPlayer />
+					{SpotifyStore.SpotifyData.sdk ? <MyCollections /> : <></>}
+				</div>
 			</div>
 		</MainLayout>
 	)

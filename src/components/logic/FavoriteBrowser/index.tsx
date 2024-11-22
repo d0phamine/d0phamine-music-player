@@ -20,7 +20,7 @@ export const FavoriteBrowser: FC = observer(() => {
 
 	
 	const  onDeleteFromFavorites = (item:  DirsArr | ITrack ): void => {
-		FSstore.deletFromFavorites(item.path)
+		FSstore.deleteFromFavorites(item.path)
 		// other  code ...
 	}
 	const  onSetBrowserDirs = (path: string ): void => {
