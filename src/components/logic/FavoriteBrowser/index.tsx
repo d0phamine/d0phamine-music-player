@@ -10,12 +10,23 @@ import { ITrack } from "../../../store/PlayerStore"
 
 import "./index.scss"
 
+
 export const FavoriteBrowser: FC = observer(() => {
 	const { FSstore } = useStores()
 
 	useEffect(() => {
 		FSstore.getFavoriteDirs()
 	}, [FSstore])
+
+	
+	const  onDeleteFromFavorites = (item:  DirsArr | ITrack ): void => {
+		FSstore.deletFromFavorites(item.path)
+		// other  code ...
+	}
+	const  onSetBrowserDirs = (path: string ): void => {
+		FSstore.setBrowserDirs(path)
+		// other  code ...
+	}
 
 	return (
 		<div className="favorite-browser">
@@ -29,17 +40,13 @@ export const FavoriteBrowser: FC = observer(() => {
 						control={
 							<div className="control-items">
 								<DirDropdown trigger={["click"]} dirPath={item.path}>
-									<CustomIcon
-										onClick={(e: React.MouseEvent) =>
-											e.preventDefault()
-										}
-									>
+									<CustomIcon>
 										<MdMoreHoriz />
 									</CustomIcon>
 								</DirDropdown>
 								<CustomIcon
 									onClick={() =>
-										FSstore.deletFromFavorites(item.path)
+										onDeleteFromFavorites(item)
 									}
 								>
 									<MdOutlineStarPurple500
@@ -48,7 +55,7 @@ export const FavoriteBrowser: FC = observer(() => {
 								</CustomIcon>
 							</div>
 						}
-						onClick={() => FSstore.setBrowserDirs(item.path)}
+						onClick={() => onSetBrowserDirs(item.path)}
 					/>
 				))}
 			</div>

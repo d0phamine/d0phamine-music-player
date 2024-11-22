@@ -22,6 +22,7 @@ import "./index.scss"
 export const TrackPlayer: FC = observer(() => {
 	const { PlayerStore, ComponentStore } = useStores()
 	const howlerRef = useRef<ReactHowler | null>(null)
+	
 
 	const formatTime = (seconds: number | null) => {
 		if (seconds == null) return "0:00" // Если значение null, возвращаем "0:00"
@@ -36,11 +37,12 @@ export const TrackPlayer: FC = observer(() => {
 	}
 
 	useEffect(() => {
-		ComponentStore.setHowlerRef(howlerRef)
 		let interval: NodeJS.Timeout | null = null
-
+		ComponentStore.setHowlerRef(howlerRef)
+		
 		if (PlayerStore.playerData.isPlaying) {
-			interval = setInterval(() => {
+
+			 interval = setInterval(() => {
 				if (howlerRef.current) {
 					PlayerStore.setCurrentSeekOfPlay(
 						howlerRef.current.seek() as number,
@@ -50,14 +52,30 @@ export const TrackPlayer: FC = observer(() => {
 					)
 				}
 			}, 1000)
-		} else if (interval) {
-			clearInterval(interval)
-		}
-
+		 }
+	
 		return () => {
 			if (interval) clearInterval(interval)
 		}
 	}, [PlayerStore.playerData.isPlaying])
+
+
+
+const onShuffled = () =>{
+	if (PlayerStore.playerData.isShuffled) {
+		PlayerStore.unShufflePlaylist()
+		PlayerStore.setSelectedTrackInCurrentPlaylist(
+			PlayerStore.playerData.currentPlaylist[0],
+		)
+	} else {
+		PlayerStore.shufflePlaylist()
+		PlayerStore.setSelectedTrackInCurrentPlaylist(
+			PlayerStore.playerData.currentPlaylist[0],
+		)
+	}
+}
+
+
 
 	return (
 		<div className="track-player">
@@ -100,19 +118,7 @@ export const TrackPlayer: FC = observer(() => {
 							? { cursor: "pointer", color: "#6f56d0" }
 							: { cursor: "pointer" }
 					}
-					onClick={() => {
-						if (PlayerStore.playerData.isShuffled) {
-							PlayerStore.unShufflePlaylist()
-							PlayerStore.setSelectedTrackInCurrentPlaylist(
-								PlayerStore.playerData.currentPlaylist[0],
-							)
-						} else {
-							PlayerStore.shufflePlaylist()
-							PlayerStore.setSelectedTrackInCurrentPlaylist(
-								PlayerStore.playerData.currentPlaylist[0],
-							)
-						}
-					}}
+					onClick={onShuffled}
 				/>
 				<MdRepeat
 					style={
@@ -164,9 +170,8 @@ export const TrackPlayer: FC = observer(() => {
 				/>
 			)}
 			<VolumeChanger />
-			{PlayerStore.playerData.selectedTrack == null ? (
-				<></>
-			) : (
+			{PlayerStore.playerData.selectedTrack  && 
+			 (
 				<ReactHowler
 					src={[
 						`file://${PlayerStore.playerData.selectedTrack?.path}`,
@@ -189,7 +194,9 @@ export const TrackPlayer: FC = observer(() => {
 						PlayerStore.changeIsPlaying()
 					}}
 				/>
-			)}
+				)
+			 
+			}
 		</div>
 	)
 })

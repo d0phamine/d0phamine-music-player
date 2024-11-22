@@ -7,10 +7,11 @@ export interface CustomIconProps {
 	onClick?: (e:React.MouseEvent) => void
 }
 
-export const CustomIcon: FC<CustomIconProps> = (props) => {
+export const CustomIcon: FC<CustomIconProps> = ({onClick=(e: React.MouseEvent) =>
+	e.preventDefault(), children}) => {
 	return (
-		<div className={"custom-icon"} onClick={props.onClick}>
-			{props.children}
+		<div className={"custom-icon"} onClick={onClick}>
+			{children}
 		</div>
 	)
 }
