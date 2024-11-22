@@ -9,6 +9,9 @@ import {
 	Artist,
 	Track,
 	MaxInt,
+	NewReleases,
+	CountryCodeA2,
+	FeaturedPlaylists,
 } from "@spotify/web-api-ts-sdk"
 
 export interface ISpotifyStore {
@@ -19,6 +22,8 @@ export interface ISpotifyStore {
 	userTopTracks: Page<Track> | undefined
 	userTopArtists: Page<Artist> | undefined
 	userTopCombined: Page<Track | Artist> | undefined
+	userNewReleases: NewReleases | undefined
+	userFeaturedPlaylists: FeaturedPlaylists | undefined
 	sdk: SpotifyApi | null
 }
 
@@ -31,6 +36,8 @@ export class SpotifyStore {
 		userTopTracks: undefined,
 		userTopArtists: undefined,
 		userTopCombined: undefined,
+		userNewReleases: undefined,
+		userFeaturedPlaylists: undefined,
 		sdk: null,
 	}
 
@@ -94,14 +101,13 @@ export class SpotifyStore {
 	public async setUserTop(
 		time_range: "short_term" | "medium_term" | "long_term",
 		limit?: MaxInt<50>,
-		offset?: MaxInt<50>,
+		offset?: number,
 	) {
 		const [topArtists, topTracks] = await Promise.all([
 			this.SpotifyData.sdk?.currentUser.topItems("artists", time_range),
 			this.SpotifyData.sdk?.currentUser.topItems("tracks", time_range),
 		])
 
-		// Сохраняем данные в стор
 		runInAction(() => {
 			this.SpotifyData.userTopArtists = topArtists
 			this.SpotifyData.userTopTracks = topTracks
@@ -111,7 +117,7 @@ export class SpotifyStore {
 	public async setUserTopCombined(
 		time_range: "short_term" | "medium_term" | "long_term",
 		limit: MaxInt<50>,
-		offset?: MaxInt<50>,
+		offset?: number,
 	) {
 		try {
 			const [topArtists, topTracks] = await Promise.all([
@@ -145,6 +151,53 @@ export class SpotifyStore {
 			})
 		} catch (error) {
 			console.error("Failed to fetch combined top items:", error)
+		}
+	}
+
+	public async setUserNewReleases(
+		country?: string,
+		limit?: MaxInt<50>,
+		offset?: number,
+	) {
+		try {
+			const userNewReleases =
+				await this.SpotifyData.sdk?.browse.getNewReleases(
+					country,
+					limit,
+					offset,
+				)
+			console.log(userNewReleases)
+			runInAction(() => {
+				this.SpotifyData.userNewReleases = userNewReleases
+			})
+		} catch (error) {
+			console.error("Ошибка при получении новых релизов:", error)
+		}
+	}
+
+	public async setUserFeaturedPlaylists(
+		country?: CountryCodeA2,
+		locale?: string,
+		timestamp?: string,
+		limit?: MaxInt<50>,
+		offset?: number,
+	) {
+		try {
+			console.log(country)
+			const userFeaturedPlaylists =
+				await this.SpotifyData.sdk?.browse.getFeaturedPlaylists(
+					country,
+					locale,
+					timestamp,
+					limit,
+					offset,
+				)
+			console.log(userFeaturedPlaylists)
+			runInAction(() => {
+				this.SpotifyData.userFeaturedPlaylists = userFeaturedPlaylists
+			})
+		} catch (error) {
+			console.error("Ошибка при получении релизов:", error)
 		}
 	}
 }
