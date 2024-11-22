@@ -131,7 +131,7 @@ export class FSstore {
 		this.getFavoriteDirs()
 	}
 
-	public deletFromFavorites(path: string) {
+	public deleteFromFavorites(path: string) {
 		ipcRenderer.send(channels.DELETE_FAVORITE, path)
 		this.getFavoriteDirs()
 	}

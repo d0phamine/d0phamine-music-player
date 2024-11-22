@@ -39,7 +39,7 @@ export const FavoriteBrowser: FC = observer(() => {
 								</DirDropdown>
 								<CustomIcon
 									onClick={() =>
-										FSstore.deletFromFavorites(item.path)
+										FSstore.deleteFromFavorites(item.path)
 									}
 								>
 									<MdOutlineStarPurple500
