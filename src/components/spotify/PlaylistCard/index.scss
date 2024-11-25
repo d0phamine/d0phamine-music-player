@@ -1,0 +1,62 @@
+.playlist-card {
+	padding: 6px;
+	// background-color: rgb(35, 35, 35);
+	display: flex;
+	gap: 6px;
+	flex-direction: column;
+	max-width: 140px;
+
+	&__cover {
+		width: 128px;
+		height: 128px;
+		background-color: rgb(36, 63, 87);
+	}
+
+	&__title {
+		font-size: 10px;
+		width: 100%; /* Ограничиваем ширину */
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-start;
+		overflow: hidden;
+
+		.title-artists {
+			p {
+				margin: 0;
+				padding: 0;
+				line-height: 1.2; /* Задаем нормальную высоту строки */
+				white-space: normal; /* Разрешаем перенос текста */
+				overflow: hidden;
+				text-overflow: ellipsis; /* Многоточие в конце, если текст не помещается */
+				display: -webkit-box; /* Для ограничения количества строк */
+				-webkit-line-clamp: 2; /* Максимум две строки */
+				-webkit-box-orient: vertical;
+			}
+		}
+
+		.title-release {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			line-height: 1;
+			width: 100%;
+
+			&__name,
+			&__artists {
+				overflow: hidden; /* Обрезаем текст, который не помещается */
+				white-space: nowrap; /* Запрещаем перенос текста */
+				text-overflow: ellipsis;
+                display: block; 
+			}
+
+			&__name {
+				font-weight: 800;
+			}
+
+			&__artists {
+				font-weight: 400;
+			}
+		}
+	}
+}
+
