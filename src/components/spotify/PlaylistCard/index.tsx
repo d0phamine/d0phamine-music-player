@@ -29,7 +29,7 @@ export const PlaylistCard: FC<PlaylistCardProps> = (props) => {
 						</div>
 					</div>
 				) : (
-					<div className="title-artists">
+					<div className="title-description">
 						<p>{props.title}</p>
 					</div>
 				)}
