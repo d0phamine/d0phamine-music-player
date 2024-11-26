@@ -9,6 +9,7 @@ export interface IComponentStore {
 	browserSearchValue: string
 	dirDropdownItems: IDirDropdownItems[]
 	drawerOpen: boolean
+	drawerContent: any | undefined
 	childrenDrawer: boolean
 	containerRefSize: { width: number; height: number }
     howlerRef:any
@@ -21,7 +22,8 @@ export class ComponentStore {
 		drawerOpen: false,
 		childrenDrawer: false,
 		containerRefSize: { width: 0, height: 0 },
-        howlerRef: null
+        howlerRef: null,
+		drawerContent: undefined,
 	}
 
 	constructor() {
@@ -36,10 +38,12 @@ export class ComponentStore {
 		this.componentData.browserSearchValue = ""
 	}
 
-	public changeDrawerOpen() {
+	public changeDrawerOpen(content?:any) {
 		if (this.componentData.drawerOpen) {
 			this.componentData.drawerOpen = false
+			this.componentData.drawerContent = undefined
 		} else {
+			this.componentData.drawerContent = content
 			this.componentData.drawerOpen = true
 		}
 	}
@@ -52,15 +56,18 @@ export class ComponentStore {
 		}
 	}
 
-	public setContainerRefSize(refElement: React.RefObject<HTMLDivElement>) {
+	public setDrawerContainerRefSize(refElement: React.RefObject<HTMLDivElement>) {
 		if (refElement.current) {
 			const { width, height } = refElement.current.getBoundingClientRect()
 			this.componentData.containerRefSize = { width, height }
 		}
 	}
+	
 
     public setHowlerRef(ref:any){
         this.componentData.howlerRef = ref
     }
+
+
 }
 

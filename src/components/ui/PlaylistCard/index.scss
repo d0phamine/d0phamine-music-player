@@ -1,10 +1,11 @@
 .playlist-card {
 	padding: 6px;
 	// background-color: rgb(35, 35, 35);
+	border: 1px solid transparent;
 	display: flex;
 	gap: 6px;
 	flex-direction: column;
-	max-width: 140px;
+	width: 142px;
 
 	&__cover {
 		width: 128px;
@@ -58,5 +59,11 @@
 			}
 		}
 	}
+}
+
+.playlist-card:hover {
+	border: 1px solid #424242;
+	cursor: pointer;
+	transition: 0.3s;
 }
 

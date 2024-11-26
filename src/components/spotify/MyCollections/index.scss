@@ -2,21 +2,27 @@
 	padding: 12px;
 	display: flex;
 	flex-direction: column;
-	gap: 12px;
-    overflow: hidden;
+	gap: 24px;
+    overflow-y: auto;
+    overflow-x: hidden;
 
 	h2 {
 		line-height: 1;
 		font-size: 16px;
 	}
 
-	&__new-releases {
+	&__new-releases,
+    &__featured-playlists,
+    &__for-you-playlists {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
+        gap: 12px;
+		
 
-		.new-releases-container {
+		.new-releases-container,
+        .featured-playlists-container,
+        .for-you-playlists-container {
 			width: 100%;
 			display: flex;
 			flex-direction: row;

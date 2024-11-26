@@ -12,9 +12,12 @@ import {
 	NewReleases,
 	CountryCodeA2,
 	FeaturedPlaylists,
+	Market,
+	PlaylistedTrack,
 } from "@spotify/web-api-ts-sdk"
 
 export interface ISpotifyStore {
+	sdk: SpotifyApi | null
 	accessToken: string | undefined
 	refreshToken: string | undefined
 	userInfo: UserProfile | undefined
@@ -24,11 +27,15 @@ export interface ISpotifyStore {
 	userTopCombined: Page<Track | Artist> | undefined
 	userNewReleases: NewReleases | undefined
 	userFeaturedPlaylists: FeaturedPlaylists | undefined
-	sdk: SpotifyApi | null
+	playlistsForCategory: FeaturedPlaylists | undefined
+	playlistItems: Page<PlaylistedTrack<Track>> | undefined | undefined
+	playlistInfo: SimplifiedPlaylist | undefined
+	forYouCategoryId: string
 }
 
 export class SpotifyStore {
 	public SpotifyData: ISpotifyStore = {
+		sdk: null,
 		accessToken: "",
 		refreshToken: "",
 		userInfo: undefined,
@@ -38,7 +45,10 @@ export class SpotifyStore {
 		userTopCombined: undefined,
 		userNewReleases: undefined,
 		userFeaturedPlaylists: undefined,
-		sdk: null,
+		playlistsForCategory: undefined,
+		playlistItems: undefined,
+		playlistInfo: undefined,
+		forYouCategoryId: "0JQ5DAt0tbjZptfcdMSKl3",
 	}
 
 	constructor() {
@@ -166,7 +176,6 @@ export class SpotifyStore {
 					limit,
 					offset,
 				)
-			console.log(userNewReleases)
 			runInAction(() => {
 				this.SpotifyData.userNewReleases = userNewReleases
 			})
@@ -183,7 +192,6 @@ export class SpotifyStore {
 		offset?: number,
 	) {
 		try {
-			console.log(country)
 			const userFeaturedPlaylists =
 				await this.SpotifyData.sdk?.browse.getFeaturedPlaylists(
 					country,
@@ -192,13 +200,67 @@ export class SpotifyStore {
 					limit,
 					offset,
 				)
-			console.log(userFeaturedPlaylists)
 			runInAction(() => {
 				this.SpotifyData.userFeaturedPlaylists = userFeaturedPlaylists
 			})
 		} catch (error) {
 			console.error("Ошибка при получении релизов:", error)
 		}
+	}
+
+	public async setPlaylistsForCategory(
+		category_id: string,
+		country?: CountryCodeA2,
+		limit?: MaxInt<50>,
+		offset?: number,
+	) {
+		try {
+			const playlistsForCategory =
+				await this.SpotifyData.sdk?.browse.getPlaylistsForCategory(
+					category_id,
+					country,
+					limit,
+					offset,
+				)
+			runInAction(() => {
+				this.SpotifyData.playlistsForCategory = playlistsForCategory
+			})
+		} catch (error) {
+			console.error(
+				"Ошибка при получении плейлистов по категории:",
+				error,
+			)
+		}
+	}
+
+	public async setPlaylistItems(
+		playlist_id: string,
+		market?: Market,
+		fields?: string,
+		limit?: MaxInt<50>,
+		offset?: number,
+	) {
+		try {
+			const playlistItems =
+				await this.SpotifyData.sdk?.playlists.getPlaylistItems(
+					playlist_id,
+					market,
+					fields,
+					limit,
+					offset,
+				)
+			console.log(playlistItems)
+			runInAction(() => {
+				this.SpotifyData.playlistItems = playlistItems
+			})
+		} catch (error) {
+			console.error("Ошибка при получении треков:", error)
+		}
+	}
+
+	public setPlaylistInfo(info:SimplifiedPlaylist){
+		this.SpotifyData.playlistInfo = info
+		console.log(info)
 	}
 }
 
