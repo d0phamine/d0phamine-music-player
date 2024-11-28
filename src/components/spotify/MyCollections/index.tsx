@@ -28,11 +28,8 @@ export const MyCollections: FC = observer(() => {
 
 	useEffect(() => {
         updateContainerSize()
-		SpotifyStore.setUserFeaturedPlaylists()
 		SpotifyStore.setUserNewReleases()
-		SpotifyStore.setPlaylistsForCategory(
-			SpotifyStore.SpotifyData.forYouCategoryId,
-		)
+        
 	}, [])
 
 	return (
@@ -53,7 +50,7 @@ export const MyCollections: FC = observer(() => {
 					)}
 				</div>
 			</div>
-			<div className="my-collections__featured-playlists">
+			{/* <div className="my-collections__featured-playlists">
 				<h2>Featured playlists</h2>
 				<div className="featured-playlists-container">
 					{SpotifyStore.SpotifyData.userFeaturedPlaylists?.playlists.items.map(
@@ -92,7 +89,7 @@ export const MyCollections: FC = observer(() => {
 						),
 					)}
 				</div>
-			</div>
+			</div> */}
 			<PlaylistDrawer
 				style={{
 					height: ComponentStore.componentData.containerRefSize

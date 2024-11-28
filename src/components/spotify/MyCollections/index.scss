@@ -18,6 +18,7 @@
 		display: flex;
 		flex-direction: column;
         gap: 12px;
+		overflow: hidden;
 		
 
 		.new-releases-container,
@@ -27,9 +28,8 @@
 			display: flex;
 			flex-direction: row;
 			gap: 12px;
-			overflow-x: auto;
-            overflow-y: hidden;
-			white-space: nowrap;
+			flex-wrap: wrap;
+            overflow-y: auto;
             scroll-behavior: smooth;
 		}
 	}

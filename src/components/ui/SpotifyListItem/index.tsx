@@ -17,6 +17,7 @@ export const SpotifyListItem: FC<SpotifyListItemProps> = (props) => {
 		<div
 			className={`spotify-list-item ${props.customClass || ""}`}
 			style={props.style}
+			onClick={props.onClick}
 		>
 			<div className="spotify-list-item__image">
 				{props.image ? <img src={props.image} alt="" /> : null}

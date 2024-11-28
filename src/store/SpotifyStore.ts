@@ -14,7 +14,38 @@ import {
 	FeaturedPlaylists,
 	Market,
 	PlaylistedTrack,
+	Categories,
+	SimplifiedArtist,
+	Image,
+	ExternalUrls,
+	Followers,
+	UserReference,
+	TrackReference
 } from "@spotify/web-api-ts-sdk"
+
+export interface SimplifiedMedia {
+	id: string
+	name: string
+	uri: string
+	images: Image[]
+	external_urls: ExternalUrls
+	type: "album" | "playlist" | string // Тип медиа
+
+	// Уникальные для альбомов
+	album_type?: string
+	album_group?: string
+	artists?: SimplifiedArtist[]
+	release_date?: string
+	total_tracks?: number
+
+	// Уникальные для плейлистов
+	collaborative?: boolean
+	description?: string
+	followers?: Followers
+	owner?: UserReference
+	public?: boolean
+	tracks?: TrackReference | null
+}
 
 export interface ISpotifyStore {
 	sdk: SpotifyApi | null
@@ -27,9 +58,10 @@ export interface ISpotifyStore {
 	userTopCombined: Page<Track | Artist> | undefined
 	userNewReleases: NewReleases | undefined
 	userFeaturedPlaylists: FeaturedPlaylists | undefined
+	userCategories: Categories | undefined
 	playlistsForCategory: FeaturedPlaylists | undefined
 	playlistItems: Page<PlaylistedTrack<Track>> | undefined | undefined
-	playlistInfo: SimplifiedPlaylist | undefined
+	mediaInfo: SimplifiedMedia | undefined
 	forYouCategoryId: string
 }
 
@@ -45,9 +77,10 @@ export class SpotifyStore {
 		userTopCombined: undefined,
 		userNewReleases: undefined,
 		userFeaturedPlaylists: undefined,
+		userCategories: undefined,
 		playlistsForCategory: undefined,
 		playlistItems: undefined,
-		playlistInfo: undefined,
+		mediaInfo: undefined,
 		forYouCategoryId: "0JQ5DAt0tbjZptfcdMSKl3",
 	}
 
@@ -179,59 +212,60 @@ export class SpotifyStore {
 			runInAction(() => {
 				this.SpotifyData.userNewReleases = userNewReleases
 			})
+			console.log(userNewReleases)
 		} catch (error) {
 			console.error("Ошибка при получении новых релизов:", error)
 		}
 	}
 
-	public async setUserFeaturedPlaylists(
-		country?: CountryCodeA2,
-		locale?: string,
-		timestamp?: string,
-		limit?: MaxInt<50>,
-		offset?: number,
-	) {
-		try {
-			const userFeaturedPlaylists =
-				await this.SpotifyData.sdk?.browse.getFeaturedPlaylists(
-					country,
-					locale,
-					timestamp,
-					limit,
-					offset,
-				)
-			runInAction(() => {
-				this.SpotifyData.userFeaturedPlaylists = userFeaturedPlaylists
-			})
-		} catch (error) {
-			console.error("Ошибка при получении релизов:", error)
-		}
-	}
+	// public async setUserFeaturedPlaylists(
+	// 	country?: CountryCodeA2,
+	// 	locale?: string,
+	// 	timestamp?: string,
+	// 	limit?: MaxInt<50>,
+	// 	offset?: number,
+	// ) {
+	// 	try {
+	// 		const userFeaturedPlaylists =
+	// 			await this.SpotifyData.sdk?.browse.getFeaturedPlaylists(
+	// 				country,
+	// 				locale,
+	// 				timestamp,
+	// 				limit,
+	// 				offset,
+	// 			)
+	// 		runInAction(() => {
+	// 			this.SpotifyData.userFeaturedPlaylists = userFeaturedPlaylists
+	// 		})
+	// 	} catch (error) {
+	// 		console.error("Ошибка при получении релизов:", error)
+	// 	}
+	// } DEPRECATED
 
-	public async setPlaylistsForCategory(
-		category_id: string,
-		country?: CountryCodeA2,
-		limit?: MaxInt<50>,
-		offset?: number,
-	) {
-		try {
-			const playlistsForCategory =
-				await this.SpotifyData.sdk?.browse.getPlaylistsForCategory(
-					category_id,
-					country,
-					limit,
-					offset,
-				)
-			runInAction(() => {
-				this.SpotifyData.playlistsForCategory = playlistsForCategory
-			})
-		} catch (error) {
-			console.error(
-				"Ошибка при получении плейлистов по категории:",
-				error,
-			)
-		}
-	}
+	// public async setPlaylistsForCategory(
+	// 	category_id: string,
+	// 	country?: CountryCodeA2,
+	// 	limit?: MaxInt<50>,
+	// 	offset?: number,
+	// ) {
+	// 	try {
+	// 		const playlistsForCategory =
+	// 			await this.SpotifyData.sdk?.browse.getPlaylistsForCategory(
+	// 				category_id,
+	// 				country,
+	// 				limit,
+	// 				offset,
+	// 			)
+	// 		runInAction(() => {
+	// 			this.SpotifyData.playlistsForCategory = playlistsForCategory
+	// 		})
+	// 	} catch (error) {
+	// 		console.error(
+	// 			"Ошибка при получении плейлистов по категории:",
+	// 			error,
+	// 		)
+	// 	}
+	// } DEPRECATED
 
 	public async setPlaylistItems(
 		playlist_id: string,
@@ -258,8 +292,31 @@ export class SpotifyStore {
 		}
 	}
 
-	public setPlaylistInfo(info:SimplifiedPlaylist){
-		this.SpotifyData.playlistInfo = info
+	public async setUserCategories(
+		country?: CountryCodeA2,
+		locale?: string,
+		limit?: MaxInt<50>,
+		offset?: number,
+	) {
+		try {
+			const userCategories =
+				await this.SpotifyData.sdk?.browse.getCategories(
+					country,
+					locale,
+					limit,
+					offset,
+				)
+			console.log(userCategories)
+			runInAction(() => {
+				this.SpotifyData.userCategories = userCategories
+			})
+		} catch (error) {
+			console.error("Ошибка получения категорий", error)
+		}
+	}
+
+	public setMediaInfo(info: SimplifiedMedia) {
+		this.SpotifyData.mediaInfo = info
 		console.log(info)
 	}
 }

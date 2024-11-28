@@ -8,7 +8,7 @@ import { SpotifyListItem } from "../../ui/SpotifyListItem"
 import { Artist, Track, SimplifiedPlaylist } from "@spotify/web-api-ts-sdk"
 
 export const MyContent: FC = observer(() => {
-	const { SpotifyStore } = useStores()
+	const { SpotifyStore, ComponentStore } = useStores()
 
 	useEffect(() => {
 		SpotifyStore.setUserPlaylists()
@@ -27,6 +27,11 @@ export const MyContent: FC = observer(() => {
 							owner={item.owner.display_name}
 							image={item.images[0].url}
 							key={index}
+							onClick={() => {
+								SpotifyStore.setMediaInfo(item)
+								SpotifyStore.setPlaylistItems(item.id)
+								ComponentStore.changeDrawerOpen()
+							}}
 						/>
 					),
 				)}

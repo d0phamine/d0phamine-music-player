@@ -1,78 +1,72 @@
-.ant-drawer{
-    border: none;
-    color: unset;
-    font-family: unset;
-    font-size: unset;
-    .ant-drawer-mask{
-        background: none;
-        border: unset;
-        pointer-events:auto;
-    }
-    .ant-drawer-content-wrapper {
-        top: auto !important;
-        width: 320px !important;
-        box-shadow: none;
-        .playlist-drawer {
-            border-left: 1px solid #424242;
-            background: rgba(22, 22, 22, 1);
+.ant-drawer {
+	border: none;
+	color: unset;
+	font-family: unset;
+	font-size: unset;
+	.ant-drawer-mask {
+		background: none;
+		border: unset;
+		pointer-events: auto;
+	}
+	.ant-drawer-content-wrapper {
+		top: auto !important;
+		width: 320px !important;
+		box-shadow: none;
+		.playlist-drawer {
+			border-left: 1px solid #424242;
+			background: rgba(22, 22, 22, 1);
 
-            &__children{
-                background: rgba(29, 28, 28, 1);
-            }
+			&__children {
+				background: rgba(29, 28, 28, 1);
+			}
 
-            .ant-drawer-body{
-                padding: 0px;
-                overflow: hidden;
-            }
+			.ant-drawer-body {
+				padding: 0px;
+				overflow: hidden;
+			}
 
-            .ant-drawer-header{
+			.ant-drawer-header {
+			}
 
-            }
+			&__content {
+				display: grid;
+				grid-template-rows: 319px 42px 1fr;
+				gap: 12px;
+				width: 100%;
+				overflow: hidden;
+				height: 100%;
 
-            &__content{
-                display: grid;
-                grid-template-rows: 1fr 42px 1fr;
-                gap: 12px;
-                width: 100%;
-                overflow: hidden;
+				img {
+					width: 100%;
+				}
 
-                img {
-                    width: 100%;
-                }
+				.content-description {
+					display: grid;
 
-                
+					gap: 4px;
+					padding: 0px 12px;
 
-                .content-description {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 4px;
-                    padding: 0px 12px;
+					p {
+						line-height: 1;
+						font-style: italic;
+						font-size: 12px;
+					}
 
-                    p{
-                        line-height: 1;
-                        font-style: italic;
-                        font-size: 12px;
-                    }
+					p:last-child {
+						font-style: normal;
+						font-weight: 600;
+					}
+				}
 
-                    p:last-child{
-                        font-style: normal;
-                        font-weight: 600;
-                    }
-                }
+				.content-playlist {
+					overflow: auto;
 
-                .content-playlist {
-                    padding-bottom: 34px;
-                    overflow: auto;
-                    height: 300px;
-
-                    .custom-list-item:nth-child(1){
-                        border-top: 1px solid #424242;
-                    }
-
-                }
-            }
-        }
-    }
+					.custom-list-item:nth-child(1) {
+						border-top: 1px solid #424242;
+					}
+				}
+			}
+		}
+	}
 }
-
 
