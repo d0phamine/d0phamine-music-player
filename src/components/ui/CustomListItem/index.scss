@@ -8,6 +8,7 @@
 	align-items: center;
 	line-height: 1;
 	list-style-type: none;
+	font-size: 14px;
 
 	&__title {
 		flex-grow: 1;
@@ -15,18 +16,16 @@
 		overflow: hidden;
 
 		p {
-            width: 100%;
-            text-overflow: ellipsis;
-            white-space: nowrap; 
-            overflow: hidden;
-			font-size: 14px;
+			width: 100%;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
 			font-weight: 400;
-            
 		}
 	}
 
-	&__control{
-		.control-items{
+	&__control {
+		.control-items {
 			display: flex;
 			flex-direction: row;
 			gap: 4px;

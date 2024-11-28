@@ -45,6 +45,11 @@ export const MyCollections: FC = observer(() => {
 								artists={item.artists}
 								cover={item.images[0].url}
 								key={index}
+                                onClick={() => {
+                                    SpotifyStore.setMediaInfo(item)
+                                    SpotifyStore.setAlbumItems(item.id)
+                                    ComponentStore.changeDrawerOpen()
+                                }}
 							/>
 						),
 					)}

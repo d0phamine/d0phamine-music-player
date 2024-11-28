@@ -20,7 +20,8 @@ import {
 	ExternalUrls,
 	Followers,
 	UserReference,
-	TrackReference
+	TrackReference,
+	SimplifiedTrack,
 } from "@spotify/web-api-ts-sdk"
 
 export interface SimplifiedMedia {
@@ -60,7 +61,8 @@ export interface ISpotifyStore {
 	userFeaturedPlaylists: FeaturedPlaylists | undefined
 	userCategories: Categories | undefined
 	playlistsForCategory: FeaturedPlaylists | undefined
-	playlistItems: Page<PlaylistedTrack<Track>> | undefined | undefined
+	playlistItems: Page<PlaylistedTrack<Track>> | undefined
+	albumItems: Page<SimplifiedTrack> | undefined
 	mediaInfo: SimplifiedMedia | undefined
 	forYouCategoryId: string
 }
@@ -80,6 +82,7 @@ export class SpotifyStore {
 		userCategories: undefined,
 		playlistsForCategory: undefined,
 		playlistItems: undefined,
+		albumItems: undefined,
 		mediaInfo: undefined,
 		forYouCategoryId: "0JQ5DAt0tbjZptfcdMSKl3",
 	}
@@ -212,7 +215,6 @@ export class SpotifyStore {
 			runInAction(() => {
 				this.SpotifyData.userNewReleases = userNewReleases
 			})
-			console.log(userNewReleases)
 		} catch (error) {
 			console.error("Ошибка при получении новых релизов:", error)
 		}
@@ -283,12 +285,33 @@ export class SpotifyStore {
 					limit,
 					offset,
 				)
-			console.log(playlistItems)
+			console.log(playlistItems, "playlist")
 			runInAction(() => {
 				this.SpotifyData.playlistItems = playlistItems
 			})
 		} catch (error) {
 			console.error("Ошибка при получении треков:", error)
+		}
+	}
+
+	public async setAlbumItems(
+		albumId: string,
+		market?: Market,
+		limit?: MaxInt<50>,
+		offset?: number,
+	) {
+		try {
+			const albumItems = await this.SpotifyData.sdk?.albums.tracks(
+				albumId,
+				market,
+				limit,
+				offset,
+			)
+			runInAction(() => {
+				this.SpotifyData.albumItems = albumItems
+			})
+		} catch (error) {
+			console.error("Ошибка при поулчении треков из альбома", error)
 		}
 	}
 
@@ -317,7 +340,7 @@ export class SpotifyStore {
 
 	public setMediaInfo(info: SimplifiedMedia) {
 		this.SpotifyData.mediaInfo = info
-		console.log(info)
+		console.log("media info",info)
 	}
 }
 

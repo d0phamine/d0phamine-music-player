@@ -3,7 +3,12 @@ import { observer } from "mobx-react-lite"
 import { Drawer } from "antd"
 
 import { useStores } from "../../../store"
-import { PlaylistedTrack } from "@spotify/web-api-ts-sdk"
+import {
+	Artist,
+	PlaylistedTrack,
+	SimplifiedArtist,
+	SimplifiedTrack,
+} from "@spotify/web-api-ts-sdk"
 
 import "./index.scss"
 import { CustomListItem } from "../../ui"
@@ -58,7 +63,12 @@ export const PlaylistDrawer: FC<PlaylistDrawerProps> = observer((props) => {
 					<div className="content-playlist">
 						{SpotifyStore.SpotifyData.playlistItems?.items.map(
 							(item: PlaylistedTrack, index: number) => (
-								<CustomListItem title={`${item.track.name}`} />
+								<CustomListItem
+									// @ts-expect-error comment
+									title={`${item.track.artists.map((item:SimplifiedArtist, index:number) => (item.name))} - ${item.track.name}`}
+									style={{ fontSize: "11px" }}
+									key={index}
+								/>
 							),
 						)}
 					</div>
@@ -84,29 +94,41 @@ export const PlaylistDrawer: FC<PlaylistDrawerProps> = observer((props) => {
 				style={props.style}
 			>
 				<div className="playlist-drawer__content">
-					{/* <img
+					<img
 						src={SpotifyStore.SpotifyData.mediaInfo?.images[0].url}
 						alt=""
 					/>
 					<div className="content-description">
-						<p>"{cleanedDescription}"</p>
+						<p>"{SpotifyStore.SpotifyData.mediaInfo?.name}"</p>
 						<p>
-							{SpotifyStore.SpotifyData.mediaInfo?.owner
-								? SpotifyStore.SpotifyData.mediaInfo?.owner
-										.display_name
+							{SpotifyStore.SpotifyData.mediaInfo?.artists
+								? SpotifyStore.SpotifyData.mediaInfo?.artists.map(
+										(
+											item: SimplifiedArtist,
+											index: number,
+										) => `${item.name} `,
+								  )
 								: ""}{" "}
-							-{" "}
-							{SpotifyStore.SpotifyData.mediaInfo?.tracks?.total}{" "}
+							- {SpotifyStore.SpotifyData.mediaInfo?.total_tracks}{" "}
 							треков
 						</p>
 					</div>
 					<div className="content-playlist">
-						{SpotifyStore.SpotifyData.playlistItems?.items.map(
-							(item: PlaylistedTrack, index: number) => (
-								<CustomListItem title={`${item.track.name}`} />
+						{SpotifyStore.SpotifyData.albumItems?.items.map(
+							(item: SimplifiedTrack, index: number) => (
+								<CustomListItem
+									title={`${item.artists.map(
+										(
+											item: SimplifiedArtist,
+											index: number,
+										) => `${item.name}`,
+									)} - ${item.name}`}
+									style={{ fontSize: "11px" }}
+									key={index}
+								/>
 							),
 						)}
-					</div> */}
+					</div>
 				</div>
 				{/* <Drawer
 					className="playlist-drawer__children"
