@@ -1,10 +1,11 @@
 import { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { Drawer } from "antd"
+import { LoadingOutlined } from "@ant-design/icons"
+import InfiniteScroll from "react-infinite-scroller"
 
 import { useStores } from "../../../store"
 import {
-	Artist,
 	PlaylistedTrack,
 	SimplifiedArtist,
 	SimplifiedTrack,
@@ -38,7 +39,10 @@ export const PlaylistDrawer: FC<PlaylistDrawerProps> = observer((props) => {
 			<Drawer
 				className="playlist-drawer"
 				closable={false}
-				onClose={() => ComponentStore.changeDrawerOpen()}
+				onClose={() => {
+					ComponentStore.changeDrawerOpen()
+					SpotifyStore.clearPlaylistItems()
+				}}
 				open={ComponentStore.componentData.drawerOpen}
 				getContainer={false}
 				style={props.style}
@@ -61,16 +65,52 @@ export const PlaylistDrawer: FC<PlaylistDrawerProps> = observer((props) => {
 						</p>
 					</div>
 					<div className="content-playlist">
-						{SpotifyStore.SpotifyData.playlistItems?.items.map(
-							(item: PlaylistedTrack, index: number) => (
-								<CustomListItem
-									// @ts-expect-error comment
-									title={`${item.track.artists.map((item:SimplifiedArtist, index:number) => (item.name))} - ${item.track.name}`}
-									style={{ fontSize: "11px" }}
-									key={index}
-								/>
-							),
-						)}
+						<InfiniteScroll
+							pageStart={0}
+							loadMore={() =>
+								SpotifyStore.SpotifyData.mediaInfo
+									? SpotifyStore.setPlaylistItems(
+											SpotifyStore.SpotifyData.mediaInfo
+												.id,
+											undefined,
+											undefined,
+											undefined,
+											SpotifyStore.SpotifyData
+												.playlistItems?.items.length,
+									  )
+									: null
+							}
+							hasMore={
+								SpotifyStore.SpotifyData.playlistItems
+									? SpotifyStore.SpotifyData.playlistItems
+											?.items.length <
+									  SpotifyStore.SpotifyData.playlistItems
+											?.total
+									: false
+							}
+							useWindow={false}
+							loader={
+								<div className="centered-class">
+									<LoadingOutlined />
+								</div>
+							}
+						>
+							{SpotifyStore.SpotifyData.playlistItems?.items.map(
+								(item: PlaylistedTrack, index: number) => (
+									<CustomListItem
+										// @ts-expect-error comment
+										title={`${item.track.artists.map(
+											(
+												item: SimplifiedArtist,
+												index: number,
+											) => item.name,
+										)} - ${item.track.name}`}
+										style={{ fontSize: "11px" }}
+										key={index}
+									/>
+								),
+							)}
+						</InfiniteScroll>
 					</div>
 				</div>
 				{/* <Drawer
@@ -114,20 +154,49 @@ export const PlaylistDrawer: FC<PlaylistDrawerProps> = observer((props) => {
 						</p>
 					</div>
 					<div className="content-playlist">
-						{SpotifyStore.SpotifyData.albumItems?.items.map(
-							(item: SimplifiedTrack, index: number) => (
-								<CustomListItem
-									title={`${item.artists.map(
-										(
-											item: SimplifiedArtist,
-											index: number,
-										) => `${item.name}`,
-									)} - ${item.name}`}
-									style={{ fontSize: "11px" }}
-									key={index}
-								/>
-							),
-						)}
+						<InfiniteScroll
+							pageStart={0}
+							loadMore={() =>
+								SpotifyStore.SpotifyData.mediaInfo
+									? SpotifyStore.setAlbumItems(
+											SpotifyStore.SpotifyData.mediaInfo
+												.id,
+											undefined,
+											undefined,
+											SpotifyStore.SpotifyData.albumItems
+												?.items.length,
+									  )
+									: null
+							}
+							hasMore={
+								SpotifyStore.SpotifyData.albumItems
+									? SpotifyStore.SpotifyData.albumItems?.items
+											.length <
+									  SpotifyStore.SpotifyData.albumItems?.total
+									: false
+							}
+							useWindow={false}
+							loader={
+								<div className="centered-class">
+									<LoadingOutlined />
+								</div>
+							}
+						>
+							{SpotifyStore.SpotifyData.albumItems?.items.map(
+								(item: SimplifiedTrack, index: number) => (
+									<CustomListItem
+										title={`${item.artists.map(
+											(
+												item: SimplifiedArtist,
+												index: number,
+											) => `${item.name}`,
+										)} - ${item.name}`}
+										style={{ fontSize: "11px" }}
+										key={index}
+									/>
+								),
+							)}
+						</InfiniteScroll>
 					</div>
 				</div>
 				{/* <Drawer

@@ -41,9 +41,11 @@
 				}
 
 				.content-description {
-					display: grid;
+					display: flex;
+					flex-direction: column;
 					gap: 4px;
 					padding: 0px 18px;
+					overflow: auto;
 
 					p {
 						line-height: 1;

@@ -64,7 +64,7 @@ export interface ISpotifyStore {
 	playlistItems: Page<PlaylistedTrack<Track>> | undefined
 	albumItems: Page<SimplifiedTrack> | undefined
 	mediaInfo: SimplifiedMedia | undefined
-	forYouCategoryId: string
+	mediaLoading: boolean
 }
 
 export class SpotifyStore {
@@ -84,7 +84,7 @@ export class SpotifyStore {
 		playlistItems: undefined,
 		albumItems: undefined,
 		mediaInfo: undefined,
-		forYouCategoryId: "0JQ5DAt0tbjZptfcdMSKl3",
+		mediaLoading: false,
 	}
 
 	constructor() {
@@ -285,13 +285,27 @@ export class SpotifyStore {
 					limit,
 					offset,
 				)
-			console.log(playlistItems, "playlist")
+
 			runInAction(() => {
-				this.SpotifyData.playlistItems = playlistItems
+				if (playlistItems?.items) {
+					if (offset === undefined) {
+						// Если offset не передан, заменяем весь список
+						this.SpotifyData.playlistItems = playlistItems
+					} else {
+						// Если offset передан, добавляем новые элементы к уже существующему массиву
+						this.SpotifyData.playlistItems?.items.push(
+							...playlistItems.items,
+						)
+					}
+				}
 			})
 		} catch (error) {
-			console.error("Ошибка при получении треков:", error)
+			console.error("Ошибка при получении треков из плейлиста", error)
 		}
+	}
+
+	public async clearPlaylistItems() {
+		this.SpotifyData.playlistItems = undefined
 	}
 
 	public async setAlbumItems(
@@ -301,17 +315,30 @@ export class SpotifyStore {
 		offset?: number,
 	) {
 		try {
+			// Выполняем запрос на получение треков из альбома
 			const albumItems = await this.SpotifyData.sdk?.albums.tracks(
 				albumId,
 				market,
 				limit,
 				offset,
 			)
+
 			runInAction(() => {
-				this.SpotifyData.albumItems = albumItems
+				if (albumItems?.items) {
+					if (offset === undefined) {
+						// Если offset не передан (первая загрузка), заменяем весь список
+						this.SpotifyData.albumItems = albumItems
+					} else {
+						// Если offset передан (добавляем новые элементы)
+						this.SpotifyData.albumItems?.items.push(
+							...albumItems.items,
+						)
+					}
+					console.log(this.SpotifyData.albumItems, "setAlbumItems")
+				}
 			})
 		} catch (error) {
-			console.error("Ошибка при поулчении треков из альбома", error)
+			console.error("Ошибка при получении треков из альбома", error)
 		}
 	}
 
@@ -340,7 +367,7 @@ export class SpotifyStore {
 
 	public setMediaInfo(info: SimplifiedMedia) {
 		this.SpotifyData.mediaInfo = info
-		console.log("media info",info)
+		console.log("media info", info)
 	}
 }
 
