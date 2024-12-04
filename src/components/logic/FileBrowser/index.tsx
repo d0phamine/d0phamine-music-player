@@ -17,7 +17,7 @@ import { Button } from "antd"
 import "./index.scss"
 
 export const FileBrowser: FC = observer(() => {
-	const { FSstore, ComponentStore, PlayerStore } = useStores()
+	const { FSstore, ComponentStore, PlayerStore, ThemeStore } = useStores()
 	return (
 		<div className="browser">
 			<div className="browser__controls">
@@ -96,6 +96,7 @@ export const FileBrowser: FC = observer(() => {
 									) : null
 								}
 								customClass="hover-control"
+								style={{borderColor:ThemeStore.CurrentTheme.borderColor}}
 							/>
 					  ))}
 			</div>

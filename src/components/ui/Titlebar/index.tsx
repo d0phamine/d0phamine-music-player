@@ -19,7 +19,7 @@ import "./index.scss"
 const { getCurrentWindow, app } = window.require("@electron/remote")
 
 export const Titlebar: FC = observer(() => {
-	const { SpotifyStore } = useStores()
+	const { ThemeStore } = useStores()
 	const location = useLocation()
 	const redirect = useNavigate()
 
@@ -43,7 +43,14 @@ export const Titlebar: FC = observer(() => {
 	})
 
 	return (
-		<div className="title-bar sticky top-0 select-none">
+		<div
+			className="title-bar sticky top-0 select-none"
+			style={{
+				backgroundColor: ThemeStore.CurrentTheme.backgroundColor,
+				borderColor: ThemeStore.CurrentTheme.borderColor,
+				color: ThemeStore.CurrentTheme.fontColor,
+			}}
+		>
 			<div className="window-controls-container">
 				<button
 					title="Close"
@@ -70,6 +77,7 @@ export const Titlebar: FC = observer(() => {
 				<Button
 					className="spotify-button"
 					size="small"
+					disabled
 					icon={
 						location.pathname === "/spotify-page" ? (
 							<IoPlaySharp />

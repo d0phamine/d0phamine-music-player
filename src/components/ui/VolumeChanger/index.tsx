@@ -15,6 +15,7 @@ export const VolumeChanger: FC = observer(() => {
 			tooltip={{ formatter: null }}
 			value={PlayerStore.playerData.playerVolume * 100}
             onChange={(value:number) => PlayerStore.setPlayerVolume(value / 100)}
+			style={{}}
 		/>
 	)
 })

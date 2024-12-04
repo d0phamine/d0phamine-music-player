@@ -11,7 +11,7 @@ import { ITrack } from "../../../store/PlayerStore"
 import "./index.scss"
 
 export const FavoriteBrowser: FC = observer(() => {
-	const { FSstore } = useStores()
+	const { FSstore, ThemeStore } = useStores()
 
 	useEffect(() => {
 		FSstore.getFavoriteDirs()
@@ -49,6 +49,7 @@ export const FavoriteBrowser: FC = observer(() => {
 							</div>
 						}
 						onClick={() => FSstore.setBrowserDirs(item.path)}
+						style={{borderColor:ThemeStore.CurrentTheme.borderColor}}
 					/>
 				))}
 			</div>
