@@ -138,7 +138,6 @@ export class PlayerStore {
 				if (elem === track) {
 					elem.selected = true
 					this.playerData.selectedTrack = elem
-					console.log(this.playerData.selectedTrack)
 				}
 			})
 		}

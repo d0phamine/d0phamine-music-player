@@ -69,7 +69,6 @@ export class FSstore {
 			ipcRenderer.on(
 				"directory-error",
 				(event: IpcRendererEvent, errorMessage: string) => {
-					console.log(errorMessage)
 					this.FSdata.loading = false
 					reject(errorMessage) // Отклоняем промис в случае ошибки
 				},

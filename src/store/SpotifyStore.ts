@@ -334,7 +334,6 @@ export class SpotifyStore {
 							...albumItems.items,
 						)
 					}
-					console.log(this.SpotifyData.albumItems, "setAlbumItems")
 				}
 			})
 		} catch (error) {
@@ -356,7 +355,6 @@ export class SpotifyStore {
 					limit,
 					offset,
 				)
-			console.log(userCategories)
 			runInAction(() => {
 				this.SpotifyData.userCategories = userCategories
 			})
@@ -367,7 +365,6 @@ export class SpotifyStore {
 
 	public setMediaInfo(info: SimplifiedMedia) {
 		this.SpotifyData.mediaInfo = info
-		console.log("media info", info)
 	}
 }
 

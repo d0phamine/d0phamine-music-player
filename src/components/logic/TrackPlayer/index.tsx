@@ -173,9 +173,6 @@ export const TrackPlayer: FC = observer(() => {
 					]}
 					playing={PlayerStore.playerData.isPlaying}
 					volume={PlayerStore.playerData.playerVolume}
-					onPlayError={(id, error) => {
-						console.log(error)
-					}}
 					ref={howlerRef}
 					onEnd={() => {
 						PlayerStore.changeIsPlaying()
