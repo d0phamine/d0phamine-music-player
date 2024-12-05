@@ -27,13 +27,6 @@ exports.createTray = () => {
 				],
 			},
 			{
-				label: "Send Notification",
-				click: () =>
-					showNotification(
-						"This Notification Comes From Tray",
-					),
-			},
-			{
 				label: "Quit",
 				click: () => {
 					config.isQuiting = true;

@@ -6,72 +6,88 @@
 	padding-block: 0px;
 	padding-top: 1px;
 
-    .ant-slider-track {
-        background-color: inherit;
-    }
+	.ant-slider-track {
+		// background-color: #fff;
+	}
 
 	.ant-slider-handle {
 		width: 6px;
 		height: 6px;
-        box-shadow: unset;
-        outline: unset;
-        background-color: transparent;
+		box-shadow: unset;
+		outline: unset;
+		background-color: transparent;
 	}
 
 	.ant-slider-handle:before {
 		width: 6px;
 		height: 6px;
-        box-shadow: unset;
-        outline: unset;
-        background-color: transparent;
+		box-shadow: unset;
+		outline: unset;
+		background-color: transparent;
 	}
 
 	.ant-slider-handle:after {
 		width: 6px;
 		height: 6px;
 		inset-block-start: -1px;
-        box-shadow: unset;
-        outline: unset;
-        background-color: transparent;
+		box-shadow: unset;
+		outline: unset;
+		background-color: transparent;
 	}
 
 	.ant-slider-handle:hover::after {
 		width: 6px;
 		height: 6px;
 		inset-block-start: -1px;
-        box-shadow: unset;
-        outline: unset;
-        background-color: transparent;
+		box-shadow: unset;
+		outline: unset;
+		background-color: transparent;
 	}
 
 	.ant-slider-handle:focus::after {
 		width: 6px;
 		height: 6px;
 		inset-block-start: -1px;
-        box-shadow: unset;
-        outline: unset;
-        background-color: transparent;
+		box-shadow: unset;
+		outline: unset;
+		background-color: transparent;
 	}
 }
 
-.volume-changer:hover{
-    .ant-slider-track{
-        background-color: #fff;
-    }
+.volume-changer:hover {
+	.ant-slider-handle {
+		background-color: transparent;
+		box-shadow: unset;
+	}
 
-    .ant-slider-handle {
-        background-color: transparent;
-        box-shadow: unset;
-    }
+	.ant-slider-handle::before {
+		background-color: transparent;
+		box-shadow: unset;
+	}
 
-    .ant-slider-handle::before {
-        background-color: transparent;
-        box-shadow: unset;
-    }
-
-    .ant-slider-handle::after {
-        background-color: transparent;
-        box-shadow: unset;
-    }
-
+	.ant-slider-handle::after {
+		background-color: transparent;
+		box-shadow: unset;
+	}
 }
+
+.dark {
+	.ant-slider-track {
+		background-color: #fff;
+	}
+
+    .ant-slider-track:hover {
+		background-color: #fff;
+	}
+}
+
+.light {
+	.ant-slider-track {
+		background-color: #000000 !important;;
+	}
+
+    .ant-slider-track:hover {
+		background-color: #000000 !important;
+	}
+}
+

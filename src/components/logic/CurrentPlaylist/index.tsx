@@ -5,14 +5,14 @@ import { CustomListItem } from "../../"
 import { useStores } from "../../../store"
 import { ITrack } from "../../../store/PlayerStore"
 
-import { MdOutlineAudioFile, MdCleaningServices } from "react-icons/md"
+import { MdOutlineAudioFile, MdCleaningServices, MdDarkMode } from "react-icons/md"
 import { IoMdMenu } from "react-icons/io"
 import { FloatButton } from "antd"
 
 import "./index.scss"
 
 export const CurrentPlaylist: FC = observer(() => {
-	const { PlayerStore } = useStores()
+	const { PlayerStore, ThemeStore } = useStores()
 
 	return (
 		<div className="current-playlist">
@@ -30,7 +30,16 @@ export const CurrentPlaylist: FC = observer(() => {
 							PlayerStore.setSelectedTrackInCurrentPlaylist(item)
 						}}
 						style={
-							item.selected ? { backgroundColor: "green" } : {}
+							item.selected
+								? {
+										backgroundColor: ThemeStore.CurrentTheme.playingTrackColor,
+										borderColor:
+											ThemeStore.CurrentTheme.borderColor,
+								  }
+								: {
+										borderColor:
+											ThemeStore.CurrentTheme.borderColor,
+								  }
 						}
 					/>
 				),
@@ -42,6 +51,10 @@ export const CurrentPlaylist: FC = observer(() => {
 				style={{ insetInlineEnd: 24 }}
 				icon={<IoMdMenu />}
 			>
+				<FloatButton
+					icon={<MdDarkMode/>}
+					onClick={() => ThemeStore.switchTheme()}
+				/>
 				<FloatButton
 					icon={<MdCleaningServices />}
 					onClick={() => PlayerStore.cleanCurrentPlaylist()}

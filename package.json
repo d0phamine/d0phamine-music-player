@@ -30,7 +30,7 @@
 				"zip"
 			],
 			"category": "public.app-category.productivity",
-			"icon": "public/web-app-manifest-512x512"
+			"icon": "public/icon.icns"
 		},
 		"win": {
 			"target": [

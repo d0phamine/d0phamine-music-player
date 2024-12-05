@@ -75,9 +75,15 @@ export const Titlebar: FC = observer(() => {
 				</button>
 				{/* <p style={{ fontSize: "4px" }}>{window.location.href}</p> */}
 				<Button
-					className="spotify-button"
+					className={
+						ThemeStore.CurrentTheme.name ===
+						ThemeStore.DarkTheme.name
+							? "spotify-button dark"
+							: "spotify-button"
+					}
 					size="small"
 					disabled
+					type="default"
 					icon={
 						location.pathname === "/spotify-page" ? (
 							<IoPlaySharp />

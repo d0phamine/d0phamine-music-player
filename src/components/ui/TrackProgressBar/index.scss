@@ -6,7 +6,7 @@
 	margin: 0px 0px 0px 0px;
 
     .ant-slider-track {
-        background-color: #fff;
+        // background-color: #fff;
     }
 
 	.ant-slider-handle {
@@ -64,7 +64,7 @@
 
 .track-progress-bar:hover{
     .ant-slider-track{
-        background-color: #fff;
+        // background-color: #fff;
     }
 
     .ant-slider-handle {
@@ -85,3 +85,22 @@
 }
 
 
+.dark {
+	.ant-slider-track {
+		background-color: #fff !important;
+	}
+
+    .ant-slider-track:hover {
+		background-color: #fff !important;
+	}
+}
+
+.light {
+	.ant-slider-track {
+		background-color: #000000 !important;
+	}
+
+    .ant-slider-track:hover {
+		background-color: #000000 !important;
+	}
+}

@@ -30,10 +30,16 @@
 	border-color: inherit;
 
 	.spotify-button {
-
 		border-radius: 12px;
 		padding: 0px 7px 0px 6px;
 		font-size: 12px;
+	}
+
+	.dark {
+		opacity: 0.3;
+		background-color: #2b2b2b !important;
+		border-color: #424242;
+		color: #fff;
 	}
 }
 

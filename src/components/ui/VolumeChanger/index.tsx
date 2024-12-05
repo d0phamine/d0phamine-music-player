@@ -8,14 +8,14 @@ import { useStores } from "../../../store"
 import "./index.scss"
 
 export const VolumeChanger: FC = observer(() => {
-	const { PlayerStore } = useStores()
+	const { PlayerStore, ThemeStore } = useStores()
 	return (
 		<Slider
-			className="volume-changer"
+			className={ThemeStore.CurrentTheme === ThemeStore.DarkTheme ? "volume-changer dark" : "volume-changer light"}
 			tooltip={{ formatter: null }}
 			value={PlayerStore.playerData.playerVolume * 100}
             onChange={(value:number) => PlayerStore.setPlayerVolume(value / 100)}
-			style={{}}
+			// style={{backgroundColor:ThemeStore.CurrentTheme.fontColor}}
 		/>
 	)
 })

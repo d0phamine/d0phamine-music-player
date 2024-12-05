@@ -8,24 +8,27 @@ import { useStores } from "../../../store"
 
 import "./index.scss"
 
-
 export interface TrackProgressBarProps {
-    howlerRef:MutableRefObject<ReactHowler | null>
+	howlerRef: MutableRefObject<ReactHowler | null>
 }
 
 export const TrackProgressBar: FC<TrackProgressBarProps> = observer((props) => {
-	const { PlayerStore } = useStores()
+	const { PlayerStore, ThemeStore } = useStores()
 
-    const handleSliderChange = (value: number) => {
-        if (props.howlerRef.current) {
-          props.howlerRef.current.seek(value); // Устанавливаем новое положение трека через seek
-          PlayerStore.setCurrentTimeOfPlay(value); // Обновляем текущее время в вашем хранилище
-        }
-      };
+	const handleSliderChange = (value: number) => {
+		if (props.howlerRef.current) {
+			props.howlerRef.current.seek(value) // Устанавливаем новое положение трека через seek
+			PlayerStore.setCurrentTimeOfPlay(value) // Обновляем текущее время в вашем хранилище
+		}
+	}
 
 	return (
 		<Slider
-			className="track-progress-bar"
+			className={
+				ThemeStore.CurrentTheme === ThemeStore.DarkTheme
+					? "track-progress-bar dark"
+					: "track-progress-bar light"
+			}
 			min={0}
 			max={PlayerStore.playerData.selectedTrack?.duration || 0}
 			tooltip={{ formatter: null }}
@@ -34,7 +37,7 @@ export const TrackProgressBar: FC<TrackProgressBarProps> = observer((props) => {
 					? 0
 					: PlayerStore.playerData.currentTimeOfPlay
 			}
-            onChange={handleSliderChange}
+			onChange={handleSliderChange}
 		/>
 	)
 })
