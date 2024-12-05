@@ -54,21 +54,21 @@ export const Titlebar: FC = observer(() => {
 			<div className="window-controls-container">
 				<button
 					title="Close"
-					className="close-button focus:outline-none hover:bg-gray-700"
+					className="close-button focus:outline-none"
 					onClick={onQuit}
 				>
 					<IoCloseOutline />
 				</button>
 				<button
 					title="Minimize"
-					className="minimize-button focus:outline-none hover:bg-gray-700"
+					className="minimize-button focus:outline-none"
 					onClick={onMinimize}
 				>
 					<IoRemove />
 				</button>
 				<button
 					title="Maximize"
-					className="min-max-button focus:outline-none hover:bg-gray-700"
+					className="min-max-button focus:outline-none"
 					onClick={onMaximize}
 				>
 					{maximized ? <IoContractOutline /> : <IoExpandOutline />}

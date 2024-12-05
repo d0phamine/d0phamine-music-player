@@ -55,13 +55,11 @@ export class ThemeStore {
 				this.CurrentTheme = this.DarkTheme
 			})
 			localStorage.setItem("theme", this.CurrentTheme.name)
-			console.log(this.CurrentTheme, "to dark")
 		} else {
 			runInAction(() => {
 				this.CurrentTheme = this.LightTheme
 			})
 			localStorage.setItem("theme", this.CurrentTheme.name)
-			console.log(this.CurrentTheme, "to light")
 		}
 	}
 }
