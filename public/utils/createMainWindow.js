@@ -3,7 +3,6 @@ const { channels } = require("./constants")
 const path = require("path")
 const os = require("os")
 const fs = require("fs")
-const { Buffer } = require("buffer")
 const { parseBuffer } = require("music-metadata-browser")
 const { join } = require("path")
 const { autoUpdater } = require("electron-updater")
@@ -52,124 +51,75 @@ exports.createMainWindow = async () => {
 
 	const audioExtensions = [".mp3", ".wav", ".flac", ".ogg", ".aac"]
 
-	ipcMain.on(channels.GET_DIR, async (event, arg) => {
+	ipcMain.handle(channels.GET_DIR, async (event, arg) => {
 		try {
-			// Если аргумент не передан или не содержит "dir", используем домашнюю директорию
-			const directoryPath = arg && arg.dir ? arg.dir : os.homedir()
+			const directoryPath = arg && arg.dir ? arg.dir : os.homedir();
 
-			// Чтение содержимого директории
-			fs.readdir(directoryPath, (err, files) => {
-				if (err) {
-					console.error("Не удалось сканировать директорию: ", err)
-					event.reply(
-						"directory-error",
-						"Не удалось сканировать директорию",
-					)
-					return
-				}
+			const files = await fs.promises.readdir(directoryPath);
+			const results = await Promise.all(
+				files.map(async (file) => {
+					if (file.startsWith(".") || file.startsWith("$")) {
+						return null;
+					}
 
-				// Используем Promise.all, чтобы асинхронно проверять каждый файл
-				Promise.all(
-					files.map((file) => {
-						// Игнорируем файлы, которые начинаются с точки
-						if (file.startsWith(".") || file.startsWith("$")) {
-							return Promise.resolve(null)
+					const filePath = path.join(directoryPath, file);
+					const stats = await fs.promises.stat(filePath);
+
+					if (stats.isDirectory()) {
+						return {
+							type: "directory",
+							name: file,
+							path: filePath,
+						};
+					} else if (audioExtensions.includes(path.extname(file).toLowerCase())) {
+						try {
+							const fileBuffer = fs.readFileSync(filePath);
+							const metadata = await parseBuffer(fileBuffer);
+							const title = metadata.common.title || file;
+							const artist = metadata.common.artist || "";
+							const duration = Math.round(metadata.format.duration) || 0;
+
+							let coverUrl = null;
+							if (metadata.common.picture && metadata.common.picture.length > 0) {
+								const cover = metadata.common.picture[0];
+								const base64Cover = cover.data.toString("base64");
+								coverUrl = `data:${cover.format};base64,${base64Cover}`;
+							}
+
+							return {
+								type: "audio",
+								name: title,
+								artist: artist,
+								path: filePath,
+								cover: coverUrl,
+								duration: duration,
+								selected: false,
+							};
+						} catch (err) {
+							console.error(`Ошибка чтения метаданных для файла ${filePath}:`, err);
+							return {
+								type: "audio",
+								name: file,
+								artist: "",
+								path: filePath,
+								cover: null,
+								duration: 0,
+								selected: false,
+							};
 						}
-
-						const filePath = path.join(directoryPath, file)
-
-						return new Promise((resolve) => {
-							fs.stat(filePath, async (err, stats) => {
-								if (err) {
-									resolve(null) // Пропускаем файлы, которые не удалось проверить
-									return
-								}
-
-								// Если это директория, добавляем в результат
-								if (stats.isDirectory()) {
-									resolve({
-										type: "directory",
-										name: file,
-										path: filePath,
-									})
-								} else if (
-									audioExtensions.includes(
-										path.extname(file).toLowerCase(),
-									)
-								) {
-									// Если это аудиофайл, пытаемся прочитать его метаданные
-									try {
-										const fileBuffer =
-											fs.readFileSync(filePath)
-										const metadata = await parseBuffer(
-											fileBuffer,
-										)
-										const title =
-											metadata.common.title || file // Название трека, если доступно, иначе имя файла
-										const artist =
-											metadata.common.artist ||
-											"" // Артист, если доступен
-										const duration =
-											Math.round(
-												metadata.format.duration,
-											) || 0 // Длительность трека в секундах
-
-										// Получение обложки
-										let coverUrl = null
-										if (
-											metadata.common.picture &&
-											metadata.common.picture.length > 0
-										) {
-											const cover =
-												metadata.common.picture[0] // Первая картинка (обычно это обложка альбома)
-											const base64Cover =
-												cover.data.toString("base64") // Преобразуем данные картинки в base64
-											coverUrl = `data:${cover.format};base64,${base64Cover}` // Создаем data-URL для изображения
-										}
-
-										resolve({
-											type: "audio",
-											name: title, // Название трека
-											artist: artist, // Артист
-											path: filePath, // Путь к файлу
-											cover: coverUrl, // Обложка
-											duration: duration, // Длительность трека в секундах
-											selected:false,
-										})
-									} catch (err) {
-										console.error(
-											`Ошибка чтения метаданных для файла ${filePath}:`,
-											err,
-										)
-										resolve({
-											type: "audio",
-											name: file, // Если метаданные не удалось прочитать, используем имя файла
-											artist: "",
-											path: filePath,
-											cover: null, // Обложка недоступна
-											duration: 0, // Если длительность неизвестна
-											selected:false,
-										})
-									}
-								} else {
-									resolve(null) // Пропускаем файлы, которые не директории или не аудиофайлы
-								}
-							})
-						})
-					}),
-				).then((results) => {
-					// Очищаем результат от null и отправляем только директории и аудиофайлы
-					const filteredFiles = results.filter(
-						(item) => item !== null,
-					)
-					event.reply("directory-files", filteredFiles, directoryPath)
+					} else {
+						return null;
+					}
 				})
-			})
+			);
+
+			const filteredFiles = results.filter((item) => item !== null);
+			return { receivedFiles: filteredFiles, path: directoryPath };
 		} catch (err) {
-			console.error("Не удалось сканировать директорию: ", err)
-			event.reply("directory-error", "Не удалось сканировать директорию")
+			console.error("Не удалось сканировать директорию: ", err);
+			throw new Error("Не удалось сканировать директорию");
 		}
-	})
+	});
 
 	const cache = new CacheStore({
 		configName: "user-preferences",
@@ -178,44 +128,36 @@ exports.createMainWindow = async () => {
 		},
 	})
 
-	// Получение массива
-	ipcMain.on(channels.GET_FAVORITES, async (event) => {
+	ipcMain.handle(channels.GET_FAVORITES, async () => {
 		try {
-			// Получаем favoriteDirs из кэша
-			const favoriteDirs = cache.get("favoriteDirs")
-			// Отправляем результат обратно в рендер-процесс
-			event.reply(channels.GET_FAVORITES, favoriteDirs)
+			const favoriteDirs = cache.get("favoriteDirs");
+			return favoriteDirs;
 		} catch (error) {
-			console.error("Error fetching favoriteDirs:", error)
-			// Отправляем ошибку обратно в рендер-процесс
-			event.reply(channels.GET_FAVORITES, {
-				error: "Failed to retrieve favorite directories",
-			})
+			console.error("Error fetching favoriteDirs:", error);
+			throw new Error("Failed to retrieve favorite directories");
 		}
-	})
+	});
 
-	// Добавление директории в массив
-	ipcMain.on(channels.ADD_FAVORITE, (event, dirPath) => {
+	ipcMain.handle(channels.ADD_FAVORITE, async (event, dirPath) => {
 		try {
 			cache.addToArray("favoriteDirs", {
 				path: dirPath,
 				name: path.basename(dirPath),
-			})
+			});
 		} catch (error) {
-			console.error("Error adding favoriteDirs:", error)
+			console.error("Error adding favoriteDirs:", error);
+			throw new Error("Failed to add favorite directory");
 		}
-	})
+	});
 
-	// Удаление директории из массива
-	ipcMain.on(channels.DELETE_FAVORITE, (event, dirPath) => {
-		// cache.removeFromArray("favoriteDirs", dirPath);
-		// return cache.get("favoriteDirs");
+	ipcMain.handle(channels.DELETE_FAVORITE, async (event, dirPath) => {
 		try {
-			cache.removeFromArray("favoriteDirs", dirPath)
+			cache.removeFromArray("favoriteDirs", dirPath);
 		} catch (error) {
-			console.error("Error deleting favoriteDirs:", error)
+			console.error("Error deleting favoriteDirs:", error);
+			throw new Error("Failed to delete favorite directory");
 		}
-	})
+	});
 
 	return window
 }

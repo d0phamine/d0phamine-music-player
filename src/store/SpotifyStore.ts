@@ -220,54 +220,60 @@ export class SpotifyStore {
 		}
 	}
 
-	// public async setUserFeaturedPlaylists(
-	// 	country?: CountryCodeA2,
-	// 	locale?: string,
-	// 	timestamp?: string,
-	// 	limit?: MaxInt<50>,
-	// 	offset?: number,
-	// ) {
-	// 	try {
-	// 		const userFeaturedPlaylists =
-	// 			await this.SpotifyData.sdk?.browse.getFeaturedPlaylists(
-	// 				country,
-	// 				locale,
-	// 				timestamp,
-	// 				limit,
-	// 				offset,
-	// 			)
-	// 		runInAction(() => {
-	// 			this.SpotifyData.userFeaturedPlaylists = userFeaturedPlaylists
-	// 		})
-	// 	} catch (error) {
-	// 		console.error("Ошибка при получении релизов:", error)
-	// 	}
-	// } DEPRECATED
+	/**
+	 * 
+	 * @Deprecated
+	 * 
+	 * public async setUserFeaturedPlaylists(
+		country?: CountryCodeA2,
+		locale?: string,
+		timestamp?: string,
+		limit?: MaxInt<50>,
+		offset?: number,
+	) {
+		try {
+			const userFeaturedPlaylists =
+				await this.SpotifyData.sdk?.browse.getFeaturedPlaylists(
+					country,
+					locale,
+					timestamp,
+					limit,
+					offset,
+				)
+			runInAction(() => {
+				this.SpotifyData.userFeaturedPlaylists = userFeaturedPlaylists
+			})
+		} catch (error) {
+			console.error("Ошибка при получении релизов:", error)
+		}
+	}
 
-	// public async setPlaylistsForCategory(
-	// 	category_id: string,
-	// 	country?: CountryCodeA2,
-	// 	limit?: MaxInt<50>,
-	// 	offset?: number,
-	// ) {
-	// 	try {
-	// 		const playlistsForCategory =
-	// 			await this.SpotifyData.sdk?.browse.getPlaylistsForCategory(
-	// 				category_id,
-	// 				country,
-	// 				limit,
-	// 				offset,
-	// 			)
-	// 		runInAction(() => {
-	// 			this.SpotifyData.playlistsForCategory = playlistsForCategory
-	// 		})
-	// 	} catch (error) {
-	// 		console.error(
-	// 			"Ошибка при получении плейлистов по категории:",
-	// 			error,
-	// 		)
-	// 	}
-	// } DEPRECATED
+	public async setPlaylistsForCategory(
+		category_id: string,
+		country?: CountryCodeA2,
+		limit?: MaxInt<50>,
+		offset?: number,
+	) {
+		try {
+			const playlistsForCategory =
+				await this.SpotifyData.sdk?.browse.getPlaylistsForCategory(
+					category_id,
+					country,
+					limit,
+					offset,
+				)
+			runInAction(() => {
+				this.SpotifyData.playlistsForCategory = playlistsForCategory
+			})
+		} catch (error) {
+			console.error(
+				"Ошибка при получении плейлистов по категории:",
+				error,
+			)
+		}
+	}
+	 * 
+	 */
 
 	public async setPlaylistItems(
 		playlist_id: string,
