@@ -1,78 +1,87 @@
 .ant-modal-mask {
-    backdrop-filter: blur(16px);
+	backdrop-filter: blur(16px);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .big-player {
-    &__content {
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		.content-cover {
+			width: 360px;
+			height: 360px;
+			padding: 0px;
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			border-radius: 8px;
+			position: relative;
+			overflow: hidden;
+			transition: background-color 1s;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			&::after {
+				content: "";
+				position: absolute;
+				border-radius: 8px;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: var(
+					--after-bg-color,
+					rgba(0, 0, 0, 0.5)
+				); // Используем CSS-переменную
+				opacity: 0;
+				transition: opacity 0.3s;
+				z-index: 1; // Установите z-index для псевдоэлемента
+			}
+
+			&:hover::after {
+				opacity: 1;
+			}
+
+			> * {
+				z-index: 2; // Установите z-index для детей элемента .content-cover
+				opacity: 0; // Изначально скрыты
+				transition: opacity 0.3s; // Плавное появление
+			}
+
+			&:hover > * {
+				opacity: 1; // Появляются при наведении
+			}
+		}
+	}
+
+	.footer-container {
         display: flex;
         flex-direction: column;
         gap: 12px;
-        .content-cover {
-            width: 360px;
-            height: 360px;
-            padding: 0px;
-            background-position: center;
-            background-size: contain;
-            background-repeat: no-repeat;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            transition: background-color 1s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+		.content-trackName {
+			text-align: center;
+			font-family: "JetBrains Mono Variable", monospace;
+		}
+	}
 
-            &::after {
-                content: "";
-                position: absolute;
-                border-radius: 8px;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5); // Полупрозрачный серый цвет
-                opacity: 0;
-                transition: opacity 0.3s;
-                z-index: 1; // Установите z-index для псевдоэлемента
-            }
+	.ant-modal-content {
+		background: none;
+		padding: 0px;
+		border-radius: 0;
+		box-shadow: unset;
+		.ant-modal-footer {
+			margin-top: 12px;
+		}
 
-            &:hover::after {
-                opacity: 1;
-            }
+		.ant-modal-close {
+			position: absolute;
+			border-radius: 6px;
+		}
 
-            > * {
-                z-index: 2; // Установите z-index для детей элемента .content-cover
-                opacity: 0; // Изначально скрыты
-                transition: opacity 0.3s; // Плавное появление
-            }
-
-            &:hover > * {
-                opacity: 1; // Появляются при наведении
-            }
-        }
-
-        .content-trackName{
-            text-align: center;
-            font-family: 'JetBrains Mono Variable', monospace;
-        }
-    }
-
-    .ant-modal-content {
-        background: none;
-        padding: 0px;
-        border-radius: 0;
-        box-shadow: unset;
-        .ant-modal-footer {
-            margin-top: 12px;
-        }
-
-        .ant-modal-close {
-            position: absolute;
-            border-radius: 6px;
-        }
-
-        .ant-modal-body {
-        }
-    }
+		.ant-modal-body {
+		}
+	}
 }
 
