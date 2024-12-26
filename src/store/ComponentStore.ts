@@ -1,3 +1,4 @@
+import { BigPlayer } from './../components/logic/BigPlayer/index';
 import { makeAutoObservable } from "mobx"
 
 export interface IDirDropdownItems {
@@ -13,6 +14,7 @@ export interface IComponentStore {
 	childrenDrawer: boolean
 	containerRefSize: { width: number; height: number }
     howlerRef:any
+	BigPlayerOpen: boolean
 }
 
 export class ComponentStore {
@@ -24,6 +26,7 @@ export class ComponentStore {
 		containerRefSize: { width: 0, height: 0 },
         howlerRef: null,
 		drawerContent: undefined,
+		BigPlayerOpen: false,
 	}
 
 	constructor() {
@@ -61,6 +64,11 @@ export class ComponentStore {
 			const { width, height } = refElement.current.getBoundingClientRect()
 			this.componentData.containerRefSize = { width, height }
 		}
+	}
+	
+	public changeBigPlayerOpen(){
+		this.componentData.BigPlayerOpen = !this.componentData.BigPlayerOpen
+		console.log(this.componentData.BigPlayerOpen)
 	}
 	
 

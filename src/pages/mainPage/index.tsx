@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite"
 import { MainLayout } from "../../Layout/mainLayout"
 
 import { useStores } from "../../store"
-import { FileBrowser, TrackPlayer, FavoriteBrowser } from "../../components"
+import { FileBrowser, TrackPlayer, FavoriteBrowser, BigPlayer } from "../../components"
 
 import "./index.scss"
 
@@ -28,6 +28,7 @@ export const MainPage: FC = observer(() => {
 				<div className="main-page__player" style={{borderColor:ThemeStore.CurrentTheme.borderColor}}>
 					<TrackPlayer />
 					<CurrentPlaylist />
+					<BigPlayer />
 				</div>
 			</div>
 		</MainLayout>

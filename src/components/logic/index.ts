@@ -5,4 +5,5 @@ export * from "./TrackPlayer"
 export * from "./CurrentPlaylist"
 export * from "./PlaylistDrawer"
 export * from "./AudioVisualizer"
+export * from "./BigPlayer"
 

@@ -20,7 +20,7 @@ import { TrackProgressBar, VolumeChanger } from "../../ui"
 import "./index.scss"
 
 export const TrackPlayer: FC = observer(() => {
-	const { PlayerStore, ComponentStore, ThemeStore } = useStores()
+	const { PlayerStore, ComponentStore } = useStores()
 	const howlerRef = useRef<ReactHowler | null>(null)
 
 	const formatTime = (seconds: number | null) => {
@@ -123,7 +123,15 @@ export const TrackPlayer: FC = observer(() => {
 					onClick={() => PlayerStore.changeIsLooped()}
 				/>
 			</div>
-			<div className="track-player__cover" style={{backgroundColor:"#cccccc"}}>
+			<div
+				className="track-player__cover"
+				style={{ backgroundColor: "#cccccc" }}
+				onClick={
+					PlayerStore.playerData.selectedTrack == null
+						? () => null
+						: () => ComponentStore.changeBigPlayerOpen()
+				}
+			>
 				{PlayerStore.playerData.selectedTrack == null ? null : (
 					<img
 						src={PlayerStore.playerData.selectedTrack.cover}
