@@ -2,14 +2,8 @@ import { FC } from "react"
 import { Modal } from "antd"
 import { observer } from "mobx-react-lite"
 import { useStores } from "../../../store"
-import { TrackProgressBar } from "../../ui"
+import { TrackProgressBar, PlayerControls } from "../../ui"
 import { CSSProperties } from "react"
-import {
-	MdPlayCircle,
-	MdSkipNext,
-	MdSkipPrevious,
-	MdPauseCircle,
-} from "react-icons/md"
 
 import "./index.scss"
 
@@ -55,36 +49,7 @@ export const BigPlayer: FC = observer(() => {
 		>
 			<div className="big-player__content">
 				<div className="content-cover" style={contentCoverStyle}>
-					<MdSkipPrevious
-						style={{ fontSize: "48px", cursor: "pointer" }}
-						onClick={() => {
-							PlayerStore.setSelectedTrackInCurrentPlaylist(
-								undefined,
-								"previous",
-							)
-						}}
-					/>
-					{PlayerStore.playerData.isPlaying ? (
-						<MdPauseCircle
-							style={{ fontSize: "64px", cursor: "pointer" }}
-							onClick={() => PlayerStore.changeIsPlaying()}
-						/>
-					) : (
-						<MdPlayCircle
-							style={{ fontSize: "64px", cursor: "pointer" }}
-							onClick={() => PlayerStore.changeIsPlaying()}
-						/>
-					)}
-
-					<MdSkipNext
-						style={{ fontSize: "48px", cursor: "pointer" }}
-						onClick={() => {
-							PlayerStore.setSelectedTrackInCurrentPlaylist(
-								undefined,
-								"next",
-							)
-						}}
-					/>
+					<PlayerControls nextFs="48px" previousFs="48px" playFs="64px"/>
 				</div>
 			</div>
 		</Modal>

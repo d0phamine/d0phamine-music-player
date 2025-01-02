@@ -42,7 +42,7 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 						showScaleX: false,
 						showScaleY: false,
 						gradient: "rainbow",
-						volume: 0,
+						volume: 1,
 						audioCtx: soundNode.context, // передаем аудиоконтекст
 					},
 				)
@@ -50,7 +50,11 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 
 			// Подключаем звуковой узел Howler к анализатору, если analyzerRef и soundNode существуют
 			if (howlerInstance && analyzerRef.current && soundNode) {
-				analyzerRef.current.connectInput(soundNode)
+				try {
+					analyzerRef.current.connectInput(soundNode)
+				} catch (error) {
+					console.error("Failed to connect input:", error)
+				}
 			}
 		}
 	}, [howlerRef, PlayerStore.playerData.selectedTrack]) // Инициализация анализатора только при смене трека

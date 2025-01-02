@@ -68,7 +68,6 @@ export class ComponentStore {
 	
 	public changeBigPlayerOpen(){
 		this.componentData.BigPlayerOpen = !this.componentData.BigPlayerOpen
-		console.log(this.componentData.BigPlayerOpen)
 	}
 	
 

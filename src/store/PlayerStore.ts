@@ -47,11 +47,6 @@ export class PlayerStore {
 			: (this.playerData.isPlaying = true)
 	}
 
-	// public setSelectedTrack(selectedTrack: ITrack) {
-	// 	this.playerData.selectedTrack = selectedTrack
-	// 	console.log(this.playerData.selectedTrack)
-	// }
-
 	public isITrack = (obj: any): obj is ITrack => {
 		return (
 			typeof obj.name === "string" &&

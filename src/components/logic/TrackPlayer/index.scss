@@ -8,15 +8,15 @@
 	align-items: center;
 	min-width: 0;
 
-	&__controls {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-	}
+	// &__controls {
+	// 	display: flex;
+	// 	flex-direction: row;
+	// 	align-items: center;
+	// }
 
-	&__controls > *:hover {
-		transition: 0.3s;
-	}
+	// &__controls > *:hover {
+	// 	transition: 0.3s;
+	// }
 
 	&__play-mode {
 		display: flex;

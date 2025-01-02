@@ -1,22 +1,9 @@
 import { FC, useEffect, useRef } from "react"
 import { observer } from "mobx-react-lite"
-
 import ReactHowler from "react-howler"
-
-import {
-	MdPlayCircle,
-	MdSkipNext,
-	MdSkipPrevious,
-	MdShuffle,
-	MdRepeat,
-	MdVolumeUp,
-	MdPauseCircle,
-	MdVolumeMute,
-} from "react-icons/md"
-
+import { MdShuffle, MdRepeat, MdVolumeUp, MdVolumeMute } from "react-icons/md"
 import { useStores } from "../../../store"
-import { TrackProgressBar, VolumeChanger } from "../../ui"
-
+import { TrackProgressBar, VolumeChanger, PlayerControls } from "../../ui"
 import "./index.scss"
 
 export const TrackPlayer: FC = observer(() => {
@@ -37,61 +24,131 @@ export const TrackPlayer: FC = observer(() => {
 
 	useEffect(() => {
 		ComponentStore.setHowlerRef(howlerRef)
-		let interval: NodeJS.Timeout | null = null
+		let animationFrameId: number = 0
+
+		const updateSeek = () => {
+			if (howlerRef.current) {
+				const seek = howlerRef.current.seek()
+				if (typeof seek === "number") {
+					PlayerStore.setCurrentSeekOfPlay(seek)
+					PlayerStore.setCurrentTimeOfPlay(seek)
+				}
+			}
+			animationFrameId = requestAnimationFrame(updateSeek)
+		}
 
 		if (PlayerStore.playerData.isPlaying) {
-			interval = setInterval(() => {
-				if (howlerRef.current) {
-					PlayerStore.setCurrentSeekOfPlay(
-						howlerRef.current.seek() as number,
-					)
-					PlayerStore.setCurrentTimeOfPlay(
-						PlayerStore.playerData.currentSeekOfPlay,
-					)
-				}
-			}, 1000)
-		} else if (interval) {
-			clearInterval(interval)
+			animationFrameId = requestAnimationFrame(updateSeek)
+		} else {
+			cancelAnimationFrame(animationFrameId)
 		}
 
 		return () => {
-			if (interval) clearInterval(interval)
+			cancelAnimationFrame(animationFrameId)
+		}
+	}, [PlayerStore.playerData.isPlaying])
+
+	useEffect(() => {
+		if (howlerRef.current) {
+			howlerRef.current.seek(0)
+			PlayerStore.setCurrentSeekOfPlay(0)
+			PlayerStore.setCurrentTimeOfPlay(0)
+		}
+	}, [PlayerStore.playerData.selectedTrack])
+
+	useEffect(() => {
+		if ("mediaSession" in navigator) {
+			const { selectedTrack } = PlayerStore.playerData
+
+			if (selectedTrack) {
+				const artwork = selectedTrack.cover
+					? [
+							{
+								src: selectedTrack.cover,
+							},
+					  ]
+					: []
+
+				navigator.mediaSession.metadata = new MediaMetadata({
+					title: selectedTrack.name,
+					artist: selectedTrack.artist || "",
+					artwork: artwork,
+				})
+			}
+
+			navigator.mediaSession.setActionHandler("play", () => {
+				PlayerStore.changeIsPlaying()
+			})
+
+			navigator.mediaSession.setActionHandler("pause", () => {
+				PlayerStore.changeIsPlaying()
+			})
+
+			navigator.mediaSession.setActionHandler("previoustrack", () => {
+				PlayerStore.setSelectedTrackInCurrentPlaylist(
+					undefined,
+					"previous",
+				)
+			})
+
+			navigator.mediaSession.setActionHandler("nexttrack", () => {
+				PlayerStore.setSelectedTrackInCurrentPlaylist(undefined, "next")
+			})
+
+			navigator.mediaSession.setActionHandler(
+				"seekbackward",
+				(details) => {
+					const seekOffset = details.seekOffset || 10 // Default to 10 seconds if not provided
+					if (PlayerStore.playerData.currentSeekOfPlay) {
+						const newTime = Math.max(
+							PlayerStore.playerData.currentSeekOfPlay -
+								seekOffset,
+							0,
+						)
+						howlerRef.current?.seek(newTime)
+						PlayerStore.setCurrentSeekOfPlay(newTime)
+					}
+				},
+			)
+
+			navigator.mediaSession.setActionHandler(
+				"seekforward",
+				(details) => {
+					const seekOffset = details.seekOffset || 10
+					if (PlayerStore.playerData.currentSeekOfPlay) {
+						const newTime = Math.min(
+							PlayerStore.playerData.currentSeekOfPlay +
+								seekOffset,
+							howlerRef.current?.duration() || 0,
+						)
+						howlerRef.current?.seek(newTime)
+						PlayerStore.setCurrentSeekOfPlay(newTime)
+					}
+				},
+			)
+
+			navigator.mediaSession.setActionHandler("seekto", (details) => {
+				const howler = howlerRef.current as unknown as {
+					fastSeek?: (time: number) => void
+					seek: (time: number) => void
+				}
+				if (details.fastSeek && howler.fastSeek && details.seekTime) {
+					howler.fastSeek(details.seekTime)
+				} else if (howler.seek && details.seekTime) {
+					howler.seek(details.seekTime)
+				}
+
+				if (details.seekTime) {
+					PlayerStore.setCurrentSeekOfPlay(details.seekTime)
+				}
+			})
 		}
 	}, [PlayerStore.playerData.isPlaying])
 
 	return (
 		<div className="track-player">
 			<div className="track-player__controls">
-				<MdSkipPrevious
-					style={{ fontSize: "24px", cursor: "pointer" }}
-					onClick={() => {
-						PlayerStore.setSelectedTrackInCurrentPlaylist(
-							undefined,
-							"previous",
-						)
-					}}
-				/>
-				{PlayerStore.playerData.isPlaying ? (
-					<MdPauseCircle
-						style={{ fontSize: "32px", cursor: "pointer" }}
-						onClick={() => PlayerStore.changeIsPlaying()}
-					/>
-				) : (
-					<MdPlayCircle
-						style={{ fontSize: "32px", cursor: "pointer" }}
-						onClick={() => PlayerStore.changeIsPlaying()}
-					/>
-				)}
-
-				<MdSkipNext
-					style={{ fontSize: "24px", cursor: "pointer" }}
-					onClick={() => {
-						PlayerStore.setSelectedTrackInCurrentPlaylist(
-							undefined,
-							"next",
-						)
-					}}
-				/>
+				<PlayerControls />
 			</div>
 			<div className="track-player__play-mode">
 				<MdShuffle
@@ -193,6 +250,7 @@ export const TrackPlayer: FC = observer(() => {
 						}
 						PlayerStore.changeIsPlaying()
 					}}
+					html5={true}
 				/>
 			)}
 		</div>

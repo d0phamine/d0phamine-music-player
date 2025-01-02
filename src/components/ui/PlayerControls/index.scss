@@ -1,0 +1,9 @@
+.player-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.player-controls > *:hover {
+    transition: 0.3s;
+}
