@@ -4,7 +4,7 @@ const isDev = require("electron-is-dev");
 const iconPath = resolve(__dirname, "..", "icon_16x16.png");
 
 let config = {
-    appName: "Desktop Music Player",
+    appName: "d0phamine music player",
     icon: iconPath,
     tray: null,
     isQuiting: false,
