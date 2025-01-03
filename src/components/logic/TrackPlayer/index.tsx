@@ -23,8 +23,12 @@ export const TrackPlayer: FC = observer(() => {
 	}
 
 	useEffect(() => {
+		PlayerStore.initMediaSession(howlerRef)
+	}, [])
+
+	useEffect(() => {
 		ComponentStore.setHowlerRef(howlerRef)
-		let animationFrameId: number = 0
+		let animationFrameId: number | null = null
 
 		const updateSeek = () => {
 			if (howlerRef.current) {
@@ -39,12 +43,14 @@ export const TrackPlayer: FC = observer(() => {
 
 		if (PlayerStore.playerData.isPlaying) {
 			animationFrameId = requestAnimationFrame(updateSeek)
-		} else {
+		} else if (animationFrameId !== null) {
 			cancelAnimationFrame(animationFrameId)
 		}
 
 		return () => {
-			cancelAnimationFrame(animationFrameId)
+			if (animationFrameId !== null) {
+				cancelAnimationFrame(animationFrameId)
+			}
 		}
 	}, [PlayerStore.playerData.isPlaying])
 
@@ -55,95 +61,6 @@ export const TrackPlayer: FC = observer(() => {
 			PlayerStore.setCurrentTimeOfPlay(0)
 		}
 	}, [PlayerStore.playerData.selectedTrack])
-
-	useEffect(() => {
-		if ("mediaSession" in navigator) {
-			const { selectedTrack } = PlayerStore.playerData
-
-			if (selectedTrack) {
-				const artwork = selectedTrack.cover
-					? [
-							{
-								src: selectedTrack.cover,
-							},
-					  ]
-					: []
-
-				navigator.mediaSession.metadata = new MediaMetadata({
-					title: selectedTrack.name,
-					artist: selectedTrack.artist || "",
-					artwork: artwork,
-				})
-			}
-
-			navigator.mediaSession.setActionHandler("play", () => {
-				PlayerStore.changeIsPlaying()
-			})
-
-			navigator.mediaSession.setActionHandler("pause", () => {
-				PlayerStore.changeIsPlaying()
-			})
-
-			navigator.mediaSession.setActionHandler("previoustrack", () => {
-				PlayerStore.setSelectedTrackInCurrentPlaylist(
-					undefined,
-					"previous",
-				)
-			})
-
-			navigator.mediaSession.setActionHandler("nexttrack", () => {
-				PlayerStore.setSelectedTrackInCurrentPlaylist(undefined, "next")
-			})
-
-			navigator.mediaSession.setActionHandler(
-				"seekbackward",
-				(details) => {
-					const seekOffset = details.seekOffset || 10 // Default to 10 seconds if not provided
-					if (PlayerStore.playerData.currentSeekOfPlay) {
-						const newTime = Math.max(
-							PlayerStore.playerData.currentSeekOfPlay -
-								seekOffset,
-							0,
-						)
-						howlerRef.current?.seek(newTime)
-						PlayerStore.setCurrentSeekOfPlay(newTime)
-					}
-				},
-			)
-
-			navigator.mediaSession.setActionHandler(
-				"seekforward",
-				(details) => {
-					const seekOffset = details.seekOffset || 10
-					if (PlayerStore.playerData.currentSeekOfPlay) {
-						const newTime = Math.min(
-							PlayerStore.playerData.currentSeekOfPlay +
-								seekOffset,
-							howlerRef.current?.duration() || 0,
-						)
-						howlerRef.current?.seek(newTime)
-						PlayerStore.setCurrentSeekOfPlay(newTime)
-					}
-				},
-			)
-
-			navigator.mediaSession.setActionHandler("seekto", (details) => {
-				const howler = howlerRef.current as unknown as {
-					fastSeek?: (time: number) => void
-					seek: (time: number) => void
-				}
-				if (details.fastSeek && howler.fastSeek && details.seekTime) {
-					howler.fastSeek(details.seekTime)
-				} else if (howler.seek && details.seekTime) {
-					howler.seek(details.seekTime)
-				}
-
-				if (details.seekTime) {
-					PlayerStore.setCurrentSeekOfPlay(details.seekTime)
-				}
-			})
-		}
-	}, [PlayerStore.playerData.isPlaying])
 
 	return (
 		<div className="track-player">

@@ -1,14 +1,17 @@
-const { join } = require("path");
+const { join, resolve } = require("path");
 const isDev = require("electron-is-dev");
 
+const iconPath = resolve(__dirname, "..", "icon_16x16.png");
+
 let config = {
-	appName: "Desktop Music Player",
-	icon: join(__dirname, "..", "/icons.icns"),
-	tray: null,
-	isQuiting: false,
-	mainWindow: null,
-	popupWindow: null,
-	isDev,
+    appName: "Desktop Music Player",
+    icon: iconPath,
+    tray: null,
+    isQuiting: false,
+    mainWindow: null,
+    popupWindow: null,
+    isDev,
 };
 
 module.exports = config;
+

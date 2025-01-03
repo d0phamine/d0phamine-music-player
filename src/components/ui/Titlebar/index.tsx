@@ -37,11 +37,6 @@ export const Titlebar: FC = observer(() => {
 		currentWindow.close()
 	}
 
-	currentWindow.on("close", (e: Error) => {
-		// Закрыть приложение
-		app.exit()
-	})
-
 	return (
 		<div
 			className="title-bar sticky top-0 select-none"

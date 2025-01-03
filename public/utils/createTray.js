@@ -1,18 +1,20 @@
-const { app, Tray, Menu, shell } = require("electron");
-const { showNotification } = require("./showNotification");
-const config = require("./config");
+const { app, Tray, Menu, shell } = require("electron")
+const { showNotification } = require("./showNotification")
+const config = require("./config")
+
+console.log(`Tray icon path: ${config.icon}`)
 
 exports.createTray = () => {
-	const t = new Tray(config.icon);
 
-	t.setToolTip(config.appName);
+	const t = new Tray(config.icon)
+
+	t.setToolTip(config.appName)
 	t.setContextMenu(
 		Menu.buildFromTemplate([
 			{
 				label: "Show App",
 				click: () => {
-					if (!config.mainWindow.isVisible())
-						config.mainWindow.show();
+					if (!config.mainWindow.isVisible()) config.mainWindow.show()
 				},
 			},
 			{
@@ -21,7 +23,7 @@ exports.createTray = () => {
 					{
 						label: "GitHub @d0phamine",
 						click: () => {
-							shell.openExternal("https://github.com/d0phamine");
+							shell.openExternal("https://github.com/d0phamine")
 						},
 					},
 				],
@@ -29,12 +31,13 @@ exports.createTray = () => {
 			{
 				label: "Quit",
 				click: () => {
-					config.isQuiting = true;
-					app.quit();
+					config.isQuiting = true
+					app.quit()
 				},
 			},
 		]),
-	);
+	)
 
-	return t;
-};
+	return t
+}
+

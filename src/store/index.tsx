@@ -5,6 +5,7 @@ import { PlayerStore } from "./PlayerStore"
 import { SpotifyStore } from "./SpotifyStore"
 import { ThemeStore } from "./ThemeStore"
 
+
 export const rootStoreContext = createContext({
 	FSstore: new FSstore(),
 	ComponentStore: new ComponentStore(),
