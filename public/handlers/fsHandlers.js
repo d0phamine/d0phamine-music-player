@@ -43,7 +43,9 @@ ipcMain.handle(channels.GET_DIR, async (event, arg) => {
 					try {
 						const fileBuffer = fs.readFileSync(filePath)
 						const metadata = await parseBuffer(fileBuffer)
-						const title = metadata.common.title || file
+						const title =
+							metadata.common.title ||
+							path.basename(file, path.extname(file))
 						const artist = metadata.common.artist || ""
 						const duration =
 							Math.round(metadata.format.duration) || 0
@@ -74,7 +76,7 @@ ipcMain.handle(channels.GET_DIR, async (event, arg) => {
 						)
 						return {
 							type: "audio",
-							name: file,
+							name: path.basename(file, path.extname(file)),
 							artist: "",
 							path: filePath,
 							cover: null,
@@ -97,32 +99,32 @@ ipcMain.handle(channels.GET_DIR, async (event, arg) => {
 })
 
 ipcMain.handle(channels.GET_FAVORITES, async () => {
-    try {
-        const favoriteDirs = cache.get("favoriteDirs");
-        return favoriteDirs;
-    } catch (error) {
-        console.error("Error fetching favoriteDirs:", error);
-        throw new Error("Failed to retrieve favorite directories");
-    }
-});
+	try {
+		const favoriteDirs = cache.get("favoriteDirs")
+		return favoriteDirs
+	} catch (error) {
+		console.error("Error fetching favoriteDirs:", error)
+		throw new Error("Failed to retrieve favorite directories")
+	}
+})
 
 ipcMain.handle(channels.ADD_FAVORITE, async (event, dirPath) => {
-    try {
-        cache.addToArray("favoriteDirs", {
-            path: dirPath,
-            name: path.basename(dirPath),
-        });
-    } catch (error) {
-        console.error("Error adding favoriteDirs:", error);
-        throw new Error("Failed to add favorite directory");
-    }
-});
+	try {
+		cache.addToArray("favoriteDirs", {
+			path: dirPath,
+			name: path.basename(dirPath),
+		})
+	} catch (error) {
+		console.error("Error adding favoriteDirs:", error)
+		throw new Error("Failed to add favorite directory")
+	}
+})
 
 ipcMain.handle(channels.DELETE_FAVORITE, async (event, dirPath) => {
-    try {
-        cache.removeFromArray("favoriteDirs", dirPath);
-    } catch (error) {
-        console.error("Error deleting favoriteDirs:", error);
-        throw new Error("Failed to delete favorite directory");
-    }
-});
+	try {
+		cache.removeFromArray("favoriteDirs", dirPath)
+	} catch (error) {
+		console.error("Error deleting favoriteDirs:", error)
+		throw new Error("Failed to delete favorite directory")
+	}
+})

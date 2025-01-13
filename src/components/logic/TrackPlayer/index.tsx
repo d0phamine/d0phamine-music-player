@@ -2,6 +2,7 @@ import { FC, useEffect, useRef } from "react"
 import { observer } from "mobx-react-lite"
 import ReactHowler from "react-howler"
 import { MdShuffle, MdRepeat, MdVolumeUp, MdVolumeMute } from "react-icons/md"
+import { AiOutlineExpandAlt } from "react-icons/ai";
 import { useStores } from "../../../store"
 import { TrackProgressBar, VolumeChanger, PlayerControls } from "../../ui"
 import "./index.scss"
@@ -112,6 +113,7 @@ export const TrackPlayer: FC = observer(() => {
 						alt=""
 					/>
 				)}
+				<AiOutlineExpandAlt style={{fontSize:"36px", color:"#fff"}}/>
 			</div>
 			<div className="track-player__info">
 				<div className="info-track-name">

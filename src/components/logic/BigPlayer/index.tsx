@@ -3,6 +3,7 @@ import { Modal } from "antd"
 import { observer } from "mobx-react-lite"
 import { useStores } from "../../../store"
 import { TrackProgressBar, PlayerControls } from "../../ui"
+import { MdLyrics } from "react-icons/md";
 import { CSSProperties } from "react"
 
 import "./index.scss"
@@ -49,7 +50,16 @@ export const BigPlayer: FC = observer(() => {
 		>
 			<div className="big-player__content">
 				<div className="content-cover" style={contentCoverStyle}>
-					<PlayerControls nextFs="48px" previousFs="48px" playFs="64px"/>
+					<div></div>
+					<PlayerControls
+						nextFs="48px"
+						previousFs="48px"
+						playFs="64px"
+						playMode
+					/>
+					<div className="content-cover__lyrics-button">
+						<MdLyrics style={{ fontSize: "24px" }} />
+					</div>
 				</div>
 			</div>
 		</Modal>

@@ -19,9 +19,16 @@
 			position: relative;
 			overflow: hidden;
 			transition: background-color 1s;
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			display: grid;
+			grid-template-rows: 1fr 1fr 1fr;
+			padding: 12px;
+
+			&__lyrics-button{
+				display: flex;
+				justify-content: end;
+				align-items: end;
+				cursor: pointer;
+			}
 
 			&::after {
 				content: "";
