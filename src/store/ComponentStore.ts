@@ -1,4 +1,3 @@
-import { BigPlayer } from './../components/logic/BigPlayer/index';
 import { makeAutoObservable } from "mobx"
 
 export interface IDirDropdownItems {
@@ -13,8 +12,10 @@ export interface IComponentStore {
 	drawerContent: any | undefined
 	childrenDrawer: boolean
 	containerRefSize: { width: number; height: number }
-    howlerRef:any
+	howlerRef: any
 	BigPlayerOpen: boolean
+	BigPlayerLyricsOpen: boolean
+	BigPlayerCoverSize: string
 }
 
 export class ComponentStore {
@@ -24,9 +25,11 @@ export class ComponentStore {
 		drawerOpen: false,
 		childrenDrawer: false,
 		containerRefSize: { width: 0, height: 0 },
-        howlerRef: null,
+		howlerRef: null,
 		drawerContent: undefined,
 		BigPlayerOpen: false,
+		BigPlayerLyricsOpen: false,
+		BigPlayerCoverSize: "360px",
 	}
 
 	constructor() {
@@ -41,7 +44,7 @@ export class ComponentStore {
 		this.componentData.browserSearchValue = ""
 	}
 
-	public changeDrawerOpen(content?:any) {
+	public changeDrawerOpen(content?: any) {
 		if (this.componentData.drawerOpen) {
 			this.componentData.drawerOpen = false
 			this.componentData.drawerContent = undefined
@@ -52,29 +55,34 @@ export class ComponentStore {
 	}
 
 	public changeChildrenDrawer() {
-		if (this.componentData.childrenDrawer) {
-			this.componentData.childrenDrawer = false
-		} else {
-			this.componentData.childrenDrawer = true
-		}
+		this.componentData.childrenDrawer = !this.componentData.childrenDrawer
 	}
 
-	public setDrawerContainerRefSize(refElement: React.RefObject<HTMLDivElement>) {
+	public setDrawerContainerRefSize(
+		refElement: React.RefObject<HTMLDivElement>,
+	) {
 		if (refElement.current) {
 			const { width, height } = refElement.current.getBoundingClientRect()
 			this.componentData.containerRefSize = { width, height }
 		}
 	}
-	
-	public changeBigPlayerOpen(){
+
+	public changeBigPlayerOpen() {
 		this.componentData.BigPlayerOpen = !this.componentData.BigPlayerOpen
 	}
-	
 
-    public setHowlerRef(ref:any){
-        this.componentData.howlerRef = ref
-    }
+	public setHowlerRef(ref: any) {
+		this.componentData.howlerRef = ref
+	}
 
-
+	public changeBigPlayerLyricsOpen() {
+		this.componentData.BigPlayerLyricsOpen =
+			!this.componentData.BigPlayerLyricsOpen
+		if (this.componentData.BigPlayerLyricsOpen) {
+			this.componentData.BigPlayerCoverSize = "240px"
+		} else {
+			this.componentData.BigPlayerCoverSize = "360px"
+		}
+	}
 }
 

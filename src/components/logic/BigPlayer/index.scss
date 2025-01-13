@@ -9,8 +9,6 @@
 		flex-direction: column;
 		gap: 12px;
 		.content-cover {
-			width: 360px;
-			height: 360px;
 			padding: 0px;
 			background-position: center;
 			background-size: contain;
@@ -63,7 +61,10 @@
 		}
 	}
 
+
+
 	.footer-container {
+		width: 360px;
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -80,6 +81,8 @@
 		box-shadow: unset;
 		.ant-modal-footer {
 			margin-top: 12px;
+			display: flex;
+			justify-content: center;
 		}
 
 		.ant-modal-close {

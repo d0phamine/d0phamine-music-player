@@ -1,10 +1,11 @@
-import { FC } from "react"
-import { Modal } from "antd"
+import { FC, CSSProperties } from "react"
 import { observer } from "mobx-react-lite"
+import { Modal } from "antd"
+import { motion, AnimatePresence } from "motion/react"
+
 import { useStores } from "../../../store"
 import { TrackProgressBar, PlayerControls } from "../../ui"
-import { MdLyrics } from "react-icons/md";
-import { CSSProperties } from "react"
+import { MdLyrics } from "react-icons/md"
 
 import "./index.scss"
 
@@ -23,6 +24,22 @@ export const BigPlayer: FC = observer(() => {
 			? `url(${selectedTrack.cover})`
 			: "none",
 		backgroundColor: selectedTrack?.cover ? "transparent" : "gray",
+		height: ComponentStore.componentData.BigPlayerCoverSize,
+		width: ComponentStore.componentData.BigPlayerCoverSize,
+	}
+
+	const modalContainerStyle: CSSProperties = {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		gap: "12px",
+		padding: "12px",
+	}
+
+	const contentLyricsStyle: CSSProperties = {
+		height: "360px",
+		width: "360px",
+		background: "red",
 	}
 
 	return (
@@ -45,22 +62,51 @@ export const BigPlayer: FC = observer(() => {
 					</div>
 				</div>
 			}
-			width={360}
+			width={"100%"}
 			closable={false}
 		>
-			<div className="big-player__content">
-				<div className="content-cover" style={contentCoverStyle}>
-					<div></div>
-					<PlayerControls
-						nextFs="48px"
-						previousFs="48px"
-						playFs="64px"
-						playMode
-					/>
-					<div className="content-cover__lyrics-button">
-						<MdLyrics style={{ fontSize: "24px" }} />
-					</div>
+			<div className="modal-container" style={modalContainerStyle}>
+				<div className="big-player__content">
+					<motion.div
+						className="content-cover"
+						style={contentCoverStyle}
+						animate={{
+							width: ComponentStore.componentData
+								.BigPlayerCoverSize,
+							height: ComponentStore.componentData
+								.BigPlayerCoverSize,
+						}}
+						transition={{ duration: 0.3, ease: "linear" }}
+					>
+						<div></div>
+						<PlayerControls
+							nextFs="48px"
+							previousFs="48px"
+							playFs="64px"
+							playMode
+						/>
+						<div className="content-cover__lyrics-button">
+							<MdLyrics
+								style={{ fontSize: "24px" }}
+								onClick={() =>
+									ComponentStore.changeBigPlayerLyricsOpen()
+								}
+							/>
+						</div>
+					</motion.div>
 				</div>
+				<AnimatePresence>
+					{ComponentStore.componentData.BigPlayerLyricsOpen && (
+						<motion.div
+							style={contentLyricsStyle}
+							initial={{ opacity: 0, scale: 0 }}
+							animate={{ opacity: 1, scale: 1 }}
+							exit={{ opacity: 0, scale: 0 }}
+							transition={{ duration: 0.3, ease: "linear" }}
+							key="box"
+						/>
+					)}
+				</AnimatePresence>
 			</div>
 		</Modal>
 	)

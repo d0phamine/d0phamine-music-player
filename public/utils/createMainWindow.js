@@ -9,6 +9,8 @@ exports.createMainWindow = async () => {
 	const window = new BrowserWindow({
 		width: 850,
 		height: 600,
+		minHeight: 600,
+		minWidth: 720,
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,

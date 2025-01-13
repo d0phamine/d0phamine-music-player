@@ -2,8 +2,6 @@ const { app, Tray, Menu, shell } = require("electron")
 const { showNotification } = require("./showNotification")
 const config = require("./config")
 
-console.log(`Tray icon path: ${config.icon}`)
-
 exports.createTray = () => {
 
 	const t = new Tray(config.icon)
