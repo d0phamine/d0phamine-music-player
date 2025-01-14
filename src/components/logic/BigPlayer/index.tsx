@@ -5,13 +5,12 @@ import { motion, AnimatePresence } from "motion/react"
 
 import { useStores } from "store"
 import { TrackProgressBar, PlayerControls } from "components/ui"
-import { TrackLyrics } from "components/logic"
-import { MdLyrics } from "react-icons/md"
+import { LyricsIcon, TrackLyrics } from "components/logic"
 
 import "./index.scss"
 
 export const BigPlayer: FC = observer(() => {
-	const { ComponentStore, PlayerStore, ThemeStore, TextylStore } = useStores()
+	const { ComponentStore, PlayerStore, ThemeStore } = useStores()
 	const selectedTrack = PlayerStore.playerData.selectedTrack
 
 	const afterBgColor =
@@ -28,6 +27,7 @@ export const BigPlayer: FC = observer(() => {
 	}
 
 	const modalContainerStyle: CSSProperties = {
+		height: "384px",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
@@ -79,26 +79,7 @@ export const BigPlayer: FC = observer(() => {
 							playMode
 						/>
 						<div className="content-cover__lyrics-button">
-							<MdLyrics
-								style={{
-									fontSize: "24px",
-									color: ComponentStore.componentData
-										.BigPlayerLyricsOpen
-										? ThemeStore.CurrentTheme.primaryColor
-										: TextylStore.textylData.lyrics
-										? ThemeStore.CurrentTheme.fontColor
-										: ThemeStore.CurrentTheme.disabledColor,
-									cursor: TextylStore.textylData.lyrics
-										? "pointer"
-										: "unset",
-									transition: "0.3s",
-								}}
-								onClick={() => {
-									if (TextylStore.textylData.lyrics) {
-										ComponentStore.changeBigPlayerLyricsOpen()
-									}
-								}}
-							/>
+							<LyricsIcon />
 						</div>
 					</motion.div>
 				</div>
@@ -106,9 +87,16 @@ export const BigPlayer: FC = observer(() => {
 					{ComponentStore.componentData.BigPlayerLyricsOpen && (
 						<motion.div
 							className="big-player__lyrics-container"
-							initial={{ opacity: 0, scale: 0 }}
-							animate={{ opacity: 1, scale: 1 }}
-							exit={{ opacity: 0, scale: 0 }}
+							animate={{
+								opacity: 1,
+								width: "360px",
+								height: "360px",
+							}}
+							exit={{
+								opacity: 0,
+								width: 0,
+								height: 0,
+							}}
 							transition={{ duration: 0.3, ease: "linear" }}
 							key="box"
 						>
