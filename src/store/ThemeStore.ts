@@ -7,6 +7,7 @@ export interface Theme {
 	borderColor: string
 	fontColor: string
 	playingTrackColor: string
+	disabledColor: string
 }
 
 export class ThemeStore {
@@ -19,6 +20,7 @@ export class ThemeStore {
 		borderColor: "#424242",
 		fontColor: "#ffffff",
 		playingTrackColor: "#1cc75b",
+		disabledColor: "rgba(184,184,184, 0.6)",
 	}
 
 	public LightTheme: Theme = {
@@ -28,6 +30,7 @@ export class ThemeStore {
 		borderColor: "#d9d9d9",
 		fontColor: "#202020",
 		playingTrackColor: "#1cc75b",
+		disabledColor: "rgba(100,100,100, 0.6)",
 	}
 
 	public CurrentTheme: Theme = { ...this.LightTheme }

@@ -1,0 +1,1 @@
+export { getLyrics } from "./getLyrics"

@@ -5,6 +5,7 @@ import { PlayerStore } from "./PlayerStore"
 import { SpotifyStore } from "./SpotifyStore"
 import { ThemeStore } from "./ThemeStore"
 import { GeniusStore } from "./GeniusStore"
+import { TextylStore } from "./TextylStore"
 
 
 export const rootStoreContext = createContext({
@@ -14,6 +15,7 @@ export const rootStoreContext = createContext({
 	SpotifyStore: new SpotifyStore(),
 	ThemeStore: new ThemeStore(),
 	GeniusStore: new GeniusStore(),
+	TextylStore: new TextylStore(),
 })
 
 export const useStores = () => useContext(rootStoreContext)

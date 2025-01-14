@@ -102,6 +102,7 @@
 		"electron-reload": "^2.0.0-alpha.1",
 		"electron-reloader": "^1.2.3",
 		"electron-updater": "^6.3.9",
+		"https": "^1.0.0",
 		"mobx": "^6.13.3",
 		"mobx-react-lite": "^4.0.7",
 		"motion": "^11.17.0",

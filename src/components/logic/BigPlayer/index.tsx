@@ -5,12 +5,13 @@ import { motion, AnimatePresence } from "motion/react"
 
 import { useStores } from "store"
 import { TrackProgressBar, PlayerControls } from "components/ui"
+import { TrackLyrics } from "components/logic"
 import { MdLyrics } from "react-icons/md"
 
 import "./index.scss"
 
 export const BigPlayer: FC = observer(() => {
-	const { ComponentStore, PlayerStore, ThemeStore } = useStores()
+	const { ComponentStore, PlayerStore, ThemeStore, TextylStore } = useStores()
 	const selectedTrack = PlayerStore.playerData.selectedTrack
 
 	const afterBgColor =
@@ -24,8 +25,6 @@ export const BigPlayer: FC = observer(() => {
 			? `url(${selectedTrack.cover})`
 			: "none",
 		backgroundColor: selectedTrack?.cover ? "transparent" : "gray",
-		height: ComponentStore.componentData.BigPlayerCoverSize,
-		width: ComponentStore.componentData.BigPlayerCoverSize,
 	}
 
 	const modalContainerStyle: CSSProperties = {
@@ -34,12 +33,6 @@ export const BigPlayer: FC = observer(() => {
 		alignItems: "center",
 		gap: "12px",
 		padding: "12px",
-	}
-
-	const contentLyricsStyle: CSSProperties = {
-		height: "360px",
-		width: "360px",
-		background: "red",
 	}
 
 	return (
@@ -87,10 +80,24 @@ export const BigPlayer: FC = observer(() => {
 						/>
 						<div className="content-cover__lyrics-button">
 							<MdLyrics
-								style={{ fontSize: "24px" }}
-								onClick={() =>
-									ComponentStore.changeBigPlayerLyricsOpen()
-								}
+								style={{
+									fontSize: "24px",
+									color: ComponentStore.componentData
+										.BigPlayerLyricsOpen
+										? ThemeStore.CurrentTheme.primaryColor
+										: TextylStore.textylData.lyrics
+										? ThemeStore.CurrentTheme.fontColor
+										: ThemeStore.CurrentTheme.disabledColor,
+									cursor: TextylStore.textylData.lyrics
+										? "pointer"
+										: "unset",
+									transition: "0.3s",
+								}}
+								onClick={() => {
+									if (TextylStore.textylData.lyrics) {
+										ComponentStore.changeBigPlayerLyricsOpen()
+									}
+								}}
 							/>
 						</div>
 					</motion.div>
@@ -98,13 +105,15 @@ export const BigPlayer: FC = observer(() => {
 				<AnimatePresence>
 					{ComponentStore.componentData.BigPlayerLyricsOpen && (
 						<motion.div
-							style={contentLyricsStyle}
+							className="big-player__lyrics-container"
 							initial={{ opacity: 0, scale: 0 }}
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0 }}
 							transition={{ duration: 0.3, ease: "linear" }}
 							key="box"
-						/>
+						>
+							<TrackLyrics />
+						</motion.div>
 					)}
 				</AnimatePresence>
 			</div>

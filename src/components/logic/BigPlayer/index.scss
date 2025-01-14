@@ -1,6 +1,6 @@
 .ant-modal-mask {
 	backdrop-filter: blur(16px);
-    background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
 .big-player {
@@ -21,11 +21,10 @@
 			grid-template-rows: 1fr 1fr 1fr;
 			padding: 12px;
 
-			&__lyrics-button{
+			&__lyrics-button {
 				display: flex;
-				justify-content: end;
-				align-items: end;
-				cursor: pointer;
+				justify-content: flex-end;
+				align-items: flex-end;
 			}
 
 			&::after {
@@ -61,13 +60,17 @@
 		}
 	}
 
-
+	&__lyrics-container {
+		height: 360px;
+		width: 360px;
+		background: red;
+	}
 
 	.footer-container {
 		width: 360px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
 		.content-trackName {
 			text-align: center;
 			font-family: "JetBrains Mono Variable", monospace;

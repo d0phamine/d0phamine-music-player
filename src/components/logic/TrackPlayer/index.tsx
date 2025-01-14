@@ -2,13 +2,13 @@ import { FC, useEffect, useRef } from "react"
 import { observer } from "mobx-react-lite"
 import ReactHowler from "react-howler"
 import { MdShuffle, MdRepeat, MdVolumeUp, MdVolumeMute } from "react-icons/md"
-import { AiOutlineExpandAlt } from "react-icons/ai";
+import { AiOutlineExpandAlt } from "react-icons/ai"
 import { useStores } from "store"
 import { TrackProgressBar, VolumeChanger, PlayerControls } from "components/ui"
 import "./index.scss"
 
 export const TrackPlayer: FC = observer(() => {
-	const { PlayerStore, ComponentStore } = useStores()
+	const { PlayerStore, ComponentStore, TextylStore } = useStores()
 	const howlerRef = useRef<ReactHowler | null>(null)
 
 	const formatTime = (seconds: number | null) => {
@@ -60,6 +60,13 @@ export const TrackPlayer: FC = observer(() => {
 			howlerRef.current.seek(0)
 			PlayerStore.setCurrentSeekOfPlay(0)
 			PlayerStore.setCurrentTimeOfPlay(0)
+		}
+
+		if (PlayerStore.playerData.selectedTrack != null) {
+			let trackName = PlayerStore.playerData.selectedTrack?.artist
+				? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
+				: PlayerStore.playerData.selectedTrack?.name || ""
+			TextylStore.setLyrics(trackName)
 		}
 	}, [PlayerStore.playerData.selectedTrack])
 
@@ -113,7 +120,9 @@ export const TrackPlayer: FC = observer(() => {
 						alt=""
 					/>
 				)}
-				<AiOutlineExpandAlt style={{fontSize:"36px", color:"#fff"}}/>
+				<AiOutlineExpandAlt
+					style={{ fontSize: "36px", color: "#fff" }}
+				/>
 			</div>
 			<div className="track-player__info">
 				<div className="info-track-name">

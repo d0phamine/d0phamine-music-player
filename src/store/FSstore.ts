@@ -5,7 +5,6 @@ import { ITrack } from "./PlayerStore"
 
 const { ipcRenderer } = window.require("electron")
 
-
 export interface DirsArr {
 	type: string
 	name: string
@@ -34,39 +33,45 @@ export class FSstore {
 		currentPath: "",
 		previousPath: "",
 		loading: false,
-		tracksFromFavoriteDir: []
+		tracksFromFavoriteDir: [],
 	}
 
 	constructor() {
 		makeAutoObservable(this)
 	}
 
-	public async getDirs(dir?: string): Promise<DirsArr[] | ITrack[]> {
-		this.FSdata.loading = true;
+	public async getDirs(
+		dir?: string,
+		needLoading?: boolean
+	): Promise<DirsArr[] | ITrack[]> {
+		this.FSdata.loading = needLoading ? true : this.FSdata.loading
 		try {
-			const { receivedFiles, path } = await ipcRenderer.invoke(channels.GET_DIR, { dir });
+			const { receivedFiles, path } = await ipcRenderer.invoke(
+				channels.GET_DIR,
+				{ dir },
+			)
 			runInAction(() => {
-				this.getPath(path);
-				this.FSdata.loading = false;
-			});
-			return receivedFiles;
+				this.getPath(path)
+				this.FSdata.loading = needLoading ? false : this.FSdata.loading
+			})
+			return receivedFiles
 		} catch (errorMessage) {
 			runInAction(() => {
-				this.FSdata.loading = false;
-			});
-			throw errorMessage;
+				this.FSdata.loading = needLoading ? false : this.FSdata.loading
+			})
+			throw errorMessage
 		}
 	}
 
 	public async setBrowserDirs(dir?: string) {
-		const files = await this.getDirs(dir ?? "") // Fetch the files
+		const files = await this.getDirs(dir ?? "", true) // Fetch the files
 		runInAction(() => {
 			this.FSdata.browserDirs = files
 			this.FSdata.filteredDirs = null // Assign the fetched files to browserDirs
 		})
 	}
 
-	public async setTracksFromFavoriteDir(dir:string){
+	public async setTracksFromFavoriteDir(dir: string) {
 		const files = await this.getDirs(dir ?? "")
 		runInAction(() => {
 			this.FSdata.tracksFromFavoriteDir = files
@@ -97,30 +102,32 @@ export class FSstore {
 
 	public async getFavoriteDirs() {
 		try {
-			const favoriteDirs = await ipcRenderer.invoke(channels.GET_FAVORITES);
+			const favoriteDirs = await ipcRenderer.invoke(
+				channels.GET_FAVORITES,
+			)
 			runInAction(() => {
-				this.FSdata.favoriteDirs = favoriteDirs;
-			});
+				this.FSdata.favoriteDirs = favoriteDirs
+			})
 		} catch (error) {
-			console.error("Error fetching favorite directories:", error);
+			console.error("Error fetching favorite directories:", error)
 		}
 	}
 
 	public async addToFavoriteDirs(path: string) {
 		try {
-			await ipcRenderer.invoke(channels.ADD_FAVORITE, path);
-			await this.getFavoriteDirs();
+			await ipcRenderer.invoke(channels.ADD_FAVORITE, path)
+			await this.getFavoriteDirs()
 		} catch (error) {
-			console.error("Error adding to favorite directories:", error);
+			console.error("Error adding to favorite directories:", error)
 		}
 	}
 
 	public async deleteFromFavorites(path: string) {
 		try {
-			await ipcRenderer.invoke(channels.DELETE_FAVORITE, path);
-			await this.getFavoriteDirs();
+			await ipcRenderer.invoke(channels.DELETE_FAVORITE, path)
+			await this.getFavoriteDirs()
 		} catch (error) {
-			console.error("Error deleting from favorite directories:", error);
+			console.error("Error deleting from favorite directories:", error)
 		}
 	}
 }
