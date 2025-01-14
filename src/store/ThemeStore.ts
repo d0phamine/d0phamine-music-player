@@ -1,5 +1,4 @@
 import { makeAutoObservable, runInAction } from "mobx"
-import { theme } from "antd"
 
 export interface Theme {
 	name: string

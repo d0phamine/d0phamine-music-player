@@ -3,8 +3,8 @@ import { observer } from "mobx-react-lite"
 import ReactHowler from "react-howler"
 import { MdShuffle, MdRepeat, MdVolumeUp, MdVolumeMute } from "react-icons/md"
 import { AiOutlineExpandAlt } from "react-icons/ai";
-import { useStores } from "../../../store"
-import { TrackProgressBar, VolumeChanger, PlayerControls } from "../../ui"
+import { useStores } from "store"
+import { TrackProgressBar, VolumeChanger, PlayerControls } from "components/ui"
 import "./index.scss"
 
 export const TrackPlayer: FC = observer(() => {

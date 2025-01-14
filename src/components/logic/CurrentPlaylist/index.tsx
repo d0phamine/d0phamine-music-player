@@ -1,9 +1,9 @@
 import { FC } from "react"
 import { observer } from "mobx-react-lite"
 
-import { CustomListItem } from "../../"
-import { useStores } from "../../../store"
-import { ITrack } from "../../../store/PlayerStore"
+import { CustomListItem } from "components/ui"
+import { useStores } from "store"
+import { ITrack } from "store/PlayerStore"
 
 import { MdOutlineAudioFile, MdCleaningServices, MdDarkMode } from "react-icons/md"
 import { IoMdMenu } from "react-icons/io"

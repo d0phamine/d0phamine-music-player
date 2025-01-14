@@ -1,6 +1,6 @@
 import { FC, useState } from "react"
 
-import { useStores } from "../../../store"
+import { useStores } from "store"
 import { observer } from "mobx-react-lite"
 import { useNavigate, useLocation } from "react-router-dom"
 
@@ -16,7 +16,7 @@ import { Button } from "antd"
 
 import "./index.scss"
 
-const { getCurrentWindow, app } = window.require("@electron/remote")
+const { getCurrentWindow } = window.require("@electron/remote")
 
 export const Titlebar: FC = observer(() => {
 	const { ThemeStore } = useStores()
@@ -68,7 +68,6 @@ export const Titlebar: FC = observer(() => {
 				>
 					{maximized ? <IoContractOutline /> : <IoExpandOutline />}
 				</button>
-				{/* <p style={{ fontSize: "4px" }}>{window.location.href}</p> */}
 				<Button
 					className={
 						ThemeStore.CurrentTheme.name ===

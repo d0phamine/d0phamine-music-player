@@ -1,11 +1,12 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect } from "react"
 
-import { useStores } from "../../../store"
+import { useStores } from "store"
 import { observer } from "mobx-react-lite"
 
-import "./index.scss"
-import { SpotifyListItem } from "../../ui/SpotifyListItem"
+import { SpotifyListItem } from "components/ui"
 import { Artist, Track, SimplifiedPlaylist } from "@spotify/web-api-ts-sdk"
+
+import "./index.scss"
 
 export const MyContent: FC = observer(() => {
 	const { SpotifyStore, ComponentStore } = useStores()

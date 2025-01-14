@@ -4,7 +4,7 @@ import ReactHowler from "react-howler"
 
 import { Slider } from "antd"
 
-import { useStores } from "../../../store"
+import { useStores } from "store"
 
 import "./index.scss"
 

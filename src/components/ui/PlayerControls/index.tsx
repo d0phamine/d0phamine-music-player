@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { useStores } from "../../../store"
+import { useStores } from "store"
 import {
 	MdPlayCircle,
 	MdSkipNext,

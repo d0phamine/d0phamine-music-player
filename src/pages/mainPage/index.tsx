@@ -1,19 +1,19 @@
 import { FC, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 
-import { MainLayout } from "../../Layout/mainLayout"
+import { MainLayout } from "layout/mainLayout"
 
-import { useStores } from "../../store"
+import { useStores } from "store"
 import {
 	FileBrowser,
 	TrackPlayer,
 	FavoriteBrowser,
 	BigPlayer,
-} from "../../components"
+} from "components"
 
 import "./index.scss"
 
-import { CurrentPlaylist } from "../../components"
+import { CurrentPlaylist } from "components"
 
 export const MainPage: FC = observer(() => {
 	const { FSstore, ThemeStore, GeniusStore } = useStores()

@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 
 import { Slider } from "antd"
 
-import { useStores } from "../../../store"
+import { useStores } from "store"
 
 import "./index.scss"
 
@@ -15,7 +15,6 @@ export const VolumeChanger: FC = observer(() => {
 			tooltip={{ formatter: null }}
 			value={PlayerStore.playerData.playerVolume * 100}
             onChange={(value:number) => PlayerStore.setPlayerVolume(value / 100)}
-			// style={{backgroundColor:ThemeStore.CurrentTheme.fontColor}}
 		/>
 	)
 })

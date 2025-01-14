@@ -1,10 +1,10 @@
 import { FC } from "react"
 import { observer } from "mobx-react-lite"
 
-import { useStores } from "../../../store"
-import { DirsArr } from "../../../store/FSstore"
-import { ITrack } from "../../../store/PlayerStore"
-import { CustomIcon, CustomListItem, BrowserSearch } from "../.."
+import { useStores } from "store"
+import { DirsArr } from "store/FSstore"
+import { ITrack } from "store/PlayerStore"
+import { CustomIcon, CustomListItem, BrowserSearch } from "components"
 
 import {
 	MdFolder,

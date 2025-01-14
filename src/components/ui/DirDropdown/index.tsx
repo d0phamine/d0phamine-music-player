@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import { Dropdown } from "antd"
 import type { MenuProps, DropdownProps } from "antd"
 
-import { useStores } from "../../../store"
+import { useStores } from "store"
 
 import "./index.scss"
 

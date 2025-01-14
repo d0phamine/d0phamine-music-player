@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite"
 import { Input } from "antd"
 import { SearchOutlined } from "@ant-design/icons"
 
-import { useStores } from "../../../store"
+import { useStores } from "store"
 
 import "./index.scss"
 import { SizeType } from "antd/es/config-provider/SizeContext"

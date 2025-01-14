@@ -3,8 +3,8 @@ import { observer } from "mobx-react-lite"
 import { Modal } from "antd"
 import { motion, AnimatePresence } from "motion/react"
 
-import { useStores } from "../../../store"
-import { TrackProgressBar, PlayerControls } from "../../ui"
+import { useStores } from "store"
+import { TrackProgressBar, PlayerControls } from "components/ui"
 import { MdLyrics } from "react-icons/md"
 
 import "./index.scss"

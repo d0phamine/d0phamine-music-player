@@ -1,11 +1,11 @@
 import { FC, useEffect, useRef } from "react"
 
-import { useStores } from "../../../store"
+import { useStores } from "store"
 import { observer } from "mobx-react-lite"
 
-import { PlaylistCard } from "../../ui"
-import { PlaylistDrawer } from "../../logic"
-import { SimplifiedAlbum, SimplifiedPlaylist } from "@spotify/web-api-ts-sdk"
+import { PlaylistCard } from "components/ui"
+import { PlaylistDrawer } from "components/logic"
+import { SimplifiedAlbum } from "@spotify/web-api-ts-sdk"
 
 import "./index.scss"
 

@@ -222,7 +222,7 @@ export class SpotifyStore {
 
 	/**
 	 * 
-	 * @Deprecated
+	 * @deprecated
 	 * 
 	 * public async setUserFeaturedPlaylists(
 		country?: CountryCodeA2,

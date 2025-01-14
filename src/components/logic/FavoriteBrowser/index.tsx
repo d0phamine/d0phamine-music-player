@@ -1,12 +1,12 @@
 import { FC, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 
-import { useStores } from "../../../store"
-import { CustomIcon, CustomListItem, DirDropdown } from "../.."
+import { useStores } from "store"
+import { CustomIcon, CustomListItem, DirDropdown } from "components/ui"
 
 import { MdFolder, MdOutlineStarPurple500, MdMoreHoriz } from "react-icons/md"
-import { DirsArr } from "../../../store/FSstore"
-import { ITrack } from "../../../store/PlayerStore"
+import { DirsArr } from "store/FSstore"
+import { ITrack } from "store/PlayerStore"
 
 import "./index.scss"
 

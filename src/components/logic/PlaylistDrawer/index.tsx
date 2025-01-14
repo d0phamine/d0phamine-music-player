@@ -4,7 +4,7 @@ import { Drawer } from "antd"
 import { LoadingOutlined } from "@ant-design/icons"
 import InfiniteScroll from "react-infinite-scroller"
 
-import { useStores } from "../../../store"
+import { useStores } from "store"
 import {
 	PlaylistedTrack,
 	SimplifiedArtist,

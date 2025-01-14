@@ -1,6 +1,6 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 
-import { Artist, SimplifiedArtist } from "@spotify/web-api-ts-sdk"
+import { SimplifiedArtist } from "@spotify/web-api-ts-sdk"
 
 import "./index.scss"
 
