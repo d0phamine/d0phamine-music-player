@@ -1,16 +1,20 @@
 import { FC, CSSProperties } from "react"
 import { observer } from "mobx-react-lite"
 import { Modal } from "antd"
-import { motion, AnimatePresence } from "motion/react"
+import {
+	motion,
+	AnimatePresence,
+} from "motion/react"
 
 import { useStores } from "store"
 import { TrackProgressBar, PlayerControls } from "components/ui"
 import { LyricsIcon, TrackLyrics } from "components/logic"
 
 import "./index.scss"
+import { TextylStore } from "store/TextylStore"
 
 export const BigPlayer: FC = observer(() => {
-	const { ComponentStore, PlayerStore, ThemeStore } = useStores()
+	const { ComponentStore, PlayerStore, ThemeStore, TextylStore } = useStores()
 	const selectedTrack = PlayerStore.playerData.selectedTrack
 
 	const afterBgColor =
@@ -24,15 +28,6 @@ export const BigPlayer: FC = observer(() => {
 			? `url(${selectedTrack.cover})`
 			: "none",
 		backgroundColor: selectedTrack?.cover ? "transparent" : "gray",
-	}
-
-	const modalContainerStyle: CSSProperties = {
-		height: "384px",
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		gap: "12px",
-		padding: "12px",
 	}
 
 	return (
@@ -58,7 +53,7 @@ export const BigPlayer: FC = observer(() => {
 			width={"100%"}
 			closable={false}
 		>
-			<div className="modal-container" style={modalContainerStyle}>
+			<div className="modal-container">
 				<div className="big-player__content">
 					<motion.div
 						className="content-cover"
@@ -87,6 +82,7 @@ export const BigPlayer: FC = observer(() => {
 					{ComponentStore.componentData.BigPlayerLyricsOpen && (
 						<motion.div
 							className="big-player__lyrics-container"
+							initial={{ opacity: 0 }}
 							animate={{
 								opacity: 1,
 								width: "360px",
@@ -99,6 +95,7 @@ export const BigPlayer: FC = observer(() => {
 							}}
 							transition={{ duration: 0.3, ease: "linear" }}
 							key="box"
+							onAnimationComplete={() => TextylStore.changeLyricsOpen()}
 						>
 							<TrackLyrics />
 						</motion.div>

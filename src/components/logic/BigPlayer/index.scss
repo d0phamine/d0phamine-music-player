@@ -61,7 +61,8 @@
 	}
 
 	&__lyrics-container {
-		background: red;
+		background: transparent;
+		overflow: hidden;
 	}
 
 	.footer-container {
@@ -92,6 +93,14 @@
 		}
 
 		.ant-modal-body {
+			.modal-container {
+				height: 384px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 12px;
+				padding: 12px;
+			}
 		}
 	}
 }

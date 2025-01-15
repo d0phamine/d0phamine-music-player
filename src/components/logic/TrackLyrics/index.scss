@@ -1,0 +1,15 @@
+.track-lyrics{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+
+    &__line{
+        font-size: 48px;
+        line-height: 1;
+        padding: 24px 0px;
+        text-align: center;
+    }
+}
