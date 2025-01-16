@@ -10,15 +10,15 @@ export interface Ilyrics {
 
 export interface ITextylStore {
 	lyrics: Ilyrics[] | undefined
-    lyricsOpen: boolean
-    lyricsLoading: boolean
+	lyricsAppear: boolean
+	lyricsLoading: boolean
 }
 
 export class TextylStore {
 	public textylData: ITextylStore = {
 		lyrics: undefined,
-        lyricsOpen: false,
-        lyricsLoading: false
+		lyricsAppear: false,
+		lyricsLoading: false,
 	}
 
 	constructor() {
@@ -32,37 +32,33 @@ export class TextylStore {
 		})
 	}
 
-    public changeLyricsOpen(){
-        this.textylData.lyricsOpen = !this.textylData.lyricsOpen
-    }
+	public changeLyricsAppear() {
+		this.textylData.lyricsAppear = !this.textylData.lyricsAppear
+	}
 
 	public setLyrics(trackName: string) {
-        this.textylData.lyricsLoading = true
+		this.textylData.lyricsLoading = true
 		getLyrics(trackName).then((res) => {
-            if (res) {
-                this.inputAdditionalValues(res)
-            }
-			
+			if (res) {
+				this.inputAdditionalValues(res)
+			}
 			runInAction(() => {
 				this.textylData.lyrics = res
+				this.textylData.lyricsLoading = false
 			})
 		})
-        this.textylData.lyricsLoading = false
 	}
 
 	public setLyricsLineActive(lineId: number) {
-
-        this.textylData.lyrics?.forEach((item: Ilyrics) => {
-            item.activeFlag = false;
-        });
+		this.textylData.lyrics?.forEach((item: Ilyrics) => {
+			item.activeFlag = false
+		})
 
 		this.textylData.lyrics?.forEach((item: Ilyrics) => {
 			if (item.id === lineId) {
 				item.activeFlag = true
-                if (item.id){
-                    
-                }
 			}
 		})
 	}
 }
+

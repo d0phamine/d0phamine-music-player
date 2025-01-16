@@ -1,7 +1,6 @@
 import { FC, useEffect, useRef } from "react"
 import { observer } from "mobx-react-lite"
 import { useStores } from "store"
-import { motion } from "motion/react"
 
 import "./index.scss"
 
@@ -9,13 +8,34 @@ export const TrackLyrics: FC = observer(() => {
 	const { TextylStore, PlayerStore, ThemeStore } = useStores()
 	const prevSeekRef = useRef<number | null>(null)
 	const activeLineRef = useRef<(HTMLDivElement | null)[]>([])
+	const lyricsContainerRef = useRef<HTMLDivElement | null>(null)
 
 	useEffect(() => {
-		// TextylStore.textylData.lyrics?.forEach((item) => {
-		//     if (item.seconds === PlayerStore.playerData.currentTimeOfPlay) {
-		//         item.activeFlag = true
-		//     }
-		// })
+		if (!TextylStore.textylData.lyricsLoading) {
+			TextylStore.textylData.lyrics?.forEach((item) => {
+				if (item.activeFlag) {
+					const observer = new MutationObserver((mutations, obs) => {
+						const element = activeLineRef.current[item.id]
+						if (element) {
+							element.scrollIntoView({
+								behavior: "smooth",
+								block: "center",
+							})
+							obs.disconnect()
+						}
+					})
+					if (lyricsContainerRef.current) {
+						observer.observe(lyricsContainerRef.current, {
+							childList: true,
+							subtree: true,
+						})
+					}
+				}
+			})
+		}
+	}, [TextylStore.textylData.lyricsLoading])
+
+	useEffect(() => {
 		const currentSeek = Math.floor(
 			PlayerStore.playerData.currentSeekOfPlay || 0,
 		)
@@ -35,9 +55,9 @@ export const TrackLyrics: FC = observer(() => {
 	}, [PlayerStore.playerData.currentSeekOfPlay])
 
 	return (
-		<div className="track-lyrics">
-			{TextylStore.textylData.lyricsOpen && (
-				TextylStore.textylData.lyricsLoading ? (
+		<div className="track-lyrics" ref={lyricsContainerRef}>
+			{TextylStore.textylData.lyricsAppear &&
+				(TextylStore.textylData.lyricsLoading ? (
 					<div>Loading...</div>
 				) : (
 					TextylStore.textylData.lyrics?.map((item, index) => (
@@ -51,14 +71,16 @@ export const TrackLyrics: FC = observer(() => {
 									color: item.activeFlag
 										? ThemeStore.CurrentTheme.fontColor
 										: ThemeStore.CurrentTheme.disabledColor,
+									filter: item.activeFlag
+										? "unset"
+										: "blur(3px)",
 								}}
 							>
 								{item.lyrics}
 							</p>
 						</div>
 					))
-				)
-			)}
+				))}
 		</div>
 	)
 })

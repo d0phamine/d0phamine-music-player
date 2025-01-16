@@ -1,4 +1,4 @@
-import { FC, CSSProperties } from "react"
+import { FC, CSSProperties, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { Modal } from "antd"
 import {
@@ -11,7 +11,6 @@ import { TrackProgressBar, PlayerControls } from "components/ui"
 import { LyricsIcon, TrackLyrics } from "components/logic"
 
 import "./index.scss"
-import { TextylStore } from "store/TextylStore"
 
 export const BigPlayer: FC = observer(() => {
 	const { ComponentStore, PlayerStore, ThemeStore, TextylStore } = useStores()
@@ -29,6 +28,12 @@ export const BigPlayer: FC = observer(() => {
 			: "none",
 		backgroundColor: selectedTrack?.cover ? "transparent" : "gray",
 	}
+
+	useEffect(() => {
+		 if (!TextylStore.textylData.lyrics){
+			ComponentStore.changeBigPlayerLyricsOpen()
+		 }
+	}, [TextylStore.textylData.lyrics])
 
 	return (
 		<Modal
@@ -85,7 +90,7 @@ export const BigPlayer: FC = observer(() => {
 							initial={{ opacity: 0 }}
 							animate={{
 								opacity: 1,
-								width: "360px",
+								width: "384px",
 								height: "360px",
 							}}
 							exit={{
@@ -95,7 +100,7 @@ export const BigPlayer: FC = observer(() => {
 							}}
 							transition={{ duration: 0.3, ease: "linear" }}
 							key="box"
-							onAnimationComplete={() => TextylStore.changeLyricsOpen()}
+							onAnimationComplete={() => TextylStore.changeLyricsAppear()}
 						>
 							<TrackLyrics />
 						</motion.div>

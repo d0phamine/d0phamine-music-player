@@ -16,6 +16,7 @@ export interface IComponentStore {
 	BigPlayerOpen: boolean
 	BigPlayerLyricsOpen: boolean
 	BigPlayerCoverSize: string
+	BigPlayerLyricsScrollState: HTMLDivElement | null
 }
 
 export class ComponentStore {
@@ -30,6 +31,7 @@ export class ComponentStore {
 		BigPlayerOpen: false,
 		BigPlayerLyricsOpen: false,
 		BigPlayerCoverSize: "360px",
+		BigPlayerLyricsScrollState: null
 	}
 
 	constructor() {
@@ -83,6 +85,10 @@ export class ComponentStore {
 		} else {
 			this.componentData.BigPlayerCoverSize = "360px"
 		}
+	}
+
+	public setBigPlayerLyricsScrollState(state:HTMLDivElement | null){
+		this.componentData.BigPlayerLyricsScrollState = state
 	}
 }
 

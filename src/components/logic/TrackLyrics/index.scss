@@ -9,7 +9,11 @@
     &__line{
         font-size: 48px;
         line-height: 1;
-        padding: 24px 0px;
+        padding: 24px 12px;
         text-align: center;
+    }
+
+    &__line:nth-child(1){
+        margin-top: 30%;
     }
 }
