@@ -43,7 +43,7 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 						showScaleX: false,
 						showScaleY: false,
 						gradient: "rainbow",
-						volume: 1,
+						volume: 0,
 						audioCtx: soundNode.context, // передаем аудиоконтекст
 					},
 				)

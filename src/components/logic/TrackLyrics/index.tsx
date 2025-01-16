@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite"
 import { useStores } from "store"
 
 import "./index.scss"
+import { CustomLoader } from "components/ui"
 
 export const TrackLyrics: FC = observer(() => {
 	const { TextylStore, PlayerStore, ThemeStore } = useStores()
@@ -58,7 +59,7 @@ export const TrackLyrics: FC = observer(() => {
 		<div className="track-lyrics" ref={lyricsContainerRef}>
 			{TextylStore.textylData.lyricsAppear &&
 				(TextylStore.textylData.lyricsLoading ? (
-					<div>Loading...</div>
+					<CustomLoader />
 				) : (
 					TextylStore.textylData.lyrics?.map((item, index) => (
 						<div

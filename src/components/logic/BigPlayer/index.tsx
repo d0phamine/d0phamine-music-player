@@ -1,10 +1,7 @@
 import { FC, CSSProperties, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { Modal } from "antd"
-import {
-	motion,
-	AnimatePresence,
-} from "motion/react"
+import { motion, AnimatePresence } from "motion/react"
 
 import { useStores } from "store"
 import { TrackProgressBar, PlayerControls } from "components/ui"
@@ -15,6 +12,13 @@ import "./index.scss"
 export const BigPlayer: FC = observer(() => {
 	const { ComponentStore, PlayerStore, ThemeStore, TextylStore } = useStores()
 	const selectedTrack = PlayerStore.playerData.selectedTrack
+
+	const trackName =
+		PlayerStore.playerData.selectedTrack == null
+			? "----"
+			: PlayerStore.playerData.selectedTrack.artist
+			? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
+			: PlayerStore.playerData.selectedTrack.name
 
 	const afterBgColor =
 		ThemeStore.CurrentTheme.name === "LightTheme"
@@ -30,9 +34,9 @@ export const BigPlayer: FC = observer(() => {
 	}
 
 	useEffect(() => {
-		 if (!TextylStore.textylData.lyrics){
+		if (!TextylStore.textylData.lyrics) {
 			ComponentStore.changeBigPlayerLyricsOpen()
-		 }
+		}
 	}, [TextylStore.textylData.lyrics])
 
 	return (
@@ -46,13 +50,7 @@ export const BigPlayer: FC = observer(() => {
 					<TrackProgressBar
 						howlerRef={ComponentStore.componentData.howlerRef}
 					/>
-					<div className="content-trackName">
-						{PlayerStore.playerData.selectedTrack == null
-							? "----"
-							: PlayerStore.playerData.selectedTrack.artist
-							? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
-							: PlayerStore.playerData.selectedTrack.name}
-					</div>
+					<div className="content-trackName">{trackName}</div>
 				</div>
 			}
 			width={"100%"}
@@ -100,7 +98,9 @@ export const BigPlayer: FC = observer(() => {
 							}}
 							transition={{ duration: 0.3, ease: "linear" }}
 							key="box"
-							onAnimationComplete={() => TextylStore.changeLyricsAppear()}
+							onAnimationComplete={() =>
+								TextylStore.changeLyricsAppear()
+							}
 						>
 							<TrackLyrics />
 						</motion.div>
