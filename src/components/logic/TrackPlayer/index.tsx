@@ -10,6 +10,7 @@ import "./index.scss"
 export const TrackPlayer: FC = observer(() => {
 	const { PlayerStore, ComponentStore, TextylStore } = useStores()
 	const howlerRef = useRef<ReactHowler | null>(null)
+	const coverImage = useRef<HTMLImageElement>(null)
 
 	const formatTime = (seconds: number | null) => {
 		if (seconds == null) return "0:00" // Если значение null, возвращаем "0:00"
@@ -28,7 +29,6 @@ export const TrackPlayer: FC = observer(() => {
 	}, [])
 
 	useEffect(() => {
-		ComponentStore.setHowlerRef(howlerRef)
 		let animationFrameId: number | null = null
 
 		const updateSeek = () => {
@@ -56,6 +56,7 @@ export const TrackPlayer: FC = observer(() => {
 	}, [PlayerStore.playerData.isPlaying])
 
 	useEffect(() => {
+		ComponentStore.setHowlerRef(howlerRef)
 		if (howlerRef.current) {
 			howlerRef.current.seek(0)
 			PlayerStore.setCurrentSeekOfPlay(0)
@@ -67,6 +68,31 @@ export const TrackPlayer: FC = observer(() => {
 				? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
 				: PlayerStore.playerData.selectedTrack?.name || ""
 			TextylStore.setLyrics(trackName)
+		}
+
+		const imageElement = coverImage.current
+		const handleLoad = () => {
+			if (imageElement && imageElement.src) {
+				console.log("image was")
+				ComponentStore.setBigPlayerCoverMainColor(imageElement);
+			} else {
+				console.log("image wasnt")
+				ComponentStore.setBigPlayerCoverMainColor(null);
+			}
+		}
+		if (imageElement) {
+			console.log("handle")
+			imageElement.addEventListener("load", handleLoad);
+			// Call handleLoad immediately in case the image is already loaded
+			if (imageElement.complete) {
+				handleLoad();
+			}
+		}
+
+		return () => {
+			if (imageElement) {
+				imageElement.removeEventListener("load", handleLoad)
+			}
 		}
 	}, [PlayerStore.playerData.selectedTrack])
 
@@ -118,6 +144,7 @@ export const TrackPlayer: FC = observer(() => {
 					<img
 						src={PlayerStore.playerData.selectedTrack.cover}
 						alt=""
+						ref={coverImage}
 					/>
 				)}
 				<AiOutlineExpandAlt

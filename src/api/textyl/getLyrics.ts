@@ -23,7 +23,6 @@ export const getLyrics = async (trackName: string) => {
 	try {
 		const reqUrl = `lyrics?q=${encodeURIComponent(trackName)}`
 		const res = await instance.get(reqUrl)
-		console.log("request")
 
 		return res.data
 	} catch (err) {

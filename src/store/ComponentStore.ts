@@ -1,4 +1,5 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, runInAction } from "mobx"
+import ColorThief from "colorthief"
 
 export interface IDirDropdownItems {
 	key: number
@@ -17,6 +18,7 @@ export interface IComponentStore {
 	BigPlayerLyricsOpen: boolean
 	BigPlayerCoverSize: string
 	BigPlayerLyricsScrollState: HTMLDivElement | null
+	BigPlayerCoverMainColor: [number, number, number] | undefined
 }
 
 export class ComponentStore {
@@ -31,7 +33,8 @@ export class ComponentStore {
 		BigPlayerOpen: false,
 		BigPlayerLyricsOpen: false,
 		BigPlayerCoverSize: "360px",
-		BigPlayerLyricsScrollState: null
+		BigPlayerLyricsScrollState: null,
+		BigPlayerCoverMainColor: undefined,
 	}
 
 	constructor() {
@@ -87,8 +90,24 @@ export class ComponentStore {
 		}
 	}
 
-	public setBigPlayerLyricsScrollState(state:HTMLDivElement | null){
+	public setBigPlayerLyricsScrollState(state: HTMLDivElement | null) {
 		this.componentData.BigPlayerLyricsScrollState = state
+	}
+
+	public setBigPlayerCoverMainColor(imageElement: HTMLImageElement | null) {
+		const colorThief = new ColorThief()
+		if (imageElement) {
+			const color = colorThief.getColor(imageElement)
+			console.log(color)
+			runInAction(() => {
+				this.componentData.BigPlayerCoverMainColor = color
+			})
+		} else {
+			console.log("undefined")
+			runInAction(() => {
+				this.componentData.BigPlayerCoverMainColor = undefined
+			})
+		}
 	}
 }
 

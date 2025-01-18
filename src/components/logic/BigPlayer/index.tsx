@@ -55,6 +55,7 @@ export const BigPlayer: FC = observer(() => {
 			}
 			width={"100%"}
 			closable={false}
+			styles={{ mask: { backgroundColor: "rgba(65, 65, 65, 0.2)" } }}
 		>
 			<div className="modal-container">
 				<div className="big-player__content">
