@@ -1,4 +1,4 @@
-import { FC, CSSProperties, useEffect } from "react"
+import { FC, CSSProperties, useEffect, useRef } from "react"
 import { observer } from "mobx-react-lite"
 import { Modal } from "antd"
 import { motion, AnimatePresence } from "motion/react"
@@ -20,6 +20,18 @@ export const BigPlayer: FC = observer(() => {
 			? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
 			: PlayerStore.playerData.selectedTrack.name
 
+	const maskStyles = {
+		mask: {
+			backgroundColor: ComponentStore.componentData
+				.BigPlayerCoverMainColor
+				? `rgba(${ComponentStore.componentData.BigPlayerCoverMainColor[0]},
+				${ComponentStore.componentData.BigPlayerCoverMainColor[1]},
+				${ComponentStore.componentData.BigPlayerCoverMainColor[2]},
+				0.2)`
+				: "rgba(65, 65, 65, 0.2)",
+		},
+	}
+
 	const afterBgColor =
 		ThemeStore.CurrentTheme.name === "LightTheme"
 			? "rgba(255, 255, 255, 0.6)" // Белый полупрозрачный цвет для светлой темы
@@ -35,7 +47,7 @@ export const BigPlayer: FC = observer(() => {
 
 	useEffect(() => {
 		if (!TextylStore.textylData.lyrics) {
-			ComponentStore.changeBigPlayerLyricsOpen()
+			ComponentStore.changeBigPlayerLyricsOpen(false)
 		}
 	}, [TextylStore.textylData.lyrics])
 
@@ -55,7 +67,7 @@ export const BigPlayer: FC = observer(() => {
 			}
 			width={"100%"}
 			closable={false}
-			styles={{ mask: { backgroundColor: "rgba(65, 65, 65, 0.2)" } }}
+			styles={maskStyles}
 		>
 			<div className="modal-container">
 				<div className="big-player__content">

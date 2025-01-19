@@ -80,9 +80,17 @@ export class ComponentStore {
 		this.componentData.howlerRef = ref
 	}
 
-	public changeBigPlayerLyricsOpen() {
-		this.componentData.BigPlayerLyricsOpen =
-			!this.componentData.BigPlayerLyricsOpen
+	public changeBigPlayerLyricsOpen(set?: boolean) {
+		if (set === true) {
+			this.componentData.BigPlayerLyricsOpen = true
+		}
+		if (set === false) {
+			this.componentData.BigPlayerLyricsOpen = false
+		} else {
+			this.componentData.BigPlayerLyricsOpen =
+				!this.componentData.BigPlayerLyricsOpen
+		}
+
 		if (this.componentData.BigPlayerLyricsOpen) {
 			this.componentData.BigPlayerCoverSize = "240px"
 		} else {
@@ -98,12 +106,10 @@ export class ComponentStore {
 		const colorThief = new ColorThief()
 		if (imageElement) {
 			const color = colorThief.getColor(imageElement)
-			console.log(color)
 			runInAction(() => {
 				this.componentData.BigPlayerCoverMainColor = color
 			})
 		} else {
-			console.log("undefined")
 			runInAction(() => {
 				this.componentData.BigPlayerCoverMainColor = undefined
 			})

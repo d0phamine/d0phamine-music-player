@@ -73,18 +73,15 @@ export const TrackPlayer: FC = observer(() => {
 		const imageElement = coverImage.current
 		const handleLoad = () => {
 			if (imageElement && imageElement.src) {
-				console.log("image was")
 				ComponentStore.setBigPlayerCoverMainColor(imageElement);
 			} else {
-				console.log("image wasnt")
 				ComponentStore.setBigPlayerCoverMainColor(null);
 			}
 		}
 		if (imageElement) {
-			console.log("handle")
 			imageElement.addEventListener("load", handleLoad);
 			// Call handleLoad immediately in case the image is already loaded
-			if (imageElement.complete) {
+			if (imageElement.complete || !imageElement.src) {
 				handleLoad();
 			}
 		}

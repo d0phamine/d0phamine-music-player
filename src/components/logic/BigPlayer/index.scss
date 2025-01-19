@@ -62,38 +62,7 @@
 	&__lyrics-container {
 		background: transparent;
 		overflow: hidden;
-		// position: relative;
-
-		// &::before,
-		// &::after {
-		// 	content: "";
-		// 	position: absolute;
-		// 	left: 0;
-		// 	right: 0;
-		// 	height: 15%; // Adjust the height as needed
-		// 	background-color: transparent;
-		// 	// mask-image: linear-gradient(
-		// 	// 	rgb(0, 0, 0) 60%,
-		// 	// 	rgba(0, 0, 0, 0) 100%
-		// 	// );
-		// 	// background-image: radial-gradient(
-		// 	// 	transparent 1px,
-		// 	// 	rgba(15, 17, 21, 0.2) 1px
-		// 	// );
-		// 	// background-size: 4px 4px;
-		// 	backdrop-filter: blur(3px);
-		// 	opacity: 1;
-		// 	z-index: 1;
-		// 	pointer-events: none; // Ensure the pseudo-elements do not block interactions
-		// }
-
-		// &::before {
-		// 	top: 0;
-		// }
-
-		// &::after {
-		// 	bottom: 0;
-		// }
+		position: relative;
 	}
 
 	.footer-container {
