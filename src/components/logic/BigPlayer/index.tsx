@@ -1,4 +1,4 @@
-import { FC, CSSProperties, useEffect, useRef } from "react"
+import { FC, CSSProperties, useEffect, useState, useRef } from "react"
 import { observer } from "mobx-react-lite"
 import { Modal } from "antd"
 import { motion, AnimatePresence } from "motion/react"
@@ -11,6 +11,9 @@ import "./index.scss"
 
 export const BigPlayer: FC = observer(() => {
 	const { ComponentStore, PlayerStore, ThemeStore, TextylStore } = useStores()
+	const [maskStyles, setMaskStyles] = useState({
+		mask: { backgroundColor: "rgba(65, 65, 65, 0.2)", transition: "unset" },
+	})
 	const selectedTrack = PlayerStore.playerData.selectedTrack
 
 	const trackName =
@@ -19,18 +22,6 @@ export const BigPlayer: FC = observer(() => {
 			: PlayerStore.playerData.selectedTrack.artist
 			? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
 			: PlayerStore.playerData.selectedTrack.name
-
-	const maskStyles = {
-		mask: {
-			backgroundColor: ComponentStore.componentData
-				.BigPlayerCoverMainColor
-				? `rgba(${ComponentStore.componentData.BigPlayerCoverMainColor[0]},
-				${ComponentStore.componentData.BigPlayerCoverMainColor[1]},
-				${ComponentStore.componentData.BigPlayerCoverMainColor[2]},
-				0.2)`
-				: "rgba(65, 65, 65, 0.2)",
-		},
-	}
 
 	const afterBgColor =
 		ThemeStore.CurrentTheme.name === "LightTheme"
@@ -44,6 +35,26 @@ export const BigPlayer: FC = observer(() => {
 			: "none",
 		backgroundColor: selectedTrack?.cover ? "transparent" : "gray",
 	}
+
+	useEffect(() => {
+		if (ComponentStore.componentData.BigPlayerOpen) {
+			setMaskStyles({
+				mask: {
+					backgroundColor: ComponentStore.componentData
+						.BigPlayerCoverMainColor
+						? `rgba(${ComponentStore.componentData.BigPlayerCoverMainColor[0]},
+                        ${ComponentStore.componentData.BigPlayerCoverMainColor[1]},
+                        ${ComponentStore.componentData.BigPlayerCoverMainColor[2]},
+                        0.2)`
+						: "rgba(65, 65, 65, 0.2)",
+					transition: "1s",
+				},
+			})
+		}
+	}, [
+		ComponentStore.componentData.BigPlayerOpen,
+		ComponentStore.componentData.BigPlayerCoverMainColor,
+	])
 
 	useEffect(() => {
 		if (!TextylStore.textylData.lyrics) {
