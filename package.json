@@ -10,7 +10,7 @@
 		"url": "https://github.com/d0phamine/desktop-react-musicPlayer"
 	},
 	"license": "GPL-3.0",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"private": true,
 	"build": {
 		"appId": "com.d0phamine.d0phamine-music-player",
