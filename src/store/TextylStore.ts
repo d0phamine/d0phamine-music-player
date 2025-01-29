@@ -26,9 +26,21 @@ export class TextylStore {
 	}
 
 	private inputAdditionalValues(lyrics: Ilyrics[]) {
+		const loadingElement: Ilyrics = {
+			seconds: 0,
+			lyrics: "loading",
+			activeFlag: true,
+			id: 1,
+		}
+		lyrics.unshift(loadingElement)
 		lyrics.forEach((item: any, index: number) => {
-			item.activeFlag = false
-			item.id = index
+			if (item.lyrics === "loading") {
+				item.activeFlag = true
+				item.id = index
+			} else {
+				item.activeFlag = false
+				item.id = index
+			}
 		})
 	}
 

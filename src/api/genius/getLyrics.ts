@@ -15,9 +15,7 @@ export const getLyrics = async (trackName: string) => {
 			},
 		})
 		const trackUrl = res.data.response.hits[0].result.url
-		console.log(trackUrl)
 		const lyrics = await extractLyrics(trackUrl)
-		console.log(lyrics)
 		return lyrics
 	} catch (err) {
 		console.error(err)

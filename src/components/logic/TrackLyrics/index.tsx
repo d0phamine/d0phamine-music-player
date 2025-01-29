@@ -4,6 +4,7 @@ import { useStores } from "store"
 
 import "./index.scss"
 import { CustomLoader } from "components/ui"
+import { color } from "motion/dist/react"
 
 export const TrackLyrics: FC = observer(() => {
 	const { TextylStore, PlayerStore, ThemeStore } = useStores()
@@ -59,7 +60,12 @@ export const TrackLyrics: FC = observer(() => {
 		<div className="track-lyrics" ref={lyricsContainerRef}>
 			{TextylStore.textylData.lyricsAppear &&
 				(TextylStore.textylData.lyricsLoading ? (
-					<CustomLoader />
+					<CustomLoader
+						style={{
+							fontSize: "72px",
+							color: ThemeStore.PrimaryColor,
+						}}
+					/>
 				) : (
 					TextylStore.textylData.lyrics?.map((item, index) => (
 						<div
@@ -67,18 +73,31 @@ export const TrackLyrics: FC = observer(() => {
 							className="track-lyrics__line"
 							ref={(el) => (activeLineRef.current[index] = el)}
 						>
-							<p
-								style={{
-									color: item.activeFlag
-										? ThemeStore.CurrentTheme.fontColor
-										: ThemeStore.CurrentTheme.disabledColor,
-									filter: item.activeFlag
-										? "unset"
-										: "blur(3px)",
-								}}
-							>
-								{item.lyrics}
-							</p>
+							{item.lyrics === "loading" ? (
+								<CustomLoader
+									style={{
+										fontSize: "72px",
+										color: ThemeStore.PrimaryColor,
+										visibility: item.activeFlag
+											? "visible"
+											: "hidden",
+									}}
+								/>
+							) : (
+								<p
+									style={{
+										color: item.activeFlag
+											? ThemeStore.CurrentTheme.fontColor
+											: ThemeStore.CurrentTheme
+													.disabledColor,
+										filter: item.activeFlag
+											? "unset"
+											: "blur(3px)",
+									}}
+								>
+									{item.lyrics}
+								</p>
+							)}
 						</div>
 					))
 				))}
