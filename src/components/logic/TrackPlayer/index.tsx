@@ -202,7 +202,7 @@ export const TrackPlayer: FC = observer(() => {
 						}
 						PlayerStore.changeIsPlaying()
 					}}
-					// html5={true}
+					html5={true}
 				/>
 			)}
 		</div>
