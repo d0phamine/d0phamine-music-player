@@ -19,6 +19,7 @@ export interface IComponentStore {
 	BigPlayerCoverSize: string
 	BigPlayerLyricsScrollState: HTMLDivElement | null
 	BigPlayerCoverMainColor: [number, number, number] | undefined
+	showAudioVisualization: boolean
 }
 
 export class ComponentStore {
@@ -35,6 +36,7 @@ export class ComponentStore {
 		BigPlayerCoverSize: "360px",
 		BigPlayerLyricsScrollState: null,
 		BigPlayerCoverMainColor: undefined,
+		showAudioVisualization: true,
 	}
 
 	constructor() {
@@ -114,6 +116,27 @@ export class ComponentStore {
 				this.componentData.BigPlayerCoverMainColor = undefined
 			})
 		}
+	}
+
+	public setShowAudiovisualization() {
+		if (localStorage.getItem("visualization")) {
+			if (localStorage.getItem("visualization") === "true") {
+				this.componentData.showAudioVisualization = true
+			} else {
+				this.componentData.showAudioVisualization = false
+			}
+		} else {
+			this.componentData.showAudioVisualization = true
+		}
+	}
+
+	public switchShowAudiovisualization() {
+		this.componentData.showAudioVisualization =
+			!this.componentData.showAudioVisualization
+		localStorage.setItem(
+			"visualization",
+			`${this.componentData.showAudioVisualization}`,
+		)
 	}
 }
 

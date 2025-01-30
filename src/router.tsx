@@ -7,10 +7,11 @@ import { useStores } from "./store"
 import { observer } from "mobx-react-lite"
 
 export const Router: FC = observer(() => {
-	const { ThemeStore } = useStores()
+	const { ThemeStore, ComponentStore } = useStores()
 
 	useEffect(() => {
 		ThemeStore.setTheme()
+		ComponentStore.setShowAudiovisualization()
 	}, [])
 
 	return (

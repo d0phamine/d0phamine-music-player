@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, FC } from "react"
+import { useRef, useEffect, FC } from "react"
 import AudioMotionAnalyzer from "audiomotion-analyzer"
 import { observer } from "mobx-react-lite"
 import { useStores } from "store"
@@ -12,7 +12,7 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 	const howlerRef = ComponentStore.componentData.howlerRef
 	const analyzerRef = useRef<AudioMotionAnalyzer | null>(null)
 	const visualizerRef = useRef<HTMLDivElement>(null)
-	const previousSoundNodeRef = useRef<AudioNode | null>(null);
+	const previousSoundNodeRef = useRef<AudioNode | null>(null)
 
 	useEffect(() => {
 		// Проверяем, что howlerRef и его свойства существуют
@@ -22,11 +22,13 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 			// Проверяем, что sounds[0] существует и содержит _node
 			const soundNode = howlerInstance._sounds[0]?._node
 			if (!soundNode) {
-				return; // Прерываем выполнение, если звуковой узел не найден
+				return // Прерываем выполнение, если звуковой узел не найден
 			}
-
+			console.log(visualizerRef.current, "visualizerRef.current")
+			console.log(analyzerRef.current, "analyzerRef.current")
 			// Инициализация AudioMotionAnalyzer только один раз
 			if (visualizerRef.current && !analyzerRef.current) {
+				console.log("new example")
 				analyzerRef.current = new AudioMotionAnalyzer(
 					visualizerRef.current,
 					{
@@ -44,27 +46,45 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 						showScaleY: false,
 						gradient: "rainbow",
 						volume: 1,
-						audioCtx: soundNode.context, // передаем аудиоконтекст
+						audioCtx: soundNode.context,
 					},
 				)
 			}
 
 			// Отключаем предыдущий звуковой узел, если он существует
-            if (previousSoundNodeRef.current && analyzerRef.current) {
-                analyzerRef.current.disconnectInput(previousSoundNodeRef.current);
-            }
+			if (previousSoundNodeRef.current && analyzerRef.current) {
+				console.log("disable")
+				analyzerRef.current.disconnectInput(
+					previousSoundNodeRef.current,
+				)
+			}
 
-            // Подключаем звуковой узел Howler к анализатору, если analyzerRef и soundNode существуют
-            if (howlerInstance && analyzerRef.current && soundNode) {
-                try {
-                    analyzerRef.current.connectInput(soundNode);
-                    previousSoundNodeRef.current = soundNode; // Сохраняем текущий звуковой узел
-                } catch (error) {
-                }
-            }
+			// Подключаем звуковой узел Howler к анализатору, если analyzerRef и soundNode существуют
+			if (howlerInstance && analyzerRef.current && soundNode) {
+				try {
+					analyzerRef.current.connectInput(soundNode)
+					previousSoundNodeRef.current = soundNode // Сохраняем текущий звуковой узел
+				} catch (error) {
+					console.error(error)
+				}
+			}
+
+			if (analyzerRef.current) {
+				if (ComponentStore.componentData.showAudioVisualization) {
+					analyzerRef.current.useCanvas = true
+				} else {
+					analyzerRef.current.useCanvas = false
+				}
+			}
 		}
-	}, [howlerRef])
+	}, [howlerRef, ComponentStore.componentData.showAudioVisualization])
 
-	// Рендерим визуализатор с плавным переходом для opacity
-	return <div ref={visualizerRef} className="audio-visualizer" style={{ background: "transparent" }}></div>
+	return (
+		<div
+			ref={visualizerRef}
+			className="audio-visualizer"
+			style={{ background: "transparent" }}
+		></div>
+	)
 })
+

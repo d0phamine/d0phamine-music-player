@@ -6,13 +6,14 @@ import { useStores } from "store"
 import { ITrack } from "store/PlayerStore"
 
 import { MdOutlineAudioFile, MdCleaningServices, MdDarkMode } from "react-icons/md"
+import { GiLaserBurst } from "react-icons/gi";
 import { IoMdMenu } from "react-icons/io"
 import { FloatButton } from "antd"
 
 import "./index.scss"
 
 export const CurrentPlaylist: FC = observer(() => {
-	const { PlayerStore, ThemeStore } = useStores()
+	const { PlayerStore, ThemeStore, ComponentStore } = useStores()
 
 	return (
 		<div className="current-playlist">
@@ -51,6 +52,11 @@ export const CurrentPlaylist: FC = observer(() => {
 				style={{ insetInlineEnd: 24 }}
 				icon={<IoMdMenu />}
 			>
+				<FloatButton
+					icon={<GiLaserBurst/>}
+					onClick={() => ComponentStore.switchShowAudiovisualization()}
+					type={ComponentStore.componentData.showAudioVisualization ? "primary" : "default"}
+				/>
 				<FloatButton
 					icon={<MdDarkMode/>}
 					onClick={() => ThemeStore.switchTheme()}

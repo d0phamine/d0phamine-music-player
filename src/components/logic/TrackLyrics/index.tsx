@@ -4,7 +4,6 @@ import { useStores } from "store"
 
 import "./index.scss"
 import { CustomLoader } from "components/ui"
-import { color } from "motion/dist/react"
 
 export const TrackLyrics: FC = observer(() => {
 	const { TextylStore, PlayerStore, ThemeStore } = useStores()

@@ -18,9 +18,13 @@ export const TrackProgressBar: FC<TrackProgressBarProps> = observer((props) => {
 
 	useEffect(() => {
 		if (!isSliding) {
-			setSliderValue(PlayerStore.playerData.currentTimeOfPlay || 0)
+			const interval = setInterval(() => {
+				setSliderValue(PlayerStore.playerData.currentTimeOfPlay || 0)
+			}, 1000)
+
+			return () => clearInterval(interval)
 		}
-	}, [PlayerStore.playerData.currentTimeOfPlay, isSliding])
+	}, [isSliding])
 
 	const handleSliderChange = (value: number) => {
 		setSliderValue(value)

@@ -18,7 +18,7 @@ export const MainLayout: FC<ILayout> = ({ children }) => {
 				style={{
 					backgroundColor: ThemeStore.CurrentTheme.backgroundColor,
 					borderColor: ThemeStore.CurrentTheme.borderColor,
-					color: ThemeStore.CurrentTheme.fontColor
+					color: ThemeStore.CurrentTheme.fontColor,
 				}}
 			>
 				<div className="visualizer-container">

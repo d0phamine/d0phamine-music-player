@@ -72,7 +72,7 @@
 		"autoprefixer": "^10.4.13",
 		"concurrently": "^8.0.1",
 		"cross-env": "^7.0.3",
-		"electron": "^22.0.0",
+		"electron": "^34.0.2",
 		"electron-builder": "^25.1.8",
 		"postcss": "^8.4.19",
 		"prettier": "^2.8.0",
@@ -87,7 +87,7 @@
 	},
 	"dependencies": {
 		"@ant-design/icons": "^5.5.2",
-		"@electron/remote": "^2.0.8",
+		"@electron/remote": "^2.1.2",
 		"@fontsource-variable/jetbrains-mono": "^5.1.1",
 		"@fontsource/fira-mono": "^5.1.0",
 		"@spotify/web-api-ts-sdk": "^1.2.0",
