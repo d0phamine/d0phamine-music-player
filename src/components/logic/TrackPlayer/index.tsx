@@ -1,16 +1,24 @@
-import { FC, useEffect, useRef } from "react"
-import { observer } from "mobx-react-lite"
-import ReactHowler from "react-howler"
+import { FC, useEffect, useRef, useState } from "react"
+
 import { MdShuffle, MdRepeat, MdVolumeUp, MdVolumeMute } from "react-icons/md"
 import { AiOutlineExpandAlt } from "react-icons/ai"
+
+import { observer } from "mobx-react-lite"
 import { useStores } from "store"
+
 import { TrackProgressBar, VolumeChanger, PlayerControls } from "components/ui"
+import ReactHowler from "react-howler"
+import Marquee from "react-fast-marquee"
+
 import "./index.scss"
 
 export const TrackPlayer: FC = observer(() => {
 	const { PlayerStore, ComponentStore, TextylStore } = useStores()
 	const howlerRef = useRef<ReactHowler | null>(null)
 	const coverImage = useRef<HTMLImageElement>(null)
+	const infoTrackNameRef = useRef<HTMLDivElement>(null)
+	const [isOverflow, setIsOverflow] = useState(false)
+	const [isPlayingTrackName, setIsPlayingTrackName] = useState(true)
 
 	const formatTime = (seconds: number | null) => {
 		if (seconds == null) return "0:00" // Если значение null, возвращаем "0:00"
@@ -73,17 +81,24 @@ export const TrackPlayer: FC = observer(() => {
 		const imageElement = coverImage.current
 		const handleLoad = () => {
 			if (imageElement && imageElement.src) {
-				ComponentStore.setBigPlayerCoverMainColor(imageElement);
+				ComponentStore.setBigPlayerCoverMainColor(imageElement)
 			} else {
-				ComponentStore.setBigPlayerCoverMainColor(null);
+				ComponentStore.setBigPlayerCoverMainColor(null)
 			}
 		}
 		if (imageElement) {
-			imageElement.addEventListener("load", handleLoad);
+			imageElement.addEventListener("load", handleLoad)
 			// Call handleLoad immediately in case the image is already loaded
 			if (imageElement.complete || !imageElement.src) {
-				handleLoad();
+				handleLoad()
 			}
+		}
+
+		if (infoTrackNameRef.current) {
+			setIsOverflow(
+				infoTrackNameRef.current.scrollWidth >
+					infoTrackNameRef.current.clientWidth,
+			)
 		}
 
 		return () => {
@@ -149,14 +164,37 @@ export const TrackPlayer: FC = observer(() => {
 				/>
 			</div>
 			<div className="track-player__info">
-				<div className="info-track-name">
-					<p>
-						{PlayerStore.playerData.selectedTrack == null
-							? "----"
-							: PlayerStore.playerData.selectedTrack.artist
-							? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
-							: PlayerStore.playerData.selectedTrack.name}
-					</p>
+				<div className="info-track-name" ref={infoTrackNameRef}>
+					{isOverflow ? (
+						<Marquee
+							pauseOnHover={true}
+							gradient={false}
+							speed={20}
+							autoFill={false}
+							play={isPlayingTrackName}
+							onCycleComplete={() => {
+								setIsPlayingTrackName(false)
+								setTimeout(
+									() => setIsPlayingTrackName(true),
+									3000,
+								)
+							}}
+						>
+							{PlayerStore.playerData.selectedTrack == null
+								? "---- "
+								: `${PlayerStore.playerData.selectedTrack.artist}`
+								? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name} `
+								: `${PlayerStore.playerData.selectedTrack.name}`}
+						</Marquee>
+					) : (
+						<p>
+							{PlayerStore.playerData.selectedTrack == null
+								? "---- "
+								: `${PlayerStore.playerData.selectedTrack.artist}`
+								? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name} `
+								: `${PlayerStore.playerData.selectedTrack.name}`}
+						</p>
+					)}
 				</div>
 				<div className="info-track-executor">
 					<p>

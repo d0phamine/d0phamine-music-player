@@ -24,11 +24,8 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 			if (!soundNode) {
 				return // Прерываем выполнение, если звуковой узел не найден
 			}
-			console.log(visualizerRef.current, "visualizerRef.current")
-			console.log(analyzerRef.current, "analyzerRef.current")
 			// Инициализация AudioMotionAnalyzer только один раз
 			if (visualizerRef.current && !analyzerRef.current) {
-				console.log("new example")
 				analyzerRef.current = new AudioMotionAnalyzer(
 					visualizerRef.current,
 					{
@@ -53,7 +50,6 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 
 			// Отключаем предыдущий звуковой узел, если он существует
 			if (previousSoundNodeRef.current && analyzerRef.current) {
-				console.log("disable")
 				analyzerRef.current.disconnectInput(
 					previousSoundNodeRef.current,
 				)
@@ -65,7 +61,7 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 					analyzerRef.current.connectInput(soundNode)
 					previousSoundNodeRef.current = soundNode // Сохраняем текущий звуковой узел
 				} catch (error) {
-					console.error(error)
+					// console.error(error)
 				}
 			}
 

@@ -46,7 +46,7 @@ ipcMain.handle(channels.GET_DIR, async (event, arg) => {
 						const title =
 							metadata.common.title ||
 							path.basename(file, path.extname(file))
-						const artist = metadata.common.artist || ""
+						const artists = metadata.common.artists || []
 						const duration =
 							Math.round(metadata.format.duration) || 0
 
@@ -63,7 +63,7 @@ ipcMain.handle(channels.GET_DIR, async (event, arg) => {
 						return {
 							type: "audio",
 							name: title,
-							artist: artist,
+							artist: artists.join(","),
 							path: filePath,
 							cover: coverUrl,
 							duration: duration,
@@ -128,3 +128,4 @@ ipcMain.handle(channels.DELETE_FAVORITE, async (event, dirPath) => {
 		throw new Error("Failed to delete favorite directory")
 	}
 })
+

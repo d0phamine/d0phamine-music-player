@@ -92,15 +92,22 @@
 			font-size: 12px;
 			line-height: 1;
 			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
 		}
 
 		.info-track-name {
 			width: 100%;
-			overflow: hidden;
 			white-space: nowrap;
-			text-overflow: ellipsis;
+			overflow: auto;
+
+			.rfm-marquee {
+				padding-right: 12px;
+			}
+
+			.rfm-child {
+				font-size: 12px;
+				line-height: 1;
+				white-space: nowrap;
+			}
 		}
 
 		.info-track-executor {
