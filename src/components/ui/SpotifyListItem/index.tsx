@@ -27,10 +27,13 @@ export const SpotifyListItem: FC<SpotifyListItemProps> = (props) => {
 					<p>{props.title}</p>
 				</div>
 				<div className="item-content-type-owner">
-					<p>{props.owner ? `${props.type} - ${props.owner}` : `${props.type}`}</p>
+					<p>
+						{props.owner
+							? `${props.type} - ${props.owner}`
+							: `${props.type}`}
+					</p>
 				</div>
 			</div>
 		</div>
 	)
 }
-

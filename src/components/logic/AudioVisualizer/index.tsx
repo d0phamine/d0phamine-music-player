@@ -83,4 +83,3 @@ export const AudioVisualizer: FC<AudioVisualizerProps> = observer(() => {
 		></div>
 	)
 })
-

@@ -18,8 +18,8 @@ export const LyricsIcon: FC = () => {
 		color: isActive
 			? ThemeStore.CurrentTheme.primaryColor
 			: isDisabled
-			? ThemeStore.CurrentTheme.disabledColor
-			: ThemeStore.CurrentTheme.fontColor,
+				? ThemeStore.CurrentTheme.disabledColor
+				: ThemeStore.CurrentTheme.fontColor,
 	})
 
 	return (
@@ -38,4 +38,3 @@ export const LyricsIcon: FC = () => {
 		/>
 	)
 }
-

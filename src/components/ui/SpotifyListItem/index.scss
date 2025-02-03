@@ -7,7 +7,6 @@
 	list-style-type: none;
 	gap: 6px;
 
-
 	&__image {
 		flex-shrink: 0;
 		img {
@@ -23,7 +22,7 @@
 		gap: 2px;
 		line-height: 1;
 
-		.item-content-title{
+		.item-content-title {
 			font-size: 14px;
 		}
 
@@ -34,7 +33,7 @@
 	}
 }
 
-.spotify-list-item:hover{
+.spotify-list-item:hover {
 	background-color: #6f56d0;
 	cursor: pointer;
 }

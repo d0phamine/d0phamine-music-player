@@ -3,13 +3,13 @@
 	overflow: hidden;
 
 	.visualizer-container {
-        height: calc(100% - 32px);
-        width: 100%;
+		height: calc(100% - 32px);
+		width: 100%;
 		z-index: 1;
 		position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.main-layout {

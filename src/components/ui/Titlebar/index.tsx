@@ -99,4 +99,3 @@ export const Titlebar: FC = observer(() => {
 		</div>
 	)
 })
-

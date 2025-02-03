@@ -45,7 +45,10 @@ export const PlayerControls: FC<IPlayerControlsProps> = observer(
 			<div className="player-controls">
 				{playMode && (
 					<MdShuffle
-						style={getStyle(PlayerStore.playerData.isShuffled, shuffleFs)}
+						style={getStyle(
+							PlayerStore.playerData.isShuffled,
+							shuffleFs,
+						)}
 						onClick={() => {
 							if (PlayerStore.playerData.isShuffled) {
 								PlayerStore.unShufflePlaylist()
@@ -93,7 +96,10 @@ export const PlayerControls: FC<IPlayerControlsProps> = observer(
 				/>
 				{playMode && (
 					<MdRepeat
-						style={getStyle(PlayerStore.playerData.isLooped, repeatFs)}
+						style={getStyle(
+							PlayerStore.playerData.isLooped,
+							repeatFs,
+						)}
 						onClick={() => PlayerStore.changeIsLooped()}
 					/>
 				)}
@@ -101,4 +107,3 @@ export const PlayerControls: FC<IPlayerControlsProps> = observer(
 		)
 	},
 )
-

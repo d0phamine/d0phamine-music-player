@@ -69,4 +69,3 @@ export const MyContent: FC = observer(() => {
 		</div>
 	)
 })
-

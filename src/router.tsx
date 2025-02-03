@@ -35,4 +35,3 @@ export const Router: FC = observer(() => {
 		</ConfigProvider>
 	)
 })
-

@@ -1,10 +1,10 @@
 .player-controls {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }
 
 .player-controls > *:hover {
-    transition: 0.3s;
+	transition: 0.3s;
 }

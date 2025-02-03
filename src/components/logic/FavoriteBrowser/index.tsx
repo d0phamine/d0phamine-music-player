@@ -21,39 +21,48 @@ export const FavoriteBrowser: FC = observer(() => {
 		<div className="favorite-browser">
 			<div className="favorite-browser__header">Favorite</div>
 			<div className="favorite-browser__list">
-				{FSstore.FSdata.favoriteDirs?.map((item: DirsArr | ITrack, index) => (
-					<CustomListItem
-						key={index}
-						title={item.name}
-						button={<MdFolder />}
-						control={
-							<div className="control-items">
-								<DirDropdown trigger={["click"]} dirPath={item.path}>
+				{FSstore.FSdata.favoriteDirs?.map(
+					(item: DirsArr | ITrack, index) => (
+						<CustomListItem
+							key={index}
+							title={item.name}
+							button={<MdFolder />}
+							control={
+								<div className="control-items">
+									<DirDropdown
+										trigger={["click"]}
+										dirPath={item.path}
+									>
+										<CustomIcon
+											onClick={(e: React.MouseEvent) =>
+												e.preventDefault()
+											}
+										>
+											<MdMoreHoriz />
+										</CustomIcon>
+									</DirDropdown>
 									<CustomIcon
-										onClick={(e: React.MouseEvent) =>
-											e.preventDefault()
+										onClick={() =>
+											FSstore.deleteFromFavorites(
+												item.path,
+											)
 										}
 									>
-										<MdMoreHoriz />
+										<MdOutlineStarPurple500
+											style={{ color: "gold" }}
+										/>
 									</CustomIcon>
-								</DirDropdown>
-								<CustomIcon
-									onClick={() =>
-										FSstore.deleteFromFavorites(item.path)
-									}
-								>
-									<MdOutlineStarPurple500
-										style={{ color: "gold" }}
-									/>
-								</CustomIcon>
-							</div>
-						}
-						onClick={() => FSstore.setBrowserDirs(item.path)}
-						style={{borderColor:ThemeStore.CurrentTheme.borderColor}}
-					/>
-				))}
+								</div>
+							}
+							onClick={() => FSstore.setBrowserDirs(item.path)}
+							style={{
+								borderColor:
+									ThemeStore.CurrentTheme.borderColor,
+							}}
+						/>
+					),
+				)}
 			</div>
 		</div>
 	)
 })
-

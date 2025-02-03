@@ -128,4 +128,3 @@ ipcMain.handle(channels.DELETE_FAVORITE, async (event, dirPath) => {
 		throw new Error("Failed to delete favorite directory")
 	}
 })
-

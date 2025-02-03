@@ -7,10 +7,8 @@ Simple Electron desktop multi-platform music application.
 (Its working on MacOS, Windows and Linux)
 
 > Written with the help of modern technologies of ReactJS and TypeScript
-> 
-> 
-> *“Don't judge me too harshly, this is my first public pet project.”*
-> 
+>
+> _“Don't judge me too harshly, this is my first public pet project.”_
 
 ---
 
@@ -25,7 +23,7 @@ Simple Electron desktop multi-platform music application.
 5. **Big player** for a more detailed look at the cover and a beautiful display of the playback
 6. Also, for most English-language compositions, the Big player provides synchronized subtitles
 
-*Yes it looks simple, but I will continue to work on it and add new cool features, believe me!!!*
+_Yes it looks simple, but I will continue to work on it and add new cool features, believe me!!!_
 
 ## My thoughts for the future
 
@@ -34,5 +32,3 @@ Simple Electron desktop multi-platform music application.
 3. Аdding functionality for external APIs (Spotify, Genius, Youtube)
 4. Work is already underway on native player support in the notification line for all operating systems
 5. Maybe EQ
-
-

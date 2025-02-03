@@ -1,16 +1,16 @@
 .favorite-browser {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	overflow: hidden;
 
-    &__header {
-        padding: 12px 12px 0px 12px;
-        line-height: 1;
-        font-size: 16px;
-    }
+	&__header {
+		padding: 12px 12px 0px 12px;
+		line-height: 1;
+		font-size: 16px;
+	}
 
-    &__list {
-        overflow-y: auto;
-    }
+	&__list {
+		overflow-y: auto;
+	}
 }

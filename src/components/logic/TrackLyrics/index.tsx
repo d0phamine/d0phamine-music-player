@@ -103,4 +103,3 @@ export const TrackLyrics: FC = observer(() => {
 		</div>
 	)
 })
-

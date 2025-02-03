@@ -8,4 +8,3 @@ export * from "./AudioVisualizer"
 export * from "./BigPlayer"
 export * from "./TrackLyrics"
 export * from "./LyricsIcon"
-

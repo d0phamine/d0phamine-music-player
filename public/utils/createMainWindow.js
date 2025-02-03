@@ -48,4 +48,3 @@ exports.createMainWindow = async () => {
 
 	return window
 }
-

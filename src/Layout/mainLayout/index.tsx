@@ -29,4 +29,3 @@ export const MainLayout: FC<ILayout> = ({ children }) => {
 		</>
 	)
 }
-

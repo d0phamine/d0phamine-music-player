@@ -11,15 +11,15 @@ import "./index.scss"
 
 export const MyCollections: FC = observer(() => {
 	const { SpotifyStore, ComponentStore } = useStores()
-    const containerRef = useRef<HTMLDivElement | null>(null)
+	const containerRef = useRef<HTMLDivElement | null>(null)
 
-    const updateContainerSize = () => {
+	const updateContainerSize = () => {
 		if (containerRef.current) {
 			ComponentStore.setDrawerContainerRefSize(containerRef)
 		}
 	}
 
-    useEffect(() => {
+	useEffect(() => {
 		window.addEventListener("resize", updateContainerSize)
 		return () => {
 			window.removeEventListener("resize", updateContainerSize)
@@ -27,9 +27,8 @@ export const MyCollections: FC = observer(() => {
 	}, [])
 
 	useEffect(() => {
-        updateContainerSize()
+		updateContainerSize()
 		SpotifyStore.setUserNewReleases()
-        
 	}, [])
 
 	return (
@@ -45,11 +44,11 @@ export const MyCollections: FC = observer(() => {
 								artists={item.artists}
 								cover={item.images[0].url}
 								key={index}
-                                onClick={() => {
-                                    SpotifyStore.setMediaInfo(item)
-                                    SpotifyStore.setAlbumItems(item.id)
-                                    ComponentStore.changeDrawerOpen()
-                                }}
+								onClick={() => {
+									SpotifyStore.setMediaInfo(item)
+									SpotifyStore.setAlbumItems(item.id)
+									ComponentStore.changeDrawerOpen()
+								}}
 							/>
 						),
 					)}
@@ -104,4 +103,3 @@ export const MyCollections: FC = observer(() => {
 		</div>
 	)
 })
-

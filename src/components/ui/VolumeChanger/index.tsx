@@ -11,10 +11,16 @@ export const VolumeChanger: FC = observer(() => {
 	const { PlayerStore, ThemeStore } = useStores()
 	return (
 		<Slider
-			className={ThemeStore.CurrentTheme === ThemeStore.DarkTheme ? "volume-changer dark" : "volume-changer light"}
+			className={
+				ThemeStore.CurrentTheme === ThemeStore.DarkTheme
+					? "volume-changer dark"
+					: "volume-changer light"
+			}
 			tooltip={{ formatter: null }}
 			value={PlayerStore.playerData.playerVolume * 100}
-            onChange={(value:number) => PlayerStore.setPlayerVolume(value / 100)}
+			onChange={(value: number) =>
+				PlayerStore.setPlayerVolume(value / 100)
+			}
 		/>
 	)
 })

@@ -20,8 +20,8 @@ export const BigPlayer: FC = observer(() => {
 		PlayerStore.playerData.selectedTrack == null
 			? "----"
 			: PlayerStore.playerData.selectedTrack.artist
-			? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
-			: PlayerStore.playerData.selectedTrack.name
+				? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name}`
+				: PlayerStore.playerData.selectedTrack.name
 
 	const afterBgColor =
 		ThemeStore.CurrentTheme.name === "LightTheme"
@@ -134,4 +134,3 @@ export const BigPlayer: FC = observer(() => {
 		</Modal>
 	)
 })
-

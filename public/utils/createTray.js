@@ -3,7 +3,6 @@ const { showNotification } = require("./showNotification")
 const config = require("./config")
 
 exports.createTray = () => {
-
 	const t = new Tray(config.icon)
 
 	t.setToolTip(config.appName)
@@ -38,4 +37,3 @@ exports.createTray = () => {
 
 	return t
 }
-

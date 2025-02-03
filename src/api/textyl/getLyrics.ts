@@ -27,12 +27,11 @@ export const getLyrics = async (trackName: string) => {
 		return res.data
 	} catch (err) {
 		if (axios.isAxiosError(err) && err.response?.status === 404) {
-            console.error("Lyrics not found");
-            return undefined;
-        } else {
-            console.error(err);
-            throw err; // Re-throw the error if it's not a 404
-        }
+			console.error("Lyrics not found")
+			return undefined
+		} else {
+			console.error(err)
+			throw err // Re-throw the error if it's not a 404
+		}
 	}
 }
-

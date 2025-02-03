@@ -15,7 +15,7 @@ export interface CustomSearchProps {
 }
 
 export const BrowserSearch: FC<CustomSearchProps> = observer((props) => {
-	const { FSstore, ComponentStore} = useStores()
+	const { FSstore, ComponentStore } = useStores()
 
 	const onSearch = (value: string) => {
 		ComponentStore.getBrowserSearchValue(value)
@@ -33,4 +33,3 @@ export const BrowserSearch: FC<CustomSearchProps> = observer((props) => {
 		/>
 	)
 })
-

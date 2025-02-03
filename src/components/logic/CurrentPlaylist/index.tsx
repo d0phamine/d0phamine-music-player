@@ -5,8 +5,12 @@ import { CustomListItem } from "components/ui"
 import { useStores } from "store"
 import { ITrack } from "store/PlayerStore"
 
-import { MdOutlineAudioFile, MdCleaningServices, MdDarkMode } from "react-icons/md"
-import { GiLaserBurst } from "react-icons/gi";
+import {
+	MdOutlineAudioFile,
+	MdCleaningServices,
+	MdDarkMode,
+} from "react-icons/md"
+import { GiLaserBurst } from "react-icons/gi"
 import { IoMdMenu } from "react-icons/io"
 import { FloatButton } from "antd"
 
@@ -33,14 +37,16 @@ export const CurrentPlaylist: FC = observer(() => {
 						style={
 							item.selected
 								? {
-										backgroundColor: ThemeStore.CurrentTheme.playingTrackColor,
+										backgroundColor:
+											ThemeStore.CurrentTheme
+												.playingTrackColor,
 										borderColor:
 											ThemeStore.CurrentTheme.borderColor,
-								  }
+									}
 								: {
 										borderColor:
 											ThemeStore.CurrentTheme.borderColor,
-								  }
+									}
 						}
 					/>
 				),
@@ -53,12 +59,18 @@ export const CurrentPlaylist: FC = observer(() => {
 				icon={<IoMdMenu />}
 			>
 				<FloatButton
-					icon={<GiLaserBurst/>}
-					onClick={() => ComponentStore.switchShowAudiovisualization()}
-					type={ComponentStore.componentData.showAudioVisualization ? "primary" : "default"}
+					icon={<GiLaserBurst />}
+					onClick={() =>
+						ComponentStore.switchShowAudiovisualization()
+					}
+					type={
+						ComponentStore.componentData.showAudioVisualization
+							? "primary"
+							: "default"
+					}
 				/>
 				<FloatButton
-					icon={<MdDarkMode/>}
+					icon={<MdDarkMode />}
 					onClick={() => ThemeStore.switchTheme()}
 				/>
 				<FloatButton
@@ -69,4 +81,3 @@ export const CurrentPlaylist: FC = observer(() => {
 		</div>
 	)
 })
-

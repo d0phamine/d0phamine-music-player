@@ -4,4 +4,3 @@ export const channels = {
 	ADD_FAVORITE: "add-favorite",
 	DELETE_FAVORITE: "delete-favorite",
 }
-

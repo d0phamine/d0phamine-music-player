@@ -183,16 +183,16 @@ export const TrackPlayer: FC = observer(() => {
 							{PlayerStore.playerData.selectedTrack == null
 								? "---- "
 								: `${PlayerStore.playerData.selectedTrack.artist}`
-								? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name} `
-								: `${PlayerStore.playerData.selectedTrack.name}`}
+									? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name} `
+									: `${PlayerStore.playerData.selectedTrack.name}`}
 						</Marquee>
 					) : (
 						<p>
 							{PlayerStore.playerData.selectedTrack == null
 								? "---- "
 								: `${PlayerStore.playerData.selectedTrack.artist}`
-								? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name} `
-								: `${PlayerStore.playerData.selectedTrack.name}`}
+									? `${PlayerStore.playerData.selectedTrack.artist} - ${PlayerStore.playerData.selectedTrack.name} `
+									: `${PlayerStore.playerData.selectedTrack.name}`}
 						</p>
 					)}
 				</div>
@@ -246,4 +246,3 @@ export const TrackPlayer: FC = observer(() => {
 		</div>
 	)
 })
-

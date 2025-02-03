@@ -77,14 +77,14 @@ export const PlaylistDrawer: FC<PlaylistDrawerProps> = observer((props) => {
 											undefined,
 											SpotifyStore.SpotifyData
 												.playlistItems?.items.length,
-									  )
+										)
 									: null
 							}
 							hasMore={
 								SpotifyStore.SpotifyData.playlistItems
 									? SpotifyStore.SpotifyData.playlistItems
 											?.items.length <
-									  SpotifyStore.SpotifyData.playlistItems
+										SpotifyStore.SpotifyData.playlistItems
 											?.total
 									: false
 							}
@@ -147,7 +147,7 @@ export const PlaylistDrawer: FC<PlaylistDrawerProps> = observer((props) => {
 											item: SimplifiedArtist,
 											index: number,
 										) => `${item.name} `,
-								  )
+									)
 								: ""}{" "}
 							- {SpotifyStore.SpotifyData.mediaInfo?.total_tracks}{" "}
 							треков
@@ -165,14 +165,15 @@ export const PlaylistDrawer: FC<PlaylistDrawerProps> = observer((props) => {
 											undefined,
 											SpotifyStore.SpotifyData.albumItems
 												?.items.length,
-									  )
+										)
 									: null
 							}
 							hasMore={
 								SpotifyStore.SpotifyData.albumItems
 									? SpotifyStore.SpotifyData.albumItems?.items
 											.length <
-									  SpotifyStore.SpotifyData.albumItems?.total
+										SpotifyStore.SpotifyData.albumItems
+											?.total
 									: false
 							}
 							useWindow={false}
@@ -211,4 +212,3 @@ export const PlaylistDrawer: FC<PlaylistDrawerProps> = observer((props) => {
 		)
 	}
 })
-

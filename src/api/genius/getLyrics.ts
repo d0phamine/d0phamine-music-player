@@ -45,4 +45,3 @@ const extractLyrics = async (trackUrl: string) => {
 		console.error(err, "Текста к этому треку еще не придумали..(")
 	}
 }
-

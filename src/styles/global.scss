@@ -1,4 +1,4 @@
-@import '@fontsource-variable/jetbrains-mono';
+@import "@fontsource-variable/jetbrains-mono";
 // ::-webkit-scrollbar {
 // 	width: 0.5rem;
 // 	display: none;
@@ -24,7 +24,7 @@ body {
 	height: 100%;
 	padding: 0;
 	margin: 0;
-	font-family: 'JetBrains Mono Variable', monospace;
+	font-family: "JetBrains Mono Variable", monospace;
 	color: white;
 	// background: #141414;
 	overflow: hidden;
@@ -68,12 +68,10 @@ body {
 	box-shadow: 0 0px 25px rgba(7, 188, 13, 0.277);
 	color: #d0d0d2;
 
-	.Toastify__progress-bar--success{
+	.Toastify__progress-bar--success {
 		background: rgba(7, 188, 12, 1);
 		height: 2px;
 	}
-
-	
 }
 
 .styled-notifications-error {
@@ -82,13 +80,13 @@ body {
 	border: 1px solid rgba(255, 255, 255, 0.124);
 	box-shadow: 0 0px 25px rgba(188, 31, 7, 0.277);
 	color: #d0d0d2;
-	.Toastify__progress-bar--error{
+	.Toastify__progress-bar--error {
 		background: rgba(231, 77, 60, 0.742);
 		height: 2px;
 	}
 }
 
-.centered-class{
+.centered-class {
 	display: flex;
 	justify-content: center;
 	align-items: center;

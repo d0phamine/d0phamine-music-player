@@ -63,4 +63,3 @@ export const TrackProgressBar: FC<TrackProgressBarProps> = observer((props) => {
 		/>
 	)
 })
-

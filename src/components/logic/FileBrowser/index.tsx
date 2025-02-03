@@ -39,7 +39,7 @@ export const FileBrowser: FC = observer(() => {
 					: (
 							FSstore.FSdata.filteredDirs ||
 							FSstore.FSdata.browserDirs
-					  )?.map((item: DirsArr | ITrack, index) => (
+						)?.map((item: DirsArr | ITrack, index) => (
 							<CustomListItem
 								key={index}
 								title={
@@ -96,11 +96,13 @@ export const FileBrowser: FC = observer(() => {
 									) : null
 								}
 								customClass="hover-control"
-								style={{borderColor:ThemeStore.CurrentTheme.borderColor}}
+								style={{
+									borderColor:
+										ThemeStore.CurrentTheme.borderColor,
+								}}
 							/>
-					  ))}
+						))}
 			</div>
 		</div>
 	)
 })
-

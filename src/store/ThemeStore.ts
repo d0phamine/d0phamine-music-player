@@ -47,8 +47,8 @@ export class ThemeStore {
 				this.CurrentTheme = this.LightTheme
 			}
 		} else {
-            this.CurrentTheme = this.LightTheme
-        }
+			this.CurrentTheme = this.LightTheme
+		}
 	}
 
 	public switchTheme() {
@@ -65,4 +65,3 @@ export class ThemeStore {
 		}
 	}
 }
-

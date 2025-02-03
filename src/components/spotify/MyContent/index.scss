@@ -1,12 +1,12 @@
 .my-content {
-    height: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
 	overflow: hidden;
 
 	&__header {
-        padding: 8px 12px 0px 12px;
+		padding: 8px 12px 0px 12px;
 		line-height: 1;
 		font-size: 16px;
 	}
@@ -19,14 +19,14 @@
 		overflow-y: auto;
 	}
 
-    // &__list:nth-child(1) {
-    //     flex: 0 1 30%; /* Минимальная высота 30%, не больше 30% */
-    //     max-height: 30%; /* Устанавливаем ограничение сверху */
-    // }
+	// &__list:nth-child(1) {
+	//     flex: 0 1 30%; /* Минимальная высота 30%, не больше 30% */
+	//     max-height: 30%; /* Устанавливаем ограничение сверху */
+	// }
 
-    /* Второй список */
-    &__list:nth-child(2) {
-        flex: 0 1 40%; /* Минимальная высота 30%, не больше 30% */
-        max-height: 40%;  /* Занимает оставшееся пространство */
-    }
+	/* Второй список */
+	&__list:nth-child(2) {
+		flex: 0 1 40%; /* Минимальная высота 30%, не больше 30% */
+		max-height: 40%; /* Занимает оставшееся пространство */
+	}
 }

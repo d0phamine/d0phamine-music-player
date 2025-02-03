@@ -8,7 +8,7 @@
 	"semi": false,
 	"importOrder": [
 		"^react$",
-		"^mobx",
+		"^mobx$",
 		"^antd$",
 		"^@ant-design/icons",
 		"^store",

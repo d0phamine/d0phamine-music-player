@@ -373,4 +373,3 @@ export class SpotifyStore {
 		this.SpotifyData.mediaInfo = info
 	}
 }
-

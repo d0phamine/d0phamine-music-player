@@ -47,7 +47,7 @@
 				overflow: hidden; /* Обрезаем текст, который не помещается */
 				white-space: nowrap; /* Запрещаем перенос текста */
 				text-overflow: ellipsis;
-                display: block; 
+				display: block;
 			}
 
 			&__name {
@@ -66,4 +66,3 @@
 	cursor: pointer;
 	transition: 0.3s;
 }
-

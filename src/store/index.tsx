@@ -7,7 +7,6 @@ import { ThemeStore } from "./ThemeStore"
 import { GeniusStore } from "./GeniusStore"
 import { TextylStore } from "./TextylStore"
 
-
 export const rootStoreContext = createContext({
 	FSstore: new FSstore(),
 	ComponentStore: new ComponentStore(),

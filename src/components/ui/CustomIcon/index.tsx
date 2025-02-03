@@ -4,7 +4,7 @@ import "./index.scss"
 
 export interface CustomIconProps {
 	children: ReactNode
-	onClick?: (e:React.MouseEvent) => void
+	onClick?: (e: React.MouseEvent) => void
 }
 
 export const CustomIcon: FC<CustomIconProps> = (props) => {
@@ -14,4 +14,3 @@ export const CustomIcon: FC<CustomIconProps> = (props) => {
 		</div>
 	)
 }
-

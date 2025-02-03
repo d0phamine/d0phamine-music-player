@@ -25,4 +25,3 @@ export const CustomListItem: FC<CustomListItemProps> = (props) => {
 		</div>
 	)
 }
-

@@ -45,4 +45,3 @@ export const MainPage: FC = observer(() => {
 		</MainLayout>
 	)
 })
-

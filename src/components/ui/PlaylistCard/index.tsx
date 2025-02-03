@@ -13,16 +13,16 @@ export interface PlaylistCardProps {
 }
 
 export const PlaylistCard: FC<PlaylistCardProps> = (props) => {
-
 	const stripHtmlTags = (input: string): string => {
-		if (!input) return ""; // Если строка пустая, возвращаем пустую строку
-		const div = document.createElement("div");
-		div.innerHTML = input; // Интерпретируем строку как HTML
-		return div.textContent || div.innerText || ""; // Извлекаем текстовое содержимое
-	};
+		if (!input) return "" // Если строка пустая, возвращаем пустую строку
+		const div = document.createElement("div")
+		div.innerHTML = input // Интерпретируем строку как HTML
+		return div.textContent || div.innerText || "" // Извлекаем текстовое содержимое
+	}
 
 	// Проверяем и обрабатываем props.title
-	const cleanedTitle = typeof props.title === "string" ? stripHtmlTags(props.title) : "";
+	const cleanedTitle =
+		typeof props.title === "string" ? stripHtmlTags(props.title) : ""
 
 	return (
 		<div className="playlist-card" onClick={props.onClick}>
@@ -49,4 +49,3 @@ export const PlaylistCard: FC<PlaylistCardProps> = (props) => {
 		</div>
 	)
 }
-

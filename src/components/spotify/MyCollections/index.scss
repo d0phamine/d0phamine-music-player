@@ -3,8 +3,8 @@
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
-    overflow-y: auto;
-    overflow-x: hidden;
+	overflow-y: auto;
+	overflow-x: hidden;
 
 	h2 {
 		line-height: 1;
@@ -12,25 +12,24 @@
 	}
 
 	&__new-releases,
-    &__featured-playlists,
-    &__for-you-playlists {
+	&__featured-playlists,
+	&__for-you-playlists {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-        gap: 12px;
+		gap: 12px;
 		overflow: hidden;
-		
 
 		.new-releases-container,
-        .featured-playlists-container,
-        .for-you-playlists-container {
+		.featured-playlists-container,
+		.for-you-playlists-container {
 			width: 100%;
 			display: flex;
 			flex-direction: row;
 			gap: 12px;
 			flex-wrap: wrap;
-            overflow-y: auto;
-            scroll-behavior: smooth;
+			overflow-y: auto;
+			scroll-behavior: smooth;
 		}
 	}
 }

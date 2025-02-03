@@ -42,7 +42,7 @@ export class FSstore {
 
 	public async getDirs(
 		dir?: string,
-		needLoading?: boolean
+		needLoading?: boolean,
 	): Promise<DirsArr[] | ITrack[]> {
 		this.FSdata.loading = needLoading ? true : this.FSdata.loading
 		try {
@@ -131,4 +131,3 @@ export class FSstore {
 		}
 	}
 }
-

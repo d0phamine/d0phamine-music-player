@@ -8,12 +8,11 @@ export interface ICustomLoaderProps {
 }
 
 export const CustomLoader: FC<ICustomLoaderProps> = ({
-	style={fontSize: "32px"}
+	style = { fontSize: "32px" },
 }) => {
 	return (
 		<div className="custom-loader">
-			<LoadingOutlined spin style={style}/>
+			<LoadingOutlined spin style={style} />
 		</div>
 	)
 }
-

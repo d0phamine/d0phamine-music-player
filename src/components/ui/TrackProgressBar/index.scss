@@ -5,92 +5,90 @@
 	border-radius: 2px;
 	margin: 0px 0px 0px 0px;
 
-    .ant-slider-track {
-        // background-color: #fff;
-    }
+	.ant-slider-track {
+		// background-color: #fff;
+	}
 
 	.ant-slider-handle {
 		width: 3px;
 		height: 3px;
-        margin-left: 2px;
-        box-shadow: unset;
-        outline: unset;
-        background-color: transparent;
+		margin-left: 2px;
+		box-shadow: unset;
+		outline: unset;
+		background-color: transparent;
 	}
 
 	.ant-slider-handle:before {
 		width: 3px;
 		height: 3px;
-        margin-left: 2px;
-        box-shadow: unset;
-        outline: unset;
+		margin-left: 2px;
+		box-shadow: unset;
+		outline: unset;
 	}
 
 	.ant-slider-handle:after {
 		width: 3px;
 		height: 3px;
 		inset-block-start: 2px;
-        box-shadow: unset;
-        outline: unset;
-        margin-left: 2px;
-        background-color: transparent;
+		box-shadow: unset;
+		outline: unset;
+		margin-left: 2px;
+		background-color: transparent;
 	}
 
 	.ant-slider-handle:hover::after {
 		width: 3px;
 		height: 3px;
 		inset-block-start: 2px;
-        margin-left: 2px;
-        background-color: transparent;
-        box-shadow: unset;
-        outline: unset;
+		margin-left: 2px;
+		background-color: transparent;
+		box-shadow: unset;
+		outline: unset;
 	}
 
 	.ant-slider-handle:focus::after {
 		width: 3px;
 		height: 3px;
 		inset-block-start: 2px;
-        margin-left: 2px;
-        background-color: transparent;
-        box-shadow: unset;
-        outline: unset;
+		margin-left: 2px;
+		background-color: transparent;
+		box-shadow: unset;
+		outline: unset;
 	}
 
-    .ant-slider-handle:focus::before {
-        width: 3px;
+	.ant-slider-handle:focus::before {
+		width: 3px;
 		height: 3px;
-    }
+	}
 }
 
-.track-progress-bar:hover{
-    .ant-slider-track{
-        // background-color: #fff;
-    }
+.track-progress-bar:hover {
+	.ant-slider-track {
+		// background-color: #fff;
+	}
 
-    .ant-slider-handle {
-        background-color: transparent;
-        box-shadow: unset;
-    }
+	.ant-slider-handle {
+		background-color: transparent;
+		box-shadow: unset;
+	}
 
-    .ant-slider-handle::before {
-        background-color: transparent;
-        box-shadow: unset;
-    }
+	.ant-slider-handle::before {
+		background-color: transparent;
+		box-shadow: unset;
+	}
 
-    .ant-slider-handle::after {
-        background-color: transparent;
-        box-shadow: unset;
-    }
-
+	.ant-slider-handle::after {
+		background-color: transparent;
+		box-shadow: unset;
+	}
 }
-
 
 .dark {
 	.ant-slider-track {
 		background-color: #fff !important;
 	}
 
-    .ant-slider-track:hover {
+	.ant-slider-track:hover {
 		background-color: #fff !important;
 	}
 }
@@ -100,7 +98,7 @@
 		background-color: #000000 !important;
 	}
 
-    .ant-slider-track:hover {
+	.ant-slider-track:hover {
 		background-color: #000000 !important;
 	}
 }
