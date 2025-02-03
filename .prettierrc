@@ -5,5 +5,22 @@
 	"singleQuote": false,
 	"endOfLine": "crlf",
 	"trailingComma": "all",
-	"semi": false
+	"semi": false,
+	"importOrder": [
+		"^react$",
+		"^mobx",
+		"^antd$",
+		"^@ant-design/icons",
+		"^store",
+		"^store/(.*)$",
+		"^components/(.*)$",
+		"^/ui/(.*)$",
+		"^/logic/(.*)$",
+		"^pages/(.*)$",
+		"^logic/(.*)$",
+		"^react.+$",
+		"^[./]"
+	],
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true
 }
