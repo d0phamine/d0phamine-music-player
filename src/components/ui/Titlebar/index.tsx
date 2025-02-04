@@ -1,18 +1,19 @@
 import { FC, useState } from "react"
 
-import { useStores } from "store"
 import { observer } from "mobx-react-lite"
-import { useNavigate, useLocation } from "react-router-dom"
 
+import { Button } from "antd"
+import { FaSpotify } from "react-icons/fa"
 import {
 	IoCloseOutline,
 	IoContractOutline,
 	IoExpandOutline,
-	IoRemove,
 	IoPlaySharp,
+	IoRemove,
 } from "react-icons/io5"
-import { FaSpotify } from "react-icons/fa"
-import { Button } from "antd"
+import { useLocation, useNavigate } from "react-router-dom"
+
+import { useStores } from "store"
 
 import "./index.scss"
 

@@ -1,18 +1,19 @@
 import { FC } from "react"
+
 import { observer } from "mobx-react-lite"
+
+import { Button } from "antd"
+import { BrowserSearch, CustomIcon, CustomListItem } from "components"
+import {
+	MdFolder,
+	MdOutlineAudioFile,
+	MdOutlineKeyboardBackspace,
+	MdOutlineStarPurple500,
+} from "react-icons/md"
 
 import { useStores } from "store"
 import { DirsArr } from "store/FSstore"
 import { ITrack } from "store/PlayerStore"
-import { CustomIcon, CustomListItem, BrowserSearch } from "components"
-
-import {
-	MdFolder,
-	MdOutlineKeyboardBackspace,
-	MdOutlineStarPurple500,
-	MdOutlineAudioFile,
-} from "react-icons/md"
-import { Button } from "antd"
 
 import "./index.scss"
 

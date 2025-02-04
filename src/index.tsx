@@ -1,14 +1,13 @@
 import React from "react"
+
 import ReactDOM from "react-dom/client"
 import { HashRouter } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 import { Titlebar } from "./components"
-
-import "react-toastify/dist/ReactToastify.css"
-import "./styles/global.scss"
-
 import { Router } from "./router"
+import "./styles/global.scss"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 

@@ -1,18 +1,20 @@
 import { FC } from "react"
+
 import { observer } from "mobx-react-lite"
 
-import { CustomListItem } from "components/ui"
+import { FloatButton } from "antd"
+import { GiLaserBurst } from "react-icons/gi"
+import { IoMdMenu } from "react-icons/io"
+import {
+	MdCleaningServices,
+	MdDarkMode,
+	MdOutlineAudioFile,
+} from "react-icons/md"
+
 import { useStores } from "store"
 import { ITrack } from "store/PlayerStore"
 
-import {
-	MdOutlineAudioFile,
-	MdCleaningServices,
-	MdDarkMode,
-} from "react-icons/md"
-import { GiLaserBurst } from "react-icons/gi"
-import { IoMdMenu } from "react-icons/io"
-import { FloatButton } from "antd"
+import { CustomListItem } from "components/ui"
 
 import "./index.scss"
 

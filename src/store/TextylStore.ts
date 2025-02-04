@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx"
+
 import { getLyrics } from "api/textyl"
 
 export interface Ilyrics {

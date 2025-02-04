@@ -1,7 +1,8 @@
 import { FC } from "react"
-import { useStores } from "store"
 
 import { MdLyrics } from "react-icons/md"
+
+import { useStores } from "store"
 
 import "./index.scss"
 

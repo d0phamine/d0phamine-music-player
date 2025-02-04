@@ -1,11 +1,12 @@
 import { createContext, useContext } from "react"
-import { FSstore } from "./FSstore"
+
 import { ComponentStore } from "./ComponentStore"
+import { FSstore } from "./FSstore"
+import { GeniusStore } from "./GeniusStore"
 import { PlayerStore } from "./PlayerStore"
 import { SpotifyStore } from "./SpotifyStore"
-import { ThemeStore } from "./ThemeStore"
-import { GeniusStore } from "./GeniusStore"
 import { TextylStore } from "./TextylStore"
+import { ThemeStore } from "./ThemeStore"
 
 export const rootStoreContext = createContext({
 	FSstore: new FSstore(),

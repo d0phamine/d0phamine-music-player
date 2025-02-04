@@ -1,11 +1,14 @@
-import { FC, CSSProperties, useEffect, useState } from "react"
+import { CSSProperties, FC, useEffect, useState } from "react"
+
 import { observer } from "mobx-react-lite"
+
 import { Modal } from "antd"
-import { motion, AnimatePresence } from "motion/react"
+import { AnimatePresence, motion } from "motion/react"
 
 import { useStores } from "store"
-import { TrackProgressBar, PlayerControls } from "components/ui"
+
 import { LyricsIcon, TrackLyrics } from "components/logic"
+import { PlayerControls, TrackProgressBar } from "components/ui"
 
 import "./index.scss"
 

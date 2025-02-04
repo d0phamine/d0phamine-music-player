@@ -1,13 +1,14 @@
 import { FC } from "react"
+
 import { observer } from "mobx-react-lite"
 
-import { Input } from "antd"
 import { SearchOutlined } from "@ant-design/icons"
+import { Input } from "antd"
+import { SizeType } from "antd/es/config-provider/SizeContext"
 
 import { useStores } from "store"
 
 import "./index.scss"
-import { SizeType } from "antd/es/config-provider/SizeContext"
 
 export interface CustomSearchProps {
 	size?: SizeType

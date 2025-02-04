@@ -1,13 +1,15 @@
 import { FC, useEffect } from "react"
-import { observer } from "mobx-react-lite"
-import { Scopes } from "@spotify/web-api-ts-sdk"
 
-import { MainLayout } from "layout/mainLayout"
+import { observer } from "mobx-react-lite"
+
+import { Scopes } from "@spotify/web-api-ts-sdk"
+import { MyCollections, MyContent, TrackPlayer } from "components"
 
 import { useStores } from "store"
 
+import { MainLayout } from "layout/mainLayout"
+
 import "./index.scss"
-import { MyCollections, MyContent, TrackPlayer } from "components"
 
 export const SpotifyPage: FC = observer(() => {
 	const { SpotifyStore } = useStores()

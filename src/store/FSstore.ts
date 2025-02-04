@@ -1,6 +1,8 @@
 import { makeAutoObservable, runInAction } from "mobx"
+
 import { dirname, normalize } from "path"
 import { channels } from "shared/constants"
+
 import { ITrack } from "./PlayerStore"
 
 const { ipcRenderer } = window.require("electron")

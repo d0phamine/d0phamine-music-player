@@ -1,10 +1,13 @@
 import { FC, useEffect } from "react"
-import { Route, Routes } from "react-router-dom"
+
+import { observer } from "mobx-react-lite"
+
 import { ConfigProvider, theme } from "antd"
+import { Route, Routes } from "react-router-dom"
+
 import { MainPage } from "./pages/mainPage"
 import { SpotifyPage } from "./pages/spotifyPage"
 import { useStores } from "./store"
-import { observer } from "mobx-react-lite"
 
 export const Router: FC = observer(() => {
 	const { ThemeStore, ComponentStore } = useStores()

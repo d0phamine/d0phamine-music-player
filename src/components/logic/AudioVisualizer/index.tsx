@@ -1,6 +1,9 @@
-import { useRef, useEffect, FC } from "react"
-import AudioMotionAnalyzer from "audiomotion-analyzer"
+import { FC, useEffect, useRef } from "react"
+
 import { observer } from "mobx-react-lite"
+
+import AudioMotionAnalyzer from "audiomotion-analyzer"
+
 import { useStores } from "store"
 
 import "./index.scss"

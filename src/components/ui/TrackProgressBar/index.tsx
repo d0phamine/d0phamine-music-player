@@ -1,8 +1,11 @@
 import { FC, MutableRefObject, useEffect, useState } from "react"
+
 import { observer } from "mobx-react-lite"
+
+import { Slider } from "antd"
 import ReactHowler from "react-howler"
 import { useDebouncedCallback } from "use-debounce"
-import { Slider } from "antd"
+
 import { useStores } from "store"
 
 import "./index.scss"

@@ -1,10 +1,12 @@
 import { FC, useEffect } from "react"
 
-import { useStores } from "store"
 import { observer } from "mobx-react-lite"
 
+import { Artist, SimplifiedPlaylist, Track } from "@spotify/web-api-ts-sdk"
+
+import { useStores } from "store"
+
 import { SpotifyListItem } from "components/ui"
-import { Artist, Track, SimplifiedPlaylist } from "@spotify/web-api-ts-sdk"
 
 import "./index.scss"
 

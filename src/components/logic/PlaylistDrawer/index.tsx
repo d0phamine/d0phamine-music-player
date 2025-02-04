@@ -1,18 +1,20 @@
 import { FC } from "react"
-import { observer } from "mobx-react-lite"
-import { Drawer } from "antd"
-import { LoadingOutlined } from "@ant-design/icons"
-import InfiniteScroll from "react-infinite-scroller"
 
-import { useStores } from "store"
+import { observer } from "mobx-react-lite"
+
+import { LoadingOutlined } from "@ant-design/icons"
 import {
 	PlaylistedTrack,
 	SimplifiedArtist,
 	SimplifiedTrack,
 } from "@spotify/web-api-ts-sdk"
+import { Drawer } from "antd"
+import InfiniteScroll from "react-infinite-scroller"
 
-import "./index.scss"
+import { useStores } from "store"
+
 import { CustomListItem } from "../../ui"
+import "./index.scss"
 
 export interface PlaylistDrawerProps {
 	style?: {}

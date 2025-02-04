@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react"
 
 import { AudioVisualizer } from "components"
+
 import { useStores } from "store"
 
 import "./index.scss"

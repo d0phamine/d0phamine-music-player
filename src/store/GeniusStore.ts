@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx"
+
 import { getLyrics } from "api/genius"
 
 export interface IGeniusStore {

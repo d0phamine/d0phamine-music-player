@@ -1,14 +1,17 @@
 import { FC } from "react"
+
 import { observer } from "mobx-react-lite"
-import { useStores } from "store"
+
 import {
+	MdPauseCircle,
 	MdPlayCircle,
+	MdRepeat,
+	MdShuffle,
 	MdSkipNext,
 	MdSkipPrevious,
-	MdPauseCircle,
-	MdShuffle,
-	MdRepeat,
 } from "react-icons/md"
+
+import { useStores } from "store"
 
 import "./index.scss"
 

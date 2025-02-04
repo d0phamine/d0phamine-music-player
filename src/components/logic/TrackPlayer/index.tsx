@@ -1,14 +1,15 @@
 import { FC, useEffect, useRef, useState } from "react"
 
-import { MdShuffle, MdRepeat, MdVolumeUp, MdVolumeMute } from "react-icons/md"
-import { AiOutlineExpandAlt } from "react-icons/ai"
-
 import { observer } from "mobx-react-lite"
+
+import Marquee from "react-fast-marquee"
+import ReactHowler from "react-howler"
+import { AiOutlineExpandAlt } from "react-icons/ai"
+import { MdRepeat, MdShuffle, MdVolumeMute, MdVolumeUp } from "react-icons/md"
+
 import { useStores } from "store"
 
-import { TrackProgressBar, VolumeChanger, PlayerControls } from "components/ui"
-import ReactHowler from "react-howler"
-import Marquee from "react-fast-marquee"
+import { PlayerControls, TrackProgressBar, VolumeChanger } from "components/ui"
 
 import "./index.scss"
 

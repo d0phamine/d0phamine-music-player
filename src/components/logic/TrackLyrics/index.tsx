@@ -1,9 +1,12 @@
 import { FC, useEffect, useRef } from "react"
+
 import { observer } from "mobx-react-lite"
+
 import { useStores } from "store"
 
-import "./index.scss"
 import { CustomLoader } from "components/ui"
+
+import "./index.scss"
 
 export const TrackLyrics: FC = observer(() => {
 	const { TextylStore, PlayerStore, ThemeStore } = useStores()
