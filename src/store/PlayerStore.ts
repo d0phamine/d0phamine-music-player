@@ -1,3 +1,4 @@
+import { CurrentPlaylist } from 'components';
 import { makeAutoObservable, runInAction } from "mobx"
 
 import ReactHowler from "react-howler"
@@ -17,6 +18,7 @@ export interface IPlayerStore {
 	isShuffled: boolean
 	isLooped: boolean
 	currentPlaylist: ITrack[]
+	CurrentPlaylistLoading: boolean
 	originalPlaylist: ITrack[]
 	selectedTrack: ITrack | null
 	currentSeekOfPlay: number | null
@@ -40,6 +42,7 @@ export class PlayerStore {
 		isShuffled: false,
 		isLooped: false,
 		currentPlaylist: [],
+		CurrentPlaylistLoading: false,
 		originalPlaylist: [],
 		selectedTrack: null,
 		currentSeekOfPlay: null,
@@ -189,6 +192,10 @@ export class PlayerStore {
 		if (arrOfTracks != null) {
 			this.playerData.currentPlaylist.push(...arrOfTracks)
 		}
+	}
+
+	public switchCurrentPlaylistLoading() {
+		this.playerData.CurrentPlaylistLoading = !this.playerData.CurrentPlaylistLoading
 	}
 
 	public cleanCurrentPlaylist() {

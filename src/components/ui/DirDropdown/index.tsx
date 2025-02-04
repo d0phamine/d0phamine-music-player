@@ -20,6 +20,7 @@ export const DirDropdown: FC<DirDropdownProps> = observer((props) => {
 
 	const onClick: MenuProps["onClick"] = async ({ key }) => {
 		if (key === "1") {
+			PlayerStore.switchCurrentPlaylistLoading()
 			await FSstore.setTracksFromFavoriteDir(props.dirPath)
 
 			// После загрузки данных теперь `tracksFromFavoriteDir` должен быть доступен
@@ -28,6 +29,7 @@ export const DirDropdown: FC<DirDropdownProps> = observer((props) => {
 					PlayerStore.addTrackToCurrentPlaylist(elem)
 				}
 			})
+			PlayerStore.switchCurrentPlaylistLoading()
 		}
 	}
 	return (

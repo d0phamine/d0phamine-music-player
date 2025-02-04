@@ -14,7 +14,7 @@ import {
 import { useStores } from "store"
 import { ITrack } from "store/PlayerStore"
 
-import { CustomListItem } from "components/ui"
+import { CustomListItem, CustomLoader } from "components/ui"
 
 import "./index.scss"
 
@@ -23,35 +23,45 @@ export const CurrentPlaylist: FC = observer(() => {
 
 	return (
 		<div className="current-playlist">
-			{PlayerStore.playerData.currentPlaylist?.map(
-				(item: ITrack, index) => (
-					<CustomListItem
-						key={index}
-						title={
-							item.artist
-								? `${item.artist} - ${item.name}`
-								: item.name
-						}
-						button={<MdOutlineAudioFile />}
-						onClick={() => {
-							PlayerStore.setSelectedTrackInCurrentPlaylist(item)
-						}}
-						style={
-							item.selected
-								? {
-										backgroundColor:
-											ThemeStore.CurrentTheme
-												.playingTrackColor,
-										borderColor:
-											ThemeStore.CurrentTheme.borderColor,
-									}
-								: {
-										borderColor:
-											ThemeStore.CurrentTheme.borderColor,
-									}
-						}
-					/>
-				),
+			{!PlayerStore.playerData.CurrentPlaylistLoading ? (
+				PlayerStore.playerData.currentPlaylist?.map(
+					(item: ITrack, index) => (
+						<CustomListItem
+							key={index}
+							title={
+								item.artist
+									? `${item.artist} - ${item.name}`
+									: item.name
+							}
+							button={<MdOutlineAudioFile />}
+							onClick={() => {
+								PlayerStore.setSelectedTrackInCurrentPlaylist(
+									item,
+								)
+							}}
+							style={
+								item.selected
+									? {
+											backgroundColor:
+												ThemeStore.CurrentTheme
+													.playingTrackColor,
+											borderColor:
+												ThemeStore.CurrentTheme
+													.borderColor,
+										}
+									: {
+											borderColor:
+												ThemeStore.CurrentTheme
+													.borderColor,
+										}
+							}
+						/>
+					),
+				)
+			) : (
+				<CustomLoader
+					style={{ color: ThemeStore.PrimaryColor, fontSize: "36px" }}
+				/>
 			)}
 
 			<FloatButton.Group
