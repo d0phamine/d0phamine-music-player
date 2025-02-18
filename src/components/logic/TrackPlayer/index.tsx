@@ -38,31 +38,30 @@ export const TrackPlayer: FC = observer(() => {
 	}, [])
 
 	useEffect(() => {
-		let animationFrameId: number | null = null
-
+		let intervalId: NodeJS.Timeout | null = null;
+	
 		const updateSeek = () => {
 			if (howlerRef.current) {
-				const seek = howlerRef.current.seek()
+				const seek = howlerRef.current.seek();
 				if (typeof seek === "number") {
-					PlayerStore.setCurrentSeekOfPlay(seek)
-					PlayerStore.setCurrentTimeOfPlay(seek)
+					PlayerStore.setCurrentSeekOfPlay(seek);
+					PlayerStore.setCurrentTimeOfPlay(seek);
 				}
 			}
-			animationFrameId = requestAnimationFrame(updateSeek)
-		}
-
+		};
+	
 		if (PlayerStore.playerData.isPlaying) {
-			animationFrameId = requestAnimationFrame(updateSeek)
-		} else if (animationFrameId !== null) {
-			cancelAnimationFrame(animationFrameId)
+			intervalId = setInterval(updateSeek, 200); // обновляем каждую секунду
+		} else if (intervalId !== null) {
+			clearInterval(intervalId);
 		}
-
+	
 		return () => {
-			if (animationFrameId !== null) {
-				cancelAnimationFrame(animationFrameId)
+			if (intervalId !== null) {
+				clearInterval(intervalId);
 			}
-		}
-	}, [PlayerStore.playerData.isPlaying])
+		};
+	}, [PlayerStore.playerData.isPlaying]);
 
 	useEffect(() => {
 		ComponentStore.setHowlerRef(howlerRef)
